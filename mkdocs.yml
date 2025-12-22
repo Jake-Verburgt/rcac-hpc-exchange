@@ -1,9 +1,9 @@
 site_name: RCAC HPC Exchange
-site_url: "https://test.example.com"
+site_url: "https://rcac-hpc-exchange.readthedocs.io/en/latest/"
 
 nav:
-  - Home: index.md
-  - Learning Outcomes: learning-outcomes.md
+  - Home: ./index.md
+  - Learning Outcomes: ./learning-outcomes.md
   - Week 1:
       - Overview: week1/index.md
       - Setting up: week1/setup.md
