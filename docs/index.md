@@ -1,17 +1,11 @@
-# Welcome to MkDocs 
+# Welcome to the RCAC HPC Exchange! 
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome to the HPC Exchange web page. We start here and will go through the other pages to learn about how to use Unix and HPC resources.
 
-## Commands
+* [Week 1](./week1/index.md)
+* [Week 2](./week2/index.md)
+* [Week 3](./week3/index.md)
+* [Week 4](./week4/index.md)
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+Click here to add the meeting series to your calendar:
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
