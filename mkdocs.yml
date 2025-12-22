@@ -1,5 +1,46 @@
 site_name: RCAC HPC Exchange
 site_url: "https://test.example.com"
+
+nav:
+  - Home: index.md
+  - Learning Outcomes: learning-outcomes.md
+  - Week 1:
+      - Overview: week1/index.md
+      - Setting up: week1/setup.md
+      - Access: week1/access.md
+      - What is Unix?: week1/unix.md
+      - The shell: week1/shell.md
+      - Anatomy of a command: week1/commands.md
+      - Navigate the filesystem: week1/filesystem.md
+      - Editing files: week1/editing.md
+      - Command reference: week1/reference.md
+  - Week 2:
+      - Overview: week2/index.md
+      - Purdue clusters: week2/clusters.md
+      - Access: week2/access.md
+      - File storage & transfer: week2/storage-transfer.md
+      - Applications: week2/applications.md
+      - What is a cluster?: week2/what-is-a-cluster.md
+      - Submit jobs (Slurm): week2/slurm-basics.md
+  - Week 3:
+      - Overview: week3/index.md
+      - Scripting: week3/scripting.md
+      - Managing processes: week3/processes.md
+      - Pipes: week3/pipes.md
+      - Files & directories: week3/files-directories.md
+  - Week 4:
+      - Overview: week4/index.md
+      - Storage & transfers: week4/storage-transfer.md
+      - Multinode & topology: week4/multinode-topology.md
+      - Job history: week4/job-history.md
+      - Utilization & monitoring: week4/utilization-monitoring.md
+      - Workload management: week4/workload-management.md
+  - Reference:
+      - Cheatsheet: reference/command-cheatsheet.md
+      - Glossary: reference/glossary.md
+      - FAQ: reference/faq.md
+
+    
 theme:
   name: material
   # logo: assets/logo.png
@@ -11,7 +52,7 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Dark mode
-      primary: green
+      primary: deep orange
       accent: deep purple
 
     # Light Mode
@@ -24,7 +65,7 @@ theme:
   font:
     text: Merriweather Sans
     code: Red Hat Mono
-    
+
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
