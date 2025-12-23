@@ -75,6 +75,10 @@ As a user, you can picture a filesystem as a series of nested files and folders(
     Which will create the `another_one` directory in your current
     directory and the `test1` directory within the `another_one`
     directory.
+
+
+
+
 ## Paths
 
 All files in UNIX systems are organized into directories, and
@@ -102,32 +106,32 @@ output_of_ls
    Paths as the argument of the `cd` program can be absolute
    or relative.
 
-   Run `cd -` to navigate to the previous directory you were in.
-   Run `cd` without any arguments to navigate back to your home
-   directory.
-
 ### Special paths
 
 
-There are three special paths that are commonly used in navigating
+There four special paths that are commonly used in navigating
 UNIX file systems:
-
+* `-`
+    * The `-` represents the previous working directory (the directory you were in before your current one)
+    * You can run `cd -` to navigate to the previous directory you were in.
+  
 * `~`
+    * The `~` represents your home directory. You can `cd ~` to move back to your home directory, or `cd ~/Desktop` to move to your desktop
+    * You can also just type `cd` (without any arguments) to return to your home directory
 * `.`
+    * The `.` represents the directory you are currently in. 
 * `..`
+    * The `..` represents the parent directory of the directory you are currently in. For example, if you are in `/home/username/Documents/mydata`, the command `cd ..` will change your directory to `/home/username/Documents`
+    * You can also stack these! For example, to move "up" two directories, you could use the command `cd ../../`
 
-The tilde (`~`), as mentioned earlier refers to your home directory.
-The single period (`.`) refers to the current working directory, which
-can sometimes be helpful, but it is more rare. Lastly, the double dot
-(`..`) refers to the parent directory of the directory you are in.
 
-```bash
-$ pwd
-/home/username/Desktop
-$ cd ..
-$ pwd
-/home/username
-```
+    ```bash
+    $ pwd
+    /home/username/Desktop
+    $ cd ..
+    $ pwd
+    /home/username
+    ```
 
 ## Permissions
 Since everything in UNIX systems is a file, file permissions are

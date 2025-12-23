@@ -76,7 +76,7 @@ you can open a terminal by running
 the program Git Bash from the Windows
 start menu.
     ![Git Bash Window](../assets/images/git_bash.png)
-* Microsoft as also Developed the "Windows Subsystem for Linux" (WSL) which allows you to run Ubuntu Linux within Windows. 
+* Microsoft has also Developed the "Windows Subsystem for Linux" (WSL) which allows you to run Ubuntu Linux within Windows. 
     * Installation Instructions can be found [here](https://learn.microsoft.com/en-us/windows/wsl/install).
         ```powershell
         wsl --install ubuntu
