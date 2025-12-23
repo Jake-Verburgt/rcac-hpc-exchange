@@ -6,7 +6,7 @@ where you can store and transfer files on the clusters, how to use different
 applications on Purdue clusters, what actually is a cluster, and lastly how
 to utilize the computing resources.
 
-* [What is a Cluster](./what-is-a-cluster.md)
+* [What is a Cluster?](./what-is-a-cluster.md)
 * [Purdue Clusters](./clusters.md)
 * [Cluster Access](./access.md)
 * [File Storage and Transfer](./storage-transfer.md)

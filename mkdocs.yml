@@ -8,20 +8,20 @@ nav:
       - Overview: week1/index.md
       - Setting up: week1/setup.md
       - Access: week1/access.md
-      - What is Unix?: week1/unix.md
-      - The shell: week1/shell.md
-      - Anatomy of a command: week1/commands.md
-      - Navigate the filesystem: week1/filesystem.md
-      - Editing files: week1/editing.md
-      - Command reference: week1/reference.md
+      - Unix?: week1/unix.md
+      - The Shell: week1/shell.md
+      - Commands: week1/commands.md
+      - Navigating Filesystems: week1/filesystem.md
+      - Editing Files: week1/editing.md
+      - Command Reference: week1/reference.md
   - Week 2:
       - Overview: week2/index.md
-      - Purdue clusters: week2/clusters.md
-      - Access: week2/access.md
-      - File storage & transfer: week2/storage-transfer.md
-      - Applications: week2/applications.md
-      - What is a cluster?: week2/what-is-a-cluster.md
-      - Submit jobs (Slurm): week2/slurm-basics.md
+      - What is a Cluster?: week2/what-is-a-cluster.md
+      - Purdue Clusters: week2/clusters.md
+      - Cluster Access: week2/access.md
+      - File Storage and Transfer: week2/storage-transfer.md
+      - Cluster Applications: week2/applications.md
+      - Cluster Job Submission: week2/slurm-basics.md
   - Week 3:
       - Overview: week3/index.md
       - Scripting: week3/scripting.md

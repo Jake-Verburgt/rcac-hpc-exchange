@@ -1,4 +1,4 @@
-# Week one
+# Week 1
 
 This is the outline for our first week of the HPC Exchange. It is
 an intoduction to Unix and how to use it. We will discuss how to
@@ -11,12 +11,12 @@ working with Unix systems.
 
 3) [Unix](./unix.md)
 
-4) [Shell](./shell.md)
+4) [The Shell](./shell.md)
 
 5) [Commands](./commands.md)
 
-6) [Filesystems](./filesystem.md)
+6) [Navigating Filesystems](./filesystem.md)
 
-7) [File Editing](./editing.md)
+7) [Editing Files](./editing.md)
 
-8) [Comnmand Reference](./reference.md)
+8) [Command Reference](./reference.md)
