@@ -1,4 +1,5 @@
 # How to access the clusters
+[Back to Week 1](./index.md)
 
 In this section, we will talk about how to actually
 access, or get onto the cluster(s).
@@ -22,7 +23,7 @@ well. To use `ssh`, open a Terminal (in any system).
 And use the command:
 
 ```sh
-   $ ssh USERNAME@CLUSTER.rcac.purdue.edu
+$ ssh USERNAME@CLUSTER.rcac.purdue.edu
 ```
 Where `USERNAME` is replaced with your Purdue username
 and `CLUSTER` is replaced with the cluster you are
@@ -31,18 +32,16 @@ trying to access.
 You should see something that looks like this:
 
 ```
-   ************************************************************
+************************************************************
 
-   ***** Use of Purdue BoilerKey or SSH keys is Required ******
+***** Use of Purdue BoilerKey or SSH keys is Required ******
 
-   ************************************************************
+************************************************************
 
-   (USERNAME@CLUSTER.rcac.purdue.edu) Password:
+(USERNAME@CLUSTER.rcac.purdue.edu) Password:
 ```
-Here you enter your Purdue password appended with a ',push'.
-So you should enter in 'password,push'. It will not look like
-anything is being typed. But the characters are being entered.
-This is a security feature of `ssh` so that people don't know
+Here you should enter in 'password,push', or you career account password. It will not look like anything is being typed. But the characters are being entered.
+* This is a security feature of `ssh` so that people don't know
 how long your password is.
 
 Once you enter your password and hit the enter key, it will
@@ -54,7 +53,7 @@ When you're logged in, you prompt should change to be of
 the form of:
 
 ```
-   USERNAME@loginXX.CLUSTER:[~] $
+USERNAME@loginXX.CLUSTER:[~] $
 ```
 
 You're now ready to do things on the cluster!
@@ -105,9 +104,9 @@ ThinLinc is also nice that the sessions are persistent,
 it will hold onto your applications and running shells
 unless you don't log in for 2 weeks.
 
-## Open OnDemand (OOD)
+## Open OnDemand (OOD) / Gateway
 
-Open on Demand, also known as the Gateway, is a modern web
+Open OnDemand, also known as the Gateway, is a modern web
 interface to our HPC resources. You don't need to open a
 terminal, or understand a UNIX command-line shell. Although,
 you can open a shell from it. You can check/edit files and
@@ -128,3 +127,5 @@ To open a shell to enter the Unix commands we will discuss
 this week, click the 'Clusters' menu in the top bar and hit the
 `>_CLUSTER shell access` option. This will open a new tab with a
 shell available for you to use.
+
+Next section: [Command Reference](./reference.md)

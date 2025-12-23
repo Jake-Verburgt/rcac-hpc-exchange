@@ -1,5 +1,6 @@
 # Anatomy of a command
 
+[Back to Week 1](./index.md)
 
 In the shell, there are two types of programs: built-in and installed.
 There is a slight, but important, distinction between the two:
@@ -13,7 +14,9 @@ Every command has a common anatomy that follows a similar pattern
 every time. There are three parts to a command:
 
 1) The program
+
 2) The options
+
 3) The argument(s)
 
 Here is an example of a copy command
@@ -33,9 +36,8 @@ requires a single leading dash. It stands for *recursive*, which tells
 the copy command to recurse into directories and copy all the files
 within those directories.
 
-**Caution**
-
-* Not all options are the same in different programs, some may even mean completely different things for different programs. Exercise caution and look at the manual pages for each program to make sure you understand what each option does.
+!!! warning "Heads up!"
+    Not all options are the same in different programs, some may even mean completely different things for different programs. Exercise caution and look at the manual pages for each program to make sure you understand what each option does.
 
 As the last part of the command, we have the argument(s). These tell
 the program what to operate on. This could be a file, a directory,
@@ -46,7 +48,7 @@ location we want to copy it to.
 
 As mentioned earlier, some options are unsupported for different programs.
 Some programs will be helpful and tell you that the option is invalid.
-Others will silently fail and you will be left wondering why.::
+Others will silently fail and you will be left wondering why
 
 ```
 $ cp -z example-data data.bak
@@ -55,11 +57,15 @@ Try 'cp --help' for more information.
 ```
 Another problem you may run into is a `command not found` error. This
 happens when the computer doesn't know where to find the program you
-are trying to run\:::
+are trying to run:
 
 ```
 $ blah
 -bash: blah: command not found
 ```
 We will go over strategies to overcome this error in the
-Week 3 section.
+[Week 3](../week3/index.md) section.
+
+
+
+Next section: [Navigating Filesystems](./filesystem.md)

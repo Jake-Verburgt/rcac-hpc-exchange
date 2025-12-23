@@ -1,4 +1,5 @@
 # Setting up for the workshop
+[Back to Week 1](./index.md)
 
 In this workshop we will be learning
 about both UNIX systems and how to
@@ -26,13 +27,6 @@ is already a UNIX system, so there's no
 need to download anything extra to make
 sure we can run the UNIX commands.
 
-## Mac
-
-Mac users can run the **Terminal**
-program to open up a shell. Then type
-`bash` and hit enter to make sure you
-are using the correct shell.
-
 ## Linux
 
 Linux users can open up Gnome
@@ -46,26 +40,45 @@ a terminal and type `bash`, then
 hit enter to make sure you're using
 the correct shell.
 
+![Image of unix terminal](../assets/images/linux_shell.png)
+
+## Mac
+
+Mac users can run the **Terminal**
+program to open up a shell. By default, the shell is likely `zsh`. Then type
+`bash` and hit enter to make sure you
+are using the correct shell.
+
+
+
 ## Windows
 
-Windows computers are not UNIX-based
-and require an extra download to
+Windows computers are not UNIX-based, and the default command prompt or Powershell will **NOT** work!
+![Screenshot of Windows Powershell](../assets/images/win_powershell.png)
+
+We will need to install extra software on Windows to
 ensure that we can run the UNIX
-commands on your computer. The
-program we will install is called
+commands on your computer:
+
+
+* The easiest option for a UNIX-like terminal on Windows is called
 [Git for Windows](https://gitforwindows.org) and will allow
 you to use a UNIX shell called Bash
 (which we will talk about later).
-Instructions on how to download and
+    * Instructions on how to download and
 install [Git for Windows](https://gitforwindows.org) can be
 found here: 
 [Installation instructions](https://carpentries.github.io/workshop-template/install_instructions/#shell).
 Just make sure to click to the tabs that
 say **Windows** and **Git for Windows**.
-
-
-Once Git for Windows is installed,
+    * Once Git for Windows is installed,
 you can open a terminal by running
 the program Git Bash from the Windows
 start menu.
-
+    ![Git Bash Window](../assets/images/git_bash.png)
+* Microsoft as also Developed the "Windows Subsystem for Linux" (WSL) which allows you to run Ubuntu Linux within Windows. 
+    * Installation Instructions can be found [here](https://learn.microsoft.com/en-us/windows/wsl/install).
+        ```powershell
+        wsl --install ubuntu
+        ``` 
+Next section: [The Shell](./shell.md)

@@ -1,16 +1,17 @@
 # What is the shell?
 
-## Shell variants
+[Back to Week 1](./index.md)
+
 
 The shell is essentially a program that lets you run other
-programs. You can think of desktop environments as a type
-of graphical shell.
+programs on a command line interface. You can think of desktop file explorers as a type of graphical shell.
 
-There are many variants of shells, such as **sh, bash, zsh, tcsh/csh**
-but the default shell for many Linux systems is **bash**.
+
+## Shell variants
+
+There are many variants of shells, such as `sh`, `bash`, `zsh`, `tcsh`/`csh`but the default shell for many Linux systems is **`bash`**.
 
 ## Anatomy of the prompt
-
 
 One important aspect of the shell is the prompt, which shows you
 information about your shell session. A typical shell could look
@@ -33,3 +34,5 @@ where you start typing.
 Of note, this prompt can be modified and configured in many different
 ways, so it may not be exactly the same on every system, or in every
 shell.
+
+Next section: [Commands](./commands.md)

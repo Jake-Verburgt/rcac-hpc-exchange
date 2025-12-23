@@ -1,5 +1,5 @@
 # Command reference
-
+[Back to Week 1](./index.md)
 `pwd` -
 Prints the current working directory.
 
@@ -17,6 +17,9 @@ Makes directories.
 
 `nano` -
 Opens the `nano` command line editor.
+
+`vim` -
+Opens the `vim` command line editor.
 
 `mv` -
 Moves or renames files and directories.

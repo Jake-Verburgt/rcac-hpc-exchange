@@ -7,12 +7,12 @@ nav:
   - Week 1:
       - Overview: week1/index.md
       - Setting up: week1/setup.md
-      - Access: week1/access.md
-      - Unix?: week1/unix.md
+      - Unix: week1/unix.md
       - The Shell: week1/shell.md
       - Commands: week1/commands.md
       - Navigating Filesystems: week1/filesystem.md
       - Editing Files: week1/editing.md
+      - Access: week1/access.md
       - Command Reference: week1/reference.md
   - Week 2:
       - Overview: week2/index.md
@@ -74,3 +74,5 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - admonition 
+  - pymdownx.details

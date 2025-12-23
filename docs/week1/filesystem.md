@@ -1,18 +1,24 @@
 # Navigate the file system
 
+[Back to Week 1](./index.md)
+
 Now that we have learned about the shell and the anatomy of a
 command, let's dive into different helpful programs that you
 typically encounter while working on UNIX systems.
+
+As a user, you can picture a filesystem as a series of nested files and folders(a.k.a. directories). 
+![Tree structure of a filesystem](../assets/images/filesystem.png)
+
 
 * pwd:
 
     `pwd` is a program that is occasionally helpful, but is a
     good way to get your feet wet in trying out different UNIX
-    programs. All it does is print out what directory you are
+    programs. All it does is print out what directory (folder) you are
     currently in. Usually you will already know where you're at
     from the prompt, but it can be helpful to know the full path.
     `pwd` stands for *print working directory*:
-    ```
+    ```bash
    $ pwd
    /home/username
     ```
@@ -23,42 +29,16 @@ typically encounter while working on UNIX systems.
     `ls` is one of the most common UNIX programs that you may use
     while on UNIX systems. By default, it lists the contents of
     your current working directory:
-    ```
+    ```bash
    $ ls
-   example-data		data.bak
+   data.csv		Documents       bin      Desktop
     ```
     There are many options that `ls` can use to modify its
     behavior. In addition, you can specify a directory as an
     argument to list contents of that directory.
 
-## Paths
-
-All files in UNIX systems are organized into directories, and
-those directories may have subdirectories, creating a tree
-of files that span the entire operating system. Directory paths
-in UNIX systems can be *absolute* or *relative*. Absolute paths
-start at the root of the file system and thus always start with
-a slash (\/). Relative paths are relative to your current working
-directory and do not start with a slash.
-
-### Abolute path
-```
-$ ls /home/username/example-data
-output_of_ls
-```
-### Relative path
-```   
-$ ls example-data
-output_of_ls
-```
-
-## File extensions
-
-In UNIX systems, file extensions are technically meaningless,
-however, convention is important. Executables don't need to
-end in `.exe` and text files don't need to end in `.txt`.
-It is helpful if they do, so that people (including yourself)
-know what type of file it is.
+    !!! note "Hidden Files"
+        Files and directories that start with a "." are hidden by default. You can use the `-a` or `--all` options to see them!
 
 * cd
 
@@ -69,10 +49,55 @@ know what type of file it is.
     ```
    $ pwd
    /home/username
-   $ cd example-data
+   $ cd Documents
    $ pwd
-   /home/username/example-data
+   /home/username/Documents
    ```
+
+    !!! note "Autocomplete"
+        Most terminal interfaces support using `tab` to autocomplete file and folders that exist in your working directory. This works for most commands, but is especially helpful with `cd`.
+
+* mkdir
+
+    The last program we'll go over in this section is the `mkdir`
+    or *make directory*. This does what it sounds like and will
+    create the directory noted in the argument if it doesn't already
+    exist.
+    ```
+    $ mkdir example-data
+    ```
+    You can also put multiple arguments and `mkdir` will
+    create all of them. A helpful option to pass to the `mkdir`
+    program is `-p`, which will create parent directories as needed.
+    ```
+    $ mkdir -p another_one/test1
+    ```
+    Which will create the `another_one` directory in your current
+    directory and the `test1` directory within the `another_one`
+    directory.
+## Paths
+
+All files in UNIX systems are organized into directories, and
+those directories may have subdirectories, creating a tree
+of files that span the entire operating system. Directory paths
+in UNIX systems can be *absolute* or *relative*. Absolute paths
+start at the root of the file system and thus always start with
+a slash (\/). Relative paths are relative to your current working
+directory and do not start with a slash.
+
+### Absolute path
+```
+$ ls /home/username/Desktop
+output_of_ls
+```
+### Relative path
+```   
+$ ls Desktop
+output_of_ls
+```
+
+!!! note "File Extensions"
+    In UNIX systems, file extensions are technically meaningless, however, convention is important. Executables don't need to end in `.exe` and text files don't need to end in `.txt`. It is helpful if they do, so that people (including yourself) know what type of file it is.
 
    Paths as the argument of the `cd` program can be absolute
    or relative.
@@ -81,7 +106,7 @@ know what type of file it is.
    Run `cd` without any arguments to navigate back to your home
    directory.
 
-## Special paths
+### Special paths
 
 
 There are three special paths that are commonly used in navigating
@@ -97,11 +122,11 @@ can sometimes be helpful, but it is more rare. Lastly, the double dot
 (`..`) refers to the parent directory of the directory you are in.
 
 ```bash
-   $ pwd
-   /home/username/example-data
-   $ cd ..
-   $ pwd
-   /home/username
+$ pwd
+/home/username/Desktop
+$ cd ..
+$ pwd
+/home/username
 ```
 
 ## Permissions
@@ -113,12 +138,12 @@ which tells `ls` to print out more information about the files.
 The following code block shows an example of what you might see from
 the longer `ls` output:
 ```bash
-   $ ls -a -l -h ~/.ssh
-   total 6.0K
-   drwxr-xr-x  2 username student    4 Jul 17 11:19 .
-   drwx------ 14 username student   28 Jul 16 22:26 ..
-   -rw-r--r--  1 username student 2.0K Oct 18  2021 authorized_keys
-   -rw-r--r--  1 username student    0 Jul 17 11:19 config
+$ ls -a -l -h ~/.ssh
+total 6.0K
+drwxr-xr-x  2 username student    4 Jul 17 11:19 .
+drwx------ 14 username student   28 Jul 16 22:26 ..
+-rw-r--r--  1 username student 2.0K Oct 18  2021 authorized_keys
+-rw-r--r--  1 username student    0 Jul 17 11:19 config
 ```
 
 The three program options used here are: `a`, which displays all files/folders,
@@ -152,13 +177,15 @@ bits. The read bit controls whether someone can look at the
 data contained in the file. The write bit controls whether someone
 can edit the data in the file. And the execute bit controls if
 someone can run that file as a program. We'll talk more about the
-execute bit in the :doc:`../week3/week3` section :doc:`../week3/scripts`.
+"execute" bit in the [Week 3 "Scripts" section](../week3/scripting.md). 
 
 For directories, the permission bits mean slightly different things.
 The write bit is the same, it controls whether someone can modify
 (e.g. delete) is. The execute bit controls whether someone can see
 what's inside the directory. The read bit controls whether
 someone can go into that folder.
+
+## Learning about command options
 
 * man 
 
@@ -185,21 +212,4 @@ options necessary to list items by reverse chronological order
 
    The command would be `$ ls -t -r` -->
 
-* mkdir
-
-    The last program we'll go over in this section is the `mkdir`
-    or *make directory*. This does what it sounds like and will
-    create the directory noted in the argument if it doesn't already
-    exist.
-    ```
-    $ mkdir ~/example-data
-    ```
-    You can also put multiple arguments and `mkdir` will
-    create all of them. A helpful option to pass to the `mkdir`
-    program is `-p`, which will create parent directories as needed.
-    ```
-    $ mkdir -p ~/another_one/test1
-    ```
-    Which will create the `another_one` directory in your home
-    directory and the `test1` directory within the `another_one`
-    directory.
+Next section: [Editing Files](./editing.md)
