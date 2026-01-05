@@ -3,7 +3,7 @@
 [Back to Week 1](./index.md)
 
 Now that we have learned about the shell and the anatomy of a
-command, let's dive into different helpful programs that you
+command, let's dive into different helpful programs (that you can run as commands) that you
 typically encounter while working on UNIX systems.
 
 As a user, you can picture a filesystem as a series of nested files and folders(a.k.a. directories). 
@@ -86,7 +86,7 @@ those directories may have subdirectories, creating a tree
 of files that span the entire operating system. Directory paths
 in UNIX systems can be *absolute* or *relative*. Absolute paths
 start at the root of the file system and thus always start with
-a slash (\/). Relative paths are relative to your current working
+a slash (`/`). Relative paths are relative to your current working
 directory and do not start with a slash.
 
 ### Absolute path
@@ -111,6 +111,7 @@ output_of_ls
 
 There four special paths that are commonly used in navigating
 UNIX file systems:
+
 * `-`
     * The `-` represents the previous working directory (the directory you were in before your current one)
     * You can run `cd -` to navigate to the previous directory you were in.
@@ -164,19 +165,44 @@ after that is the size of the item. Then comes the date that the item
 was most recently modified. Last of all is the name of the actual item.
 
 
-The four items in the `.ssh` folder of this home directory are: the
-current directory (.), a link to the parent directory (..), and two
-files (`authorized_keys` and `config`).
+The four items in the `.ssh` folder of this home directory are: 
+
+1) The current directory (`.`)
+
+2) A link to the parent directory (`..`)
+
+3) Two files:
+
+* `authorized_keys`
+* `config`
 
 Let's talk permissions. The first ten characters of each row
-represent the permissions for each item listed. The first column
-shows whether it's a directory (with a `d`) or not (with a dash).
-Then the next nine columns are broken into three groups of three.
-The first group of three is the permissions belonging to the
-user that owns (`u`) the file. The next group of three is the permissions
-for the group that owns the access to the file (`g`). And the last
-three are the permissions for other users (`o`). Each group of
-three is made up of the read (`r`), write (`w`), and execute (`x`)
+represent the permissions for each item listed:
+
+<span class="perm-type">-</span><span class="perm-user">rw-</span><span class="perm-group">r--</span><span class="perm-other">r--</span>  1 user group  4096 Jan  5  notes.txt
+
+The first column shows whether it's a directory (with a `d`) or not (with a dash):
+
+<span class="perm-type">d</span>rwxr-x--- 2 user group  4096 Jan  5  secure_dir
+
+
+
+Then the next nine columns are broken into three groups of three:
+
+1) First three - User (`u`)
+
+ -<span class="perm-user">rw-</span>r----  1 user group  4096 Jan  5  notes.txt
+
+
+2) Second three - Group (`g`)
+
+-rw-<span class="perm-group">r--</span>r--  1 user group  4096 Jan  5  notes.txt
+
+3) Last three - Others (`o`)
+
+-rw-r--<span class="perm-other">r--</span>  1 user group  4096 Jan  5  notes.txt
+
+Each group of three is made up of the read (`r`), write (`w`), and execute (`x`)
 bits. The read bit controls whether someone can look at the
 data contained in the file. The write bit controls whether someone
 can edit the data in the file. And the execute bit controls if

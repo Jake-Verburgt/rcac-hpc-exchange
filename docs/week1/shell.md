@@ -6,6 +6,8 @@
 The shell is essentially a program that lets you run other
 programs on a command line interface. You can think of desktop file explorers as a type of graphical shell.
 
+![Shell vs Browser](../assets/images/shell_vs_filebrowser.png)
+
 
 ## Shell variants
 

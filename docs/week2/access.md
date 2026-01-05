@@ -1,18 +1,20 @@
 # How to access the clusters
 
+[Back to Week 1](./index.md)
+
 In this section, we will talk about how to actually
 access, or get onto the cluster(s).
 
 There are three main ways to get onto the cluster(s):
 
-#. ssh
-#. ThinLinc
-#. Open on Demand (gateway)
+* ssh
+* ThinLinc
+* Open OnDemand (gateway)
 
 We will discuss each of these options and you can
 choose which option(s) makes the most sense for you.
 
-**ssh**
+## SSH
 
 `ssh` is the simplest way to access the cluster.
 Most UNIX systems (such as Linux and macOS) have
@@ -21,30 +23,27 @@ comes with the `ssh` program already there as
 well. To use `ssh`, open a Terminal (in any system).
 And use the command:
 
-.. code-block::
-
-   $ ssh USERNAME@CLUSTER.rcac.purdue.edu
-
+```sh
+$ ssh USERNAME@CLUSTER.rcac.purdue.edu
+```
 Where `USERNAME` is replaced with your Purdue username
 and `CLUSTER` is replaced with the cluster you are
 trying to access.
 
 You should see something that looks like this:
 
-.. code-block::
+```
+************************************************************
 
-   ************************************************************
+***** Use of Purdue BoilerKey or SSH keys is Required ******
 
-   ***** Use of Purdue BoilerKey or SSH keys is Required ******
+************************************************************
 
-   ************************************************************
+(USERNAME@CLUSTER.rcac.purdue.edu) Password:
+```
+Here you should enter in 'password,push'. It will not look like anything is being typed. But the characters are being entered.
 
-   (USERNAME@CLUSTER.rcac.purdue.edu) Password:
-
-Here you enter your Purdue password appended with a ',push'.
-So you should enter in 'password,push'. It will not look like
-anything is being typed. But the characters are being entered.
-This is a security feature of `ssh` so that people don't know
+* This is a security feature of `ssh` so that people don't know
 how long your password is.
 
 Once you enter your password and hit the enter key, it will
@@ -55,13 +54,13 @@ to the cluster you are trying to get into).
 When you're logged in, you prompt should change to be of
 the form of:
 
-.. code-block::
-
-   USERNAME@loginXX.CLUSTER:[~] $
+```
+USERNAME@loginXX.CLUSTER:[~] $
+```
 
 You're now ready to do things on the cluster!
 
-**ThinLinc**
+## ThinLinc
 
 ThinLinc is an alternative we provide if you would like
 a more familiar GUI-based interface. There are two ways
@@ -73,7 +72,7 @@ well as restart your session in the desktop version,
 which you can't do in the browser version.
 
 You can download the desktop ThinLinc client from Cendio
-here: `Cendio <https://www.cendio.com/thinlinc/download/>`_
+here: [Cendio](https://www.cendio.com/thinlinc/download/)
 
 Otherwise, if you want to use the browser version,
 simply open up your favorite internet browser and
@@ -82,9 +81,7 @@ navigate to `desktop.CLUSTER.rcac.purdue.edu`, where
 you want to access.
 
 The desktop version of ThinLinc looks like this:
-
-.. image:: /_static/TL_login.png
-   :alt: Image showing the ThinLinc login portal, with text boxes to enter in the Server, the Username, and the path to the ssh key.
+![Image showing the ThinLinc login portal, with text boxes to enter in the Server, the Username, and the path to the ssh key.](../assets/images/TL_login.png)
 
 
 You may need to click the `Advanced` button to see
@@ -99,9 +96,7 @@ you will see one or two windows pop up that you just need to
 click through and then it will prompt two Duo pushes, that
 you need to approve. After you're logged in, you'll see
 something that looks like this:
-
-.. image:: ../_static/TL_page.png
-   :alt: Image showing what the desktop looks like when logged into a cluster via ThinLinc.
+![Image showing what the desktop looks like when logged into a cluster via ThinLinc.](../assets/images/TL_page.png)
 
 Use ThinLinc, either the browser or desktop version, if
 you want to run any kind of graphical application, like
@@ -111,9 +106,9 @@ ThinLinc is also nice that the sessions are persistent,
 it will hold onto your applications and running shells
 unless you don't log in for 2 weeks.
 
-**Open on Demand**
+## Open OnDemand (OOD) / Gateway
 
-Open on Demand, also known as the Gateway, is a modern web
+Open OnDemand, also known as the Gateway, is a modern web
 interface to our HPC resources. You don't need to open a
 terminal, or understand a UNIX command-line shell. Although,
 you can open a shell from it. You can check/edit files and
@@ -128,12 +123,11 @@ trying to access. After you log in through Purdue's normal
 Single Sign On page (no need to add ',push' to your password),
 you should see something like this:
 
-.. image:: ../_static/OoD_page.png
-   :alt: Image showing what the Open on Demand (Gateway) entrance page, or dashboard, looks like.
+![Image showing what the Open on Demand (Gateway) entrance page, or dashboard, looks like.](../assets/images/OoD_page.png "Open Ondemand Page")
 
-To open a shell, click the 'Clusters' menu in the top bar and hit the
+To open a shell to enter the Unix commands we will discuss
+this week, click the 'Clusters' menu in the top bar and hit the
 `>_CLUSTER shell access` option. This will open a new tab with a
 shell available for you to use.
 
-Next section\:
-:doc:`files1`
+Next section: [File Storage and Transfer](./storage-transfer.md)

@@ -130,8 +130,8 @@ Vim has a very complex set of keybindings, but the commands below are the fundam
    ```
    Which will change the name of the file to be `paper.txt`
 
-   !!! warning "Overwriting"
-      If the file you are copying to already exists, it will be overwritten. Use the `-n` (no clobber) when moving or copying files to skip moves that would overwrite a file.
+!!! warning "Overwriting"
+    If the file you are copying to already exists, it will be overwritten. Use the `-n` (no clobber) when moving or copying files to skip moves that would overwrite a file.
 
    Changing the location of the file:
    ```bash
@@ -187,3 +187,5 @@ Vim has a very complex set of keybindings, but the commands below are the fundam
    ```bash
    $ rm -r data.bak
    ```
+
+Next section: [Command Reference](./reference.md)

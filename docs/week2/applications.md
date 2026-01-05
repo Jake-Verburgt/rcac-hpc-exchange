@@ -5,11 +5,11 @@ how to use different applications on our clusters.
 
 First, we have an example python script that we
 will be using just as a test problem for our
-sessions this week as well as in week 4.
+sessions this week as well as in [week 4](../week4/index.md).
 
 Please use your favorite command line text editor
-(probably `nano`) to add this file to your cluster
-account and save it as **example.py**.
+(like `vim` or `nano`) to add this file to your cluster
+account and save it as `example.py`.
 
 ```python
 import numpy as np
@@ -34,12 +34,7 @@ Next, let's try running it:
 $ python example.py
 -bash: python: command not found
 ```
-Wait, what? Why didn't that work?
-<!-- 
-.. admonition:: Answer
-   :collapsible: closed -->
-
-The system doesn't know about python yet,
+Wait, what? Why didn't that work? The system doesn't know about python yet,
 we haven't loaded it.
 
 There are too many versions and conflicting software to

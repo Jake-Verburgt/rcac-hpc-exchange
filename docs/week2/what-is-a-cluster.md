@@ -1,14 +1,14 @@
 # What is a cluster?
 
-Since we've now learned how to interact with
-the cluster and run programs on it, what
-actually is a cluster? A cluster is built from
+Before we begin, we must understand what a cluster actually is, and what it consists of. A cluster is built from
 many **servers**, which are **interconnected**
 over fast networks, attached to one or more
 **data** storage systems. They typically run
 a **UNIX**-like operating system and are
 managed by a batch **scheduler**. They often
 run special **software**.
+
+## Servers (Nodes)
 
 So what are these servers that make up the
 clusters? They're all just computers! They
@@ -35,31 +35,61 @@ own memory associated with it. There are many other
 components that can make up a node, such as disk
 space, or GPUs.
 
+## Clusters
+
 Most clusters are broken up into two main parts:
-the front end or login nodes and the compute or
-back end nodes. When you log into the cluster,
+1) Front-end or login nodes
+2) Compute or back-end nodes. 
+
+When you log into the cluster,
 you are put onto a login node, which is limited
 in resources and not suitable for doing actual
 research. You need to interact with the scheduler
-(which we will talk about in the next section
-:doc:`jobs`) to move from the login nodes to the
+(which we will talk about in a bit) to move from the login nodes to the
 compute nodes.
 
-Before we get started with how to do that,
+![Overview of cluster](../assets/images/cluster_overview.png)
+
+You can typically tell what node (and node type) you are on by looking at your command prompt:
+```
+user@login00 ~ $ 
+```
+
+or by using the `hostname` command:
+```bash
+$ hostname
+login00.cluster.rcac.purdue.edu
+```
+
+## Run Types
+
+Before we get started with how to run jobs on the compute nodes,
 we should talk about the two paradigms of
 running code on a supercomputer:
 
 * Interactively
 * Batch mode
 
-In the interactive paradigm, you get a session
+In the `interactive` paradigm, you get a session
 on a compute node (using the gateway, ssh, or
 ThinLinc), and the run your code directly.
 However, if your network drops, your code
 could be interrupted.
 
-In the batch paradigm, you write your code,
+In the `batch` paradigm, you write your code,
 and then submit one (or many) instances of
 your code using the scheduler and it can
 run on arbitrarily many nodes without worry
 of interruption.
+
+### Cluster Filesystems
+
+Although we will discuss Filesystem locations in greater detail later, it is important to understand that many filesystems on the cluster are *shared across nodes*. If you create a file in your home directory on a login node, that same file will be available on any of the compute nodes, because all of the nodes are mounting the same home directory filesystem.
+
+|Storage | Location | Purpose | Availability|
+|--------|----------|-------|------------|
+| Home   | `/home/username`| Backed up personal storage | Shared across all nodes|
+| Scratch | `/scratch/cluster/username`| Large temporary files | Shared across all nodes|
+| Depot | `/depot/labname`| Files and programs for your lab | Shared across all nodes **AND** across clusters|
+| temp | `/tmp`| Varies | Node specific|
+| apps | `/apps`| Centrally installed applications | Shared across all nodes|

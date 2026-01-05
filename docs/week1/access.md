@@ -1,4 +1,5 @@
 # How to access the clusters
+
 [Back to Week 1](./index.md)
 
 In this section, we will talk about how to actually
@@ -40,7 +41,8 @@ You should see something that looks like this:
 
 (USERNAME@CLUSTER.rcac.purdue.edu) Password:
 ```
-Here you should enter in 'password,push', or you career account password. It will not look like anything is being typed. But the characters are being entered.
+Here you should enter in 'password,push'. It will not look like anything is being typed. But the characters are being entered.
+
 * This is a security feature of `ssh` so that people don't know
 how long your password is.
 
@@ -128,4 +130,4 @@ this week, click the 'Clusters' menu in the top bar and hit the
 `>_CLUSTER shell access` option. This will open a new tab with a
 shell available for you to use.
 
-Next section: [Command Reference](./reference.md)
+Next section: [Unix](./unix.md)

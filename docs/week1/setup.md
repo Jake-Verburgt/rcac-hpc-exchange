@@ -1,4 +1,5 @@
 # Setting up for the workshop
+
 [Back to Week 1](./index.md)
 
 In this workshop we will be learning
@@ -81,4 +82,6 @@ start menu.
         ```powershell
         wsl --install ubuntu
         ``` 
-Next section: [The Shell](./shell.md)
+
+
+   Next section: [Access](./access.md)

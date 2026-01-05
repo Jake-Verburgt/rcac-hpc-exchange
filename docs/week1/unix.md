@@ -1,10 +1,12 @@
 # What is Unix?
 
+[Back to Week 1](./index.md)
+
 ## The Unix Operating System
 
 
 Unix is a broad family of multitasking, multi-user operating systems,
-stemming from the original AT\&T Unix, developed by Bell Labs in the
+stemming from the original AT&T Unix, developed by Bell Labs in the
 early 1970s. It is often associated with its rich tradition with
 command-line environments, the UNIX "shell", and the C-programming
 language.
@@ -130,3 +132,5 @@ that contains everything about the systems is via the "shell".
 We will talk about the shell more in the next section, but for
 now, it is sufficient to say that it is the text-based
 interface to interact with UNIX systems.
+
+Next section: [The Shell](./shell.md)

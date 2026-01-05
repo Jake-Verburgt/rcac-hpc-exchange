@@ -6,10 +6,10 @@ navigate the filesystem and common commands you may encounter while
 working with Unix systems.
 
 * [Setting Up](./setup.md)
+* [Access](./access.md)
 * [Unix](./unix.md)
 * [The Shell](./shell.md)
 * [Commands](./commands.md)
 * [Navigating Filesystems](./filesystem.md)
 * [Editing Files](./editing.md)
-* [Access](./access.md)
 * [Command Reference](./reference.md)

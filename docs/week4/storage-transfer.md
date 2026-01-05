@@ -18,8 +18,6 @@ clusters:
 * `Ceph` (S3 object storage)
 
 **Cloud**
-
-* Box.com / REED (retires soon)
 * SharePoint
 * GitHub (github.itap.purdue.edu)
 
