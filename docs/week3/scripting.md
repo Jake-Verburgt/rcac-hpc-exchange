@@ -1,5 +1,7 @@
 # Scripting
 
+[Back to Week 3](./index.md)
+
 In this section there are a couple of main
 concepts that we are going to discuss:
 
@@ -28,7 +30,7 @@ quotes are verbatim.
 Following is a simple script we will use as an
 example in the following sections:
 
-```
+```bash title="hello.sh" linenums="1"
 #!/bin/bash
 
 echo 'Hello, World!'
@@ -57,7 +59,7 @@ use:
 There are two ways to execute shell scripts:
 
 * Invoking it with the appropriate shell
-    ```
+    ```bash
     $ bash hello.sh
     Ooh, so scary!
     ```
@@ -66,6 +68,8 @@ There are two ways to execute shell scripts:
     $ ./hello.sh
     -bash: ./hello.sh: Permission denied
     ```
+
+
 Why did this happen? What can we do to
 check the permissions? Use the command `ls -l hello.sh` to see the
 permissions:
@@ -73,8 +77,8 @@ permissions:
 $ ls –l hello.sh
 -rw-r--r-- 1 username student 22 Oct 11 01:44 hello.sh
 ```
-The file `hello.sh` doesn't have the execute
-bit set, so we can't execute it as a program.
+The file `hello.sh` doesn't have the **execute**
+bit set, so we can't run it as a program.
 
 You can change file and directory permissions
 using the `chmod` program:
@@ -179,12 +183,12 @@ Variables also have a scope. If you define
 a variable, it is only visible in local
 scope (current script) by default.
 ```
-   X=true
+X=true
 ```
 To propagate the variable down to child
 processes, you need to `export` it.
 ```
-   export X
+export X
 ```
 You can also declare the variable and export
 it on the same line.
@@ -201,7 +205,7 @@ export THING=0 DATASET=foo.in
 There are a couple of "magic" variables which
 are not like other programming languages.
 ```
-   echo $RANDOM
+echo $RANDOM
 ```
 Will always give you a random value, even if
 you set it to be something else.
@@ -284,7 +288,7 @@ start up process and can cause weird errors.
 
 ## Exit status
 
-Successful programs should exit with a zero (0).
+Successful programs should exit with a zero (`0`).
 And any non-zero exit status should be considered
 an error condition. Often, programs will document
 the meaning of their different exit status values

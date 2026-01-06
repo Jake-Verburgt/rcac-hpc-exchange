@@ -24,6 +24,17 @@ As a user, you can picture a filesystem as a series of nested files and folders(
     ```
 
 
+??? question "What directory are you in when you open your shell?"
+
+    Most shells start in your home directory!
+
+    ```bash
+    $ pwd
+    /home/verburgt
+    ```
+    
+
+
 * ls:
 
     `ls` is one of the most common UNIX programs that you may use
@@ -37,8 +48,42 @@ As a user, you can picture a filesystem as a series of nested files and folders(
     behavior. In addition, you can specify a directory as an
     argument to list contents of that directory.
 
-    !!! note "Hidden Files"
-        Files and directories that start with a "." are hidden by default. You can use the `-a` or `--all` options to see them!
+!!! note "Hidden Files"
+    Files and directories that start with a "." are hidden by default. You can use the `-a` or `--all` options to see them!
+
+!!! tip "Wildcards"
+    Wildcards are special characters that let you match multiple files or directories at once, instead of typing each name manually. Bash expands wildcards before a command runs, so the program receives a list of matching filenames. These can be used to match a specific subset of files based on their name. The primary wildcards used are:
+
+    * `*` matches any number of characters
+    * `?` - matches exactly one character
+    * `[abc]` or `[a-z]` - matches one character from a set or range
+
+    You can substitute these in to match specific patterns like so:
+
+    ```bash
+    $ ls *.txt
+    file1.txt file2.txt file3.txt
+    ```
+
+    ```bash
+    $ ls data_?.[ct]sv
+    data1.csv data2.tsv data3.csv
+    ```
+
+??? question "What files and folders are hidden in your home directory?"
+
+    Check with `$ ls --all`! These will vary depending on what you have installed, but most will be configuration files for programs you have installed. Common ones are:
+
+    ```
+    .bashrc     - bash startup customization file
+    .conda      - Conda python environments
+    .cache      - Cached data (like photo thumbnails)
+    .ssh        - Configuration files for SSH
+    ```
+
+??? question "How would you list all of the png files in your Downloads folder?"
+    
+    Use `$ ls Downloads/*.png`!
 
 * cd
 
@@ -54,8 +99,24 @@ As a user, you can picture a filesystem as a series of nested files and folders(
    /home/username/Documents
    ```
 
-    !!! note "Autocomplete"
-        Most terminal interfaces support using `tab` to autocomplete file and folders that exist in your working directory. This works for most commands, but is especially helpful with `cd`.
+!!! tip "Autocomplete"
+    Most terminal interfaces support using `tab` to autocomplete file and folders that exist in your working directory. This works for most commands, but is especially helpful with `cd`.
+
+!!! tip "Returning Home"
+    If you run the `cd` command without arguments, you will return back to your home directory.
+
+
+??? question "How can we move to our Desktop?"
+
+    Use `$ cd Desktop`!
+
+    ??? question "How can we move back to your Home directory?"
+
+        There's several ways!
+
+        * Specify the whole path with `$ cd /home/username` 
+        * You can always return home with just `cd`
+        * You can also use `cd ..` to move *up* a directory, or `cd -` to move to your previous directory (more on this later!)
 
 * mkdir
 
@@ -76,6 +137,20 @@ As a user, you can picture a filesystem as a series of nested files and folders(
     directory and the `test1` directory within the `another_one`
     directory.
 
+??? question "How would you make a folder on your Desktop titled `myfolder`?"
+
+    There are several ways! We could first `cd` to the Desktop, and run `mkdir`:
+
+    ```bash 
+    cd /home/user/Desktop
+    mkdir myfolder
+    ```
+
+    Or we could make it from our home directory by specifying the path:
+
+    ```bash
+    mkdir Desktop/myfolder
+    ```
 
 
 
@@ -116,23 +191,42 @@ UNIX file systems:
     * The `-` represents the previous working directory (the directory you were in before your current one)
     * You can run `cd -` to navigate to the previous directory you were in.
   
+    ```bash
+    $ cd Desktop/data
+    $ cd -
+    $ pwd
+    /home/username
+    ```
+
+    ![cd dash ](../assets/images/cd_dash.png)
+
+
 * `~`
     * The `~` represents your home directory. You can `cd ~` to move back to your home directory, or `cd ~/Desktop` to move to your desktop
     * You can also just type `cd` (without any arguments) to return to your home directory
 * `.`
-    * The `.` represents the directory you are currently in. 
+    * The `.` represents the directory you are currently in. You can use it to reference certain files in your current directory (like `ls ./myfile.txt`), 
 * `..`
     * The `..` represents the parent directory of the directory you are currently in. For example, if you are in `/home/username/Documents/mydata`, the command `cd ..` will change your directory to `/home/username/Documents`
     * You can also stack these! For example, to move "up" two directories, you could use the command `cd ../../`
 
-
     ```bash
-    $ pwd
-    /home/username/Desktop
+    $ cd Desktop/data
     $ cd ..
     $ pwd
-    /home/username
+    /home/username/Desktop
     ```
+
+    ![cd dot dot ](../assets/images/cd_dotdot.png)
+
+??? question "How would we move from the `data` directory to the Downloads directory with one command?"
+
+    There are several ways! We could first `cd` to the Desktop, and run `mkdir`:
+
+    ```bash 
+    cd ../../Downloads
+    ```
+
 
 ## Permissions
 Since everything in UNIX systems is a file, file permissions are

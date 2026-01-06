@@ -1,5 +1,7 @@
 # Managing files and directories
 
+[Back to Week 3](./index.md)
+
 Now that we can create files from the
 output of processes, we should learn
 some file management techniques. In

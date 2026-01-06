@@ -1,6 +1,6 @@
 # How to access the clusters
 
-[Back to Week 1](./index.md)
+[Back to Week 2](./index.md)
 
 In this section, we will talk about how to actually
 access, or get onto the cluster(s).

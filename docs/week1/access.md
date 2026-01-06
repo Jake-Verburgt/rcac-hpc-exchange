@@ -60,6 +60,11 @@ USERNAME@loginXX.CLUSTER:[~] $
 
 You're now ready to do things on the cluster!
 
+
+!!! note SSH from Windows
+    If you are using Windows, the `ssh` within PowerShell *will* work fine.
+
+
 ## ThinLinc
 
 ThinLinc is an alternative we provide if you would like

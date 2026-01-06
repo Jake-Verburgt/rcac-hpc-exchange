@@ -43,7 +43,7 @@ in a file name.
 **A safe practice is to stick to letters, numbers,
 underscores and dashes in your file names.**
 
-## Command line editors
+## File Editing and Creation
 
 
 Now, we want to edit files, but we don't have a graphical
@@ -102,6 +102,7 @@ $ vim document.txt
 ```
 
 Vim has a very complex set of keybindings, but the commands below are the fundamentals for getting started:
+
 * `a` - Enter edit mode
 * `esc` - Escape insert mode
 * `:w` - Write / save file
@@ -130,15 +131,19 @@ Vim has a very complex set of keybindings, but the commands below are the fundam
    ```
    Which will change the name of the file to be `paper.txt`
 
-!!! warning "Overwriting"
-    If the file you are copying to already exists, it will be overwritten. Use the `-n` (no clobber) when moving or copying files to skip moves that would overwrite a file.
-
    Changing the location of the file:
    ```bash
    $ mv paper.txt ~/Desktop/
    ```
    Which will move the file into the `Desktop`
    directory, but keep the same name.
+
+!!! note "Moving Multiple Files"
+    If you provide more than 2 arguments, `mv` will require the last argument to be a destination directory. Like:
+
+    ```bash
+    mv file1.png file2.png *.txt Desktop
+    ```
 
 * cp
 
@@ -149,23 +154,29 @@ Vim has a very complex set of keybindings, but the commands below are the fundam
    ```bash
    $ cp ~/example-data/paper.txt ~/thesis.txt
    ```
+
    Will copy the `paper.txt` file data from the *example-data*
    directory into the new file `thesis.txt`, in the home
    directory, but still keep the original file around.
+
+
+!!! warning "Overwriting"
+    If the file you are moving or copying to already exists, **it will be overwritten without any confirmation or warning**. Use the `-n` (no clobber) when moving or copying files to skip moves that would overwrite a file.
+
+
 
    Let's try backing up a directory:
    ```bash
    $ cp example-data/ data.bak
    cp: example-data/ is a directory (not copied).
    ```
-
    Oops, what happened here?
 
-   We can't copy directories without recursively copying its contents, with the `-r` option. Use
+   We can't copy directories without recursively copying its contents, whcich `cp` does not do by default. You can copy directories with the `-r` (recursive) option:
    ```bash
    $ cp -r cp example-data/ data.bak
    ```
-   to copy directories
+
 
 * rm
 
@@ -174,7 +185,7 @@ Vim has a very complex set of keybindings, but the commands below are the fundam
    removes or `unlinks` files and directories. On UNIX systems,
    there is no concept of a trash bin, **if you remove a file,
    it's gone forever, no way to get it back**. So make sure
-   you know what you're deleting before you run the program.
+   you know what you're deleting before you run `rm`.
 
    ```bash
    $ rm thesis.txt

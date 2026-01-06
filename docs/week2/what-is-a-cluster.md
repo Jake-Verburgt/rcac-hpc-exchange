@@ -1,5 +1,9 @@
 # What is a cluster?
 
+
+[Back to Week 2](./index.md)
+
+
 Before we begin, we must understand what a cluster actually is, and what it consists of. A cluster is built from
 many **servers**, which are **interconnected**
 over fast networks, attached to one or more
@@ -37,9 +41,11 @@ space, or GPUs.
 
 ## Clusters
 
-Most clusters are broken up into two main parts:
+Very broadly, a cluster is just a collection on nodes, which are able to communicate and work together. Most clusters are broken up into two main parts:
+
 1) Front-end or login nodes
-2) Compute or back-end nodes. 
+
+2) Compute or back-end nodes
 
 When you log into the cluster,
 you are put onto a login node, which is limited
@@ -93,3 +99,5 @@ Although we will discuss Filesystem locations in greater detail later, it is imp
 | Depot | `/depot/labname`| Files and programs for your lab | Shared across all nodes **AND** across clusters|
 | temp | `/tmp`| Varies | Node specific|
 | apps | `/apps`| Centrally installed applications | Shared across all nodes|
+
+Next Section: [Purdue Clusters](./clusters.md)

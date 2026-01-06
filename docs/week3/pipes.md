@@ -1,5 +1,7 @@
 # Managing output with pipes
 
+[Back to Week 3](./index.md)
+
 When dealing with processes, the output
 of those processes is important. In this
 section, we will discuss how to manage

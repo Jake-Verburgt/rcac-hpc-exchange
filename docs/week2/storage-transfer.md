@@ -1,5 +1,7 @@
 # File storage and transfer
 
+[Back to Week 2](./index.md)
+
 Now that we can get onto the cluster, we
 want to get our data and files onto it as
 well.
@@ -13,7 +15,7 @@ store data/files on:
 * Fortress
 
 We will discuss in more detail what each of these areas are
-in the week 4 section.
+in the [week 4](../week4/index.md) section.
 
 For now, we will put everything into our home directories,
 as that is where we land whenever we log into the
@@ -42,19 +44,22 @@ what they can do. e.g. there is a file size limit of
 100 GB to upload and if your connection is flaky at
 all, you're going to have a bad time.
 
+![ood_transfer](../assets/images/ood_transfer.png)
+
 ### SCP 
 
 `scp` stands for `secure copy protocol` and is the
-server version of the `cp` we saw last week (:ref:`cp`)
+server version of the `cp` we saw last week.
 It too need a source and a destination, but one of
 them may be a server.
 
+Copying to a cluster:
 ```bash
-   $ scp ./source_file USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name
+$ scp ./source_file USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name
 ```
 Copying from a cluster:
 ```bash 
-   $ scp USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name ./destination_file
+$ scp USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name ./destination_file
 ```
 When copying from a cluster, the destination file will
 go into the directory you are currently in. You can also
@@ -98,8 +103,10 @@ It includes features to auto-resume transfers in case of
 disconnection. It has the same format of arguments as `scp`,
 but has many more options, check them out with:
 ```
-   $ man rsync
+$ man rsync
 ```
+
+
 ### SMB
 
 `SMB`, also known as `Samba` is a way to connect a
@@ -112,17 +119,18 @@ site: [SMB drives](https://www.rcac.purdue.edu/knowledge/negishi/storage/transfe
 ### Globus
 
 For transferring large data to the cluster, you will
-want to use the [Globus transfer service](https://transfer.rcac.purdue.edu).If you want to transfer files from your local machine
-to the cluster, you will need to install the `Globus Connect
-Personal` software on your local computer.
+want to use the [Globus transfer service](https://transfer.rcac.purdue.edu). If you want to transfer files from your local machine
+to the cluster, you will need to install the [Globus Connect
+Personal](https://www.globus.org/globus-connect-personal) software on your local computer.
 
 From the Globus transfer service, you can select a source
 and a destination. It will handle the actual transferring
 of the file(s) for you, resuming if there's network
 connectivity problems.
 
-## Helpful RCAC programs
+![globus_transfer](../assets/images/globus_transfer.png)
 
+## Helpful RCAC programs for file management 
 
 The following two programs can be helpful for you as you
 navigate using the clusters. As a note, these are RCAC
@@ -144,6 +152,7 @@ other supercomputers may not have them.
     scratch  cluster    36KB  200.0TB  0.00%      0k  2,000k  0.00%
     depot    example  92.0MB    1.0TB     1%       -       -      -
     ```
+
 * flost
 
     RCAC regularly backs up data in home and depot
@@ -165,3 +174,5 @@ other supercomputers may not have them.
 
    Please enter the date that you lost your files: 2024-10-01
     ```
+
+Next Section: [Cluster Applications](./applications.md)

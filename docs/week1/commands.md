@@ -2,13 +2,13 @@
 
 [Back to Week 1](./index.md)
 
-In the shell, there are two types of programs: built-in and installed.
+The primary purpose of the shell is to run commands, which are just small programs. These programs allow you to do things such as move files, run scripts, and transfer data. In the shell, there are two types of programs: built-in and installed.
 There is a slight, but important, distinction between the two:
 built-in programs usually come with the operating system, and installed
 programs are added externally after the operating system is set up.
 They can both usually be run the same way, by typing their name
 into the shell, but there are some caveats that we will go over in
-week 3. 
+[week 3](../week3/index.md). 
 
 Every command has a common anatomy that follows a similar pattern
 every time. There are three parts to a command:
@@ -24,7 +24,7 @@ Here is an example of a copy command
 $ cp --verbose -r example-data data.bak
 ```
 
-Again, the $ is the end of the prompt, showing that we are using
+Again, the `$` is the end of the prompt, showing that we are using
 the shell to type in our command. It starts with the program, which
 in this example is `cp`. This program copies data from one location
 to another. Next comes the options, which modify the behavior of the
