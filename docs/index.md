@@ -9,3 +9,5 @@ Welcome to the HPC Exchange web page. We start here and will go through the othe
 
 Click here to add the meeting series to your calendar:
 
+[Teams Registration](https://events.teams.microsoft.com/event/260d5d31-0235-4ad1-adf7-19a4d3682f78@4130bd39-7c53-419c-b1e5-8758d6d63f21)
+

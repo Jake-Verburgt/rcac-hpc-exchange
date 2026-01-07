@@ -45,14 +45,14 @@ You can also check on ALL
 running processes with the `ps`
 command.
 ```
-   $ ps -u username
-   PID     TTY     TIME   CMD
-   221965 ?      00:00:00 systemd
-   221967 ?      00:00:00 (sd-pam)
-   221972 ?      00:00:00 sshd
-   221973 pts/10 00:00:00 bash
-   222170 pts/10 00:00:00 sleep
-   222182 pts/10 00:00:00 ps
+$ ps -u username
+PID     TTY     TIME   CMD
+221965 ?      00:00:00 systemd
+221967 ?      00:00:00 (sd-pam)
+221972 ?      00:00:00 sshd
+221973 pts/10 00:00:00 bash
+222170 pts/10 00:00:00 sleep
+222182 pts/10 00:00:00 ps
 ```
 <!-- Quiz: What does the `-u` option
 do?
@@ -69,7 +69,7 @@ the `wait` program. You can also
 re-attach to background processes
 with the `fg` program. Lastly, you
 can interrupt processes with the
-`kill` command (using \% for the
+`kill` command (using `%` for the
 relative PID).
 
 ```
@@ -81,12 +81,12 @@ $ sleep 600 &
 $ kill -s int %1
 ```
 
-   If you don't want to wait for a
-   program to finish normally, you
-   can send an interrupt signal with
-   your keyboard. For Linux and Windows
-   users, you press `Ctrl + c` and for
-   Mac users, you press `Cmd + .*`.
+If you don't want to wait for a
+program to finish normally, you
+can send an interrupt signal with
+your keyboard. For Linux and Windows
+users, you press `Ctrl + c` and for
+Mac users, you press `Cmd + .*`.
 
 Once you send a program to the
 background, you can pull it back to

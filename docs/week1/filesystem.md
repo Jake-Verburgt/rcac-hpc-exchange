@@ -220,12 +220,9 @@ UNIX file systems:
     ![cd dot dot ](../assets/images/cd_dotdot.png)
 
 ??? question "How would we move from the `data` directory to the Downloads directory with one command?"
-
-    There are several ways! We could first `cd` to the Desktop, and run `mkdir`:
-
-    ```bash 
-    cd ../../Downloads
-    ```
+     ```bash 
+     cd ../../Downloads
+     ```
 
 
 ## Permissions
@@ -273,11 +270,11 @@ The four items in the `.ssh` folder of this home directory are:
 Let's talk permissions. The first ten characters of each row
 represent the permissions for each item listed:
 
-<span class="perm-type">-</span><span class="perm-user">rw-</span><span class="perm-group">r--</span><span class="perm-other">r--</span>  1 user group  4096 Jan  5  notes.txt
+<span class="perm-type">-</span><span class="perm-user">rw-</span><span class="perm-group">r--</span><span class="perm-other">r--</span>  1 username groupname  4096 Jan  5  notes.txt
 
 The first column shows whether it's a directory (with a `d`) or not (with a dash):
 
-<span class="perm-type">d</span>rwxr-x--- 2 user group  4096 Jan  5  secure_dir
+<span class="perm-type">d</span>rwxr-x--- 2 username groupname  4096 Jan  5  secure_dir
 
 
 
@@ -285,23 +282,23 @@ Then the next nine columns are broken into three groups of three:
 
 1) First three - User (`u`)
 
- -<span class="perm-user">rw-</span>r----  1 user group  4096 Jan  5  notes.txt
+ -<span class="perm-user">rw-</span>r----  1 username groupname  4096 Jan  5  notes.txt
 
 
 2) Second three - Group (`g`)
 
--rw-<span class="perm-group">r--</span>r--  1 user group  4096 Jan  5  notes.txt
+-rw-<span class="perm-group">r--</span>r--  1 username groupname  4096 Jan  5  notes.txt
 
 3) Last three - Others (`o`)
 
--rw-r--<span class="perm-other">r--</span>  1 user group  4096 Jan  5  notes.txt
+-rw-r--<span class="perm-other">r--</span>  1 username groupname  4096 Jan  5  notes.txt
 
 Each group of three is made up of the read (`r`), write (`w`), and execute (`x`)
 bits. The read bit controls whether someone can look at the
 data contained in the file. The write bit controls whether someone
 can edit the data in the file. And the execute bit controls if
 someone can run that file as a program. We'll talk more about the
-"execute" bit in the [Week 3 "Scripts" section](../week3/scripting.md). 
+"execute" bit in the [Week 3 "Scripting" section](../week3/scripting.md). 
 
 For directories, the permission bits mean slightly different things.
 The write bit is the same, it controls whether someone can modify

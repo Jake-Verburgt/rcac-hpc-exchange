@@ -18,14 +18,9 @@ the computer to take. The first line, called the
 "shebang" defines what shell interpreter to be
 used.
 
-Bash (and other shells) often use whitespace to
-delimit arguments to programs. Quotations keep
-arguments with spaces together.
+The lines after the shebang are effectively a series of commands
 
-Double quotes and single quotes work differently
-in bash: double quotes allow expansion of variables
-and some other kinds of things, whereas single
-quotes are verbatim.
+
 
 Following is a simple script we will use as an
 example in the following sections:
@@ -35,14 +30,18 @@ example in the following sections:
 
 echo 'Hello, World!'
 ```
-Please use your command-line editor to copy this
-into a file named `hello.sh`.
 
 Notice the first line is the "shebang" that starts
 with a `#!`, followed by the interpreter, which in
 this case is the bash shell. We then have the `echo`
 program, which just prints out the argument(s) to
 the console.
+
+!!! note "Quotes"
+    Bash (and other shells) often use whitespace to delimit arguments to programs. Quotations keep arguments with spaces together.
+
+    Double quotes and single quotes work differently in bash: double quotes allow expansion of variables and some other kinds of things, whereas single quotes are verbatim. Please use your command-line editor to copy this into a file named `hello.sh`.
+
 
 A couple of helpful programs that you may want to
 use:
@@ -56,76 +55,97 @@ use:
 | `date` | Current date and time (many format options) |
 
 
+## Running Scripts
 There are two ways to execute shell scripts:
 
-* Invoking it with the appropriate shell
-    ```bash
-    $ bash hello.sh
-    Ooh, so scary!
-    ```
-* Refer to it as a program directly by its path
-    ```
-    $ ./hello.sh
-    -bash: ./hello.sh: Permission denied
-    ```
-
-
-Why did this happen? What can we do to
-check the permissions? Use the command `ls -l hello.sh` to see the
-permissions:
+1) Invoking it with the appropriate shell
+```bash
+$ bash hello.sh
+Hello, World!
 ```
-$ ls –l hello.sh
--rw-r--r-- 1 username student 22 Oct 11 01:44 hello.sh
+
+2) Refer to it as a program directly by its path
+
+```bash
+$ ./hello.sh
+-bash: ./hello.sh: Permission denied
 ```
-The file `hello.sh` doesn't have the **execute**
-bit set, so we can't run it as a program.
+
+!!! failure "Execution Permissions"
+    Why did this happen? What can we do to check the permissions? Use the command `ls -l hello.sh` to see the permissions:
+
+    ```
+    $ ls –l hello.sh
+    -rw-r--r-- 1 username student 22 Oct 11 01:44 hello.sh
+    ```
+    The file `hello.sh` doesn't have the **execute**
+    bit set, so we can't run it as a program.
 
 You can change file and directory permissions
 using the `chmod` program:
 
-```
-$ chmod +x boo.sh
-$ ls –l boo.sh
--rwxr-xr-x 1 username student 22 Oct 11 01:44 boo.sh
-$ ./boo.sh
-Ooh, so scary!
+```bash
+$ chmod +x hello.sh
+$ ls –l hello.sh
+-rwxr-xr-x 1 username student 22 Oct 11 01:44 hello.sh
+$ ./hello.sh
+Hello, World!
 ```
 
-The `chmod` program takes both relative (**[ugo][-+][rwx]**) and absolute (e.g. 700)
-syntax.
+The `chmod` program allows you to add and remove read(`r`)/write(`w`)/execute(`x`) permissions for the user (`u`), group (`g`), and others (`o`) with the following syntax:
 
-How would we remove read permissions on a
-file for both the file *group* and *others*?
+```bash
+chmod [ugo][-+][rwx] file
 ```
-chmod go-r boo.sh
-```
+
+??? question "How would we remove read permissions on a
+file for both the file *group* and *others*?"
+    ```
+    chmod go-r file.sh
+    ```
+
+
 ## `$PATH` variable 
-Now that we have an executable shell script,
-we may want to move it to a directory that
-contains all our executables, maybe something
-named `bin`, like was mentioned earlier.
-We also need to make the new directory discoverable
-by the shell. We do this using the `PATH` variable,
-which we will discuss in a minute. Essentially,
-the `PATH` variable controls where the shell looks
-for executables.
 
-Also, remember that file extensions are optional
-in UNIX.
+You may have noticed that we needed to execute our file relative to our current directory (i.e `./hello.sh` instead of just `hello.sh`). If we try to run just  `hello.sh`, we will get a "command not found" error:
+
+```bash
+$ hello.sh
+hello.sh: command not found
 ```
+
+In order for a shell to be able to find this little program and use it as a command, we need to add the directory it is located in to be part of our `PATH` variable. (We'll talk more on shell variables in a bit).
+
+Essentially,the `PATH` variable controls where the shell looks for executables. You can see all the directories that are searched for commands with the following command:
+
+```bash
+echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:
+```
+Every command that we run is located in one of these directories! For example, we can see that the program that is executed by the `ls` command is located in  `/usr/bin/`, which is listed in our `PATH` variable!
+
+```bash
+$ which ls
+/usr/bin/ls
+```
+
+It's common to make a `bin` directory in your home directory, and store any executable files you want to run as commands there. Let's make a `bin` directory, move our program there, and add the `bin` directory to our `PATH` variable!
+
+```bash 
 $ mkdir ~/bin
-$ mv boo.sh ~/bin/boo
+$ mv hello.sh ~/bin/hello
 $ export PATH=$PATH:~/bin
-$ boo
-Ooh, so scary!
+$ hello
+Hello, World!
 ```
-Now does it matter if we change directories?
-What happens if we close the shell and reopen it?
 
+!!! tip
+    Also, remember that file extensions are optional in UNIX (you can remove the `.sh` from the file name).
 
-It doesn't matter if we change directories, but
-the change to our PATH variable is not kept if
-we close the shell.
+??? question "What happens if we close the shell and reopen it?"
+    It doesn't matter if we change directories, but the change to our `PATH` variable is not kept if we close the shell.
+
+      There is a file called the `.bashrc` file that you can add the `export PATH=$PATH:~/bin` command, which will be ran whenever you open a terminal!
 
 ## Environment variables
 
@@ -147,17 +167,14 @@ by environment variables.
 
 ### Simple variables
 
-They are like other programming languages.
+They are like other programming languages, and you can define them yourself! There are no types (mostly everything is text)
 
 Simple assignment:
-```
+```bash
 x=1
-```
-There are no types (mostly everything is text)
-```
 y=foo
 ```
-Variables are conventionally uppercase, but
+Variables are *conventionally* uppercase, but
 it's not necessary.
 ```
 NAME="some data"
@@ -248,18 +265,28 @@ Typically, on Linux you would use the `~/.bashrc`
 file, but on the UNIX system we have on the clusters
 it's contained in the `~/.bash_profile` hidden file.
 
+```bash  title="/home/username/.bashrc" linenums="1"
+
+#aliases
+alias rm="rm -i"
+alias Negishi='ssh username@.negishi.rcac.purdue.edu'
+
+
+#variable exports
+export PATH=$PATH:$HOME/bin
+```
+
 There are many things you can put in the login
 profile to configure your personal session, but
 three that we are going to talk about are:
 
 * Aliases
 * Variables
-* Modules (bad)
 
 An alias is a verbatim command substitution that
 happens on the command line when invoked like a program.
 Here's one example:
-```
+```bash
 alias rm="rm -i"
 ```
 Which would make sure that every time you run the
@@ -269,7 +296,7 @@ commands.
 
 You can also add variables (like `PATH`) to your
 login profile.
-```
+```bash
 export PATH=$PATH:$HOME/bin
 ```
 This will add the newly created `bin` folder in your
@@ -281,10 +308,9 @@ Because that would mean the only place that the
 computer looks for programs would be in your
 home directory. Which would be bad.
 
-Something that you should **NOT** do is load
-modules (especially conda modules) in your
-login profile. This can mess up the rest of the
-start up process and can cause weird errors.
+
+!!! warning 
+    Something that you should **NOT** do is load modules (especially conda modules) in your login profile. This can mess up the rest of the start up process and can cause weird errors.
 
 ## Exit status
 
@@ -294,12 +320,12 @@ an error condition. Often, programs will document
 the meaning of their different exit status values
 in their manual page.
 
-```
-   $ boo
-   Ooh, so scary!
+```bash hl_lines="4"
+$ hello
+Hello, world!
 
-   $ echo $?
-   0
+$ echo $?
+0
 ```
 Control flow (if-else conditional statements) in
 shell scripts often hinge on the success or
@@ -308,7 +334,7 @@ true and 1 (non-zero) means false in the UNIX
 shell. This is opposite of almost everywhere
 else.
 
-```
+```bash hl_lines="2 6"
 $ true
 $ echo $?
 0

@@ -103,7 +103,7 @@ $ vim document.txt
 
 Vim has a very complex set of keybindings, but the commands below are the fundamentals for getting started:
 
-* `a` - Enter edit mode
+* `a` - Enter insert mode
 * `esc` - Escape insert mode
 * `:w` - Write / save file
 * `:q` - Quit
@@ -161,7 +161,7 @@ Vim has a very complex set of keybindings, but the commands below are the fundam
 
 
 !!! warning "Overwriting"
-    If the file you are moving or copying to already exists, **it will be overwritten without any confirmation or warning**. Use the `-n` (no clobber) when moving or copying files to skip moves that would overwrite a file.
+    If the file you are moving or copying to already exists, **it will be overwritten without any confirmation or warning**. Use the `-n` (no clobber) or `-i` (interactive) when moving or copying files to skip moves that would overwrite a file.
 
 
 

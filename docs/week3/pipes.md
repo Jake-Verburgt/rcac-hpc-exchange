@@ -43,7 +43,7 @@ to attach to files other than the console.
 | `>>  FILE` | Append `stdout` to `FILE` |
 | `2>  FILE` | Write `stderr` to `FILE` |
 | `2>> FILE` | Append `stderr` to `FILE` |
-| `\|   PROGRAM` | Join `stdout` to `stdin` of `PROGRAM` |
+| `|   PROGRAM` | Join `stdout` to `stdin` of `PROGRAM` |
 
 The following example redirects "Ooh, so scary!"
 from the console into the file `message.txt`.

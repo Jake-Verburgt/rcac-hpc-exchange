@@ -9,9 +9,14 @@ this section, we will go over three
 main topics surrounding file
 management:
 
-* Archive formats for managing files and data
-* Data compression programs
-* Finding files
+1) Archive formats for managing files and data
+
+2) Data compression programs
+
+3) Finding files
+
+
+## Archiving 
 
 To archive a file or directory means to
 bundle those files up into a single archive
@@ -23,31 +28,46 @@ They differ in that `tar` compresses the
 whole output together instead of
 individually compressing files within the
 archive.
-```
+
+### TAR (Tape ARchive)
+
+`tar` stands for "Tape ARchive" format,
+because tape archives do better with one
+big file instead of many, smaller files. We will learn more on how to archive data at RCAC in [Week 4](../week4/index.md). To package a directory into a single, compressed file, you would use the following command:
+
+```bash
 $ tar -cvzf example-data.tar.gz example-data/
 ```
 In the example above, we supplied four options
 to the `tar` program and two arguments. The
-options are, in order, compress, verbose, with
-gzip, to a file named the following. The first
-argument is actually an extension of the `f`
+options are:
+
+* `c` - compress
+* `v` - verbose
+* `z` - gzip
+* `f` - file named the following. 
+
+The first argument is actually an extension of the `f`
 option, which tells `tar` what we want to name
 the archive. The second (and following)
 argument(s) tells `tar` what we want to archive.
+
 To undo the archiving, simple swap the `c`
 option for the `x` option (which stands for
-extract).
+extract)L
 
-`tar` stands for "Tape ARchive" format,
-because tape archives do better with one
-big file instead of many, smaller files.
+```bash
+$ tar -xvzf example-data.tar.gz
+```
+
+### Zip
 
 The `zip` program is simpler to use, but
 often people prefer `tar` over `zip`.
 
 ```
-   $ zip archive-name.zip example-data/
-   $ unzip archive-name.zip
+$ zip archive-name.zip example-data/
+$ unzip archive-name.zip
 ```
 
 As mentioned in earlier sections,
@@ -102,8 +122,8 @@ to have a program to find files that match a
 pattern. To do this, use the `find` program.
 
 ```
-   $ find ~ -type f -name "*.txt" | grep "example-data"
-   ~/example-data/paper.txt
+$ find ~ -type f -name "*.txt" | grep "example-data"
+~/example-data/paper.txt
 ```
 
 In the example, we used some arguments and some
