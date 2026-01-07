@@ -112,52 +112,52 @@ Vim has a very complex set of keybindings, but the commands below are the fundam
 
 ## File Management  
 
-* mv
+#### mv
 
-   Once you have a file to play around with, we can
-   run some special programs using the file. The first
-   of these is the `mv` program, which stands for `move`.
-   It takes two arguments to run: a source and a destination.
+Once you have a file to play around with, we can
+run some special programs using the file. The first
+of these is the `mv` program, which stands for `move`.
+It takes two arguments to run: a source and a destination.
 
-   The `mv` program can change the name of a file, or it can
-   move the file to a different directory. So, the source is
-   what file you want to modify and the destination is either
-   the name of the file you want to change it to, or if it's
-   a directory, it's the place you want to put the file.
+The `mv` program can change the name of a file, or it can
+move the file to a different directory. So, the source is
+what file you want to modify and the destination is either
+the name of the file you want to change it to, or if it's
+a directory, it's the place you want to put the file.
 
-   Changing the name of the file:
-   ```bash
-   $ mv document.txt paper.txt
-   ```
-   Which will change the name of the file to be `paper.txt`
+Changing the name of the file:
+```bash
+$ mv document.txt paper.txt
+```
+Which will change the name of the file to be `paper.txt`
 
-   Changing the location of the file:
-   ```bash
-   $ mv paper.txt ~/Desktop/
-   ```
-   Which will move the file into the `Desktop`
-   directory, but keep the same name.
+Changing the location of the file:
+```bash
+$ mv paper.txt ~/Desktop/
+```
+Which will move the file into the `Desktop`
+directory, but keep the same name.
 
 !!! note "Moving Multiple Files"
-    If you provide more than 2 arguments, `mv` will require the last argument to be a destination directory. Like:
+   If you provide more than 2 arguments, `mv` will require the last argument to be a destination directory. Like:
 
-    ```bash
-    mv file1.png file2.png *.txt Desktop
-    ```
-
-* cp
-
-   The `cp` or `copy` program is similar to the `mv` program
-   except that it leaves the original copy intact. This is
-   useful if you want to create a backup or a fork of
-   something. The command:
    ```bash
-   $ cp ~/example-data/paper.txt ~/thesis.txt
+   mv file1.png file2.png *.txt Desktop
    ```
 
-   Will copy the `paper.txt` file data from the *example-data*
-   directory into the new file `thesis.txt`, in the home
-   directory, but still keep the original file around.
+#### cp
+
+The `cp` or `copy` program is similar to the `mv` program
+except that it leaves the original copy intact. This is
+useful if you want to create a backup or a fork of
+something. The command:
+```bash
+$ cp ~/example-data/paper.txt ~/thesis.txt
+```
+
+Will copy the `paper.txt` file data from the *example-data*
+directory into the new file `thesis.txt`, in the home
+directory, but still keep the original file around.
 
 
 !!! warning "Overwriting"
@@ -165,38 +165,37 @@ Vim has a very complex set of keybindings, but the commands below are the fundam
 
 
 
-   Let's try backing up a directory:
-   ```bash
-   $ cp example-data/ data.bak
-   cp: example-data/ is a directory (not copied).
-   ```
-   Oops, what happened here?
+Let's try backing up a directory:
+```bash
+$ cp example-data/ data.bak
+cp: example-data/ is a directory (not copied).
+```
+Oops, what happened here?
 
-   We can't copy directories without recursively copying its contents, whcich `cp` does not do by default. You can copy directories with the `-r` (recursive) option:
-   ```bash
-   $ cp -r cp example-data/ data.bak
-   ```
+We can't copy directories without recursively copying its contents, whcich `cp` does not do by default. You can copy directories with the `-r` (recursive) option:
+```bash
+$ cp -r cp example-data/ data.bak
+```
 
+#### rm
 
-* rm
+The most powerful and respect-worthy program we will
+talk about in this series is the `rm` program. It
+removes or `unlinks` files and directories. On UNIX systems,
+there is no concept of a trash bin, **if you remove a file,
+it's gone forever, no way to get it back**. So make sure
+you know what you're deleting before you run `rm`.
 
-   The most powerful and respect-worthy program we will
-   talk about in this series is the `rm` program. It
-   removes or `unlinks` files and directories. On UNIX systems,
-   there is no concept of a trash bin, **if you remove a file,
-   it's gone forever, no way to get it back**. So make sure
-   you know what you're deleting before you run `rm`.
+```bash
+$ rm thesis.txt
+```
 
-   ```bash
-   $ rm thesis.txt
-   ```
-
-   To delete directories, you need to use the `-r` or
-   recursive option. This will delete the directory and
-   everything inside of it. Again, this is permanent, so
-   be very careful to know exactly what you're deleting.
-   ```bash
-   $ rm -r data.bak
-   ```
+To delete directories, you need to use the `-r` or
+recursive option. This will delete the directory and
+everything inside of it. Again, this is permanent, so
+be very careful to know exactly what you're deleting.
+```bash
+$ rm -r data.bak
+```
 
 Next section: [Command Reference](./reference.md)

@@ -10,18 +10,19 @@ As a user, you can picture a filesystem as a series of nested files and folders(
 ![Tree structure of a filesystem](../assets/images/filesystem.png)
 
 
-* pwd:
+### pwd:
 
-    `pwd` is a program that is occasionally helpful, but is a
+`pwd` is a program that is occasionally helpful, but is a
     good way to get your feet wet in trying out different UNIX
     programs. All it does is print out what directory (folder) you are
     currently in. Usually you will already know where you're at
     from the prompt, but it can be helpful to know the full path.
     `pwd` stands for *print working directory*:
-    ```bash
-   $ pwd
-   /home/username
-    ```
+
+```bash
+$ pwd
+/home/username
+```
 
 
 ??? question "What directory are you in when you open your shell?"
@@ -35,18 +36,20 @@ As a user, you can picture a filesystem as a series of nested files and folders(
     
 
 
-* ls:
+### ls:
 
-    `ls` is one of the most common UNIX programs that you may use
+`ls` is one of the most common UNIX programs that you may use
     while on UNIX systems. By default, it lists the contents of
     your current working directory:
-    ```bash
-   $ ls
-   data.csv		Documents       bin      Desktop
-    ```
-    There are many options that `ls` can use to modify its
-    behavior. In addition, you can specify a directory as an
-    argument to list contents of that directory.
+
+```bash
+$ ls
+data.csv		Documents       bin      Desktop
+```
+
+There are many options that `ls` can use to modify its
+behavior. In addition, you can specify a directory as an
+argument to list contents of that directory.
 
 !!! note "Hidden Files"
     Files and directories that start with a "." are hidden by default. You can use the `-a` or `--all` options to see them!
@@ -58,17 +61,17 @@ As a user, you can picture a filesystem as a series of nested files and folders(
     * `?` - matches exactly one character
     * `[abc]` or `[a-z]` - matches one character from a set or range
 
-    You can substitute these in to match specific patterns like so:
+You can substitute these in to match specific patterns like so:
 
-    ```bash
-    $ ls *.txt
-    file1.txt file2.txt file3.txt
-    ```
+```bash
+$ ls *.txt
+file1.txt file2.txt file3.txt
+```
 
-    ```bash
-    $ ls data_?.[ct]sv
-    data1.csv data2.tsv data3.csv
-    ```
+```bash
+$ ls data_?.[ct]sv
+data1.csv data2.tsv data3.csv
+```
 
 ??? question "What files and folders are hidden in your home directory?"
 
@@ -85,19 +88,20 @@ As a user, you can picture a filesystem as a series of nested files and folders(
     
     Use `$ ls Downloads/*.png`!
 
-* cd
+### cd
 
-    Another one of the most common programs to run on UNIX systems
-    is `cd`, which stands for *change directory*, but should be
-    thought of as *change working directory*. This will change
-    which directory you are currently working in.
-    ```
-   $ pwd
-   /home/username
-   $ cd Documents
-   $ pwd
-   /home/username/Documents
-   ```
+Another one of the most common programs to run on UNIX systems
+is `cd`, which stands for *change directory*, but should be
+thought of as *change working directory*. This will change
+which directory you are currently working in.
+
+```
+$ pwd
+/home/username
+$ cd Documents
+$ pwd
+/home/username/Documents
+```
 
 !!! tip "Autocomplete"
     Most terminal interfaces support using `tab` to autocomplete file and folders that exist in your working directory. This works for most commands, but is especially helpful with `cd`.
@@ -118,24 +122,24 @@ As a user, you can picture a filesystem as a series of nested files and folders(
         * You can always return home with just `cd`
         * You can also use `cd ..` to move *up* a directory, or `cd -` to move to your previous directory (more on this later!)
 
-* mkdir
+### mkdir
 
-    The last program we'll go over in this section is the `mkdir`
-    or *make directory*. This does what it sounds like and will
-    create the directory noted in the argument if it doesn't already
-    exist.
-    ```
-    $ mkdir example-data
-    ```
-    You can also put multiple arguments and `mkdir` will
-    create all of them. A helpful option to pass to the `mkdir`
-    program is `-p`, which will create parent directories as needed.
-    ```
-    $ mkdir -p another_one/test1
-    ```
-    Which will create the `another_one` directory in your current
-    directory and the `test1` directory within the `another_one`
-    directory.
+The last program we'll go over in this section is the `mkdir`
+or *make directory*. This does what it sounds like and will
+create the directory noted in the argument if it doesn't already
+exist.
+```
+$ mkdir example-data
+```
+You can also put multiple arguments and `mkdir` will
+create all of them. A helpful option to pass to the `mkdir`
+program is `-p`, which will create parent directories as needed.
+```
+$ mkdir -p another_one/test1
+```
+Which will create the `another_one` directory in your current
+directory and the `test1` directory within the `another_one`
+directory.
 
 ??? question "How would you make a folder on your Desktop titled `myfolder`?"
 
@@ -174,12 +178,12 @@ output_of_ls
 $ ls Desktop
 output_of_ls
 ```
-
 !!! note "File Extensions"
-    In UNIX systems, file extensions are technically meaningless, however, convention is important. Executables don't need to end in `.exe` and text files don't need to end in `.txt`. It is helpful if they do, so that people (including yourself) know what type of file it is.
+     In UNIX systems, file extensions are technically meaningless, however, convention is important. Executables don't need to end in `.exe` and text files don't need to end in `.txt`. It is helpful if they do, so that people (including yourself) know what type of file it is.
+     
+     Paths as the argument of the `cd` program can be absolute or relative.
 
-   Paths as the argument of the `cd` program can be absolute
-   or relative.
+
 
 ### Special paths
 
@@ -187,7 +191,7 @@ output_of_ls
 There four special paths that are commonly used in navigating
 UNIX file systems:
 
-* `-`
+#### Previous Working Directory: `-`
     * The `-` represents the previous working directory (the directory you were in before your current one)
     * You can run `cd -` to navigate to the previous directory you were in.
   
@@ -200,24 +204,28 @@ UNIX file systems:
 
     ![cd dash ](../assets/images/cd_dash.png)
 
+#### Home Directory: `~`
 
-* `~`
-    * The `~` represents your home directory. You can `cd ~` to move back to your home directory, or `cd ~/Desktop` to move to your desktop
-    * You can also just type `cd` (without any arguments) to return to your home directory
-* `.`
-    * The `.` represents the directory you are currently in. You can use it to reference certain files in your current directory (like `ls ./myfile.txt`), 
-* `..`
-    * The `..` represents the parent directory of the directory you are currently in. For example, if you are in `/home/username/Documents/mydata`, the command `cd ..` will change your directory to `/home/username/Documents`
-    * You can also stack these! For example, to move "up" two directories, you could use the command `cd ../../`
+* The `~` represents your home directory. You can `cd ~` to move back to your home directory, or `cd ~/Desktop` to move to your desktop
+* You can also just type `cd` (without any arguments) to return to your home directory
 
-    ```bash
-    $ cd Desktop/data
-    $ cd ..
-    $ pwd
-    /home/username/Desktop
-    ```
+#### Current Working Directory: `.`
 
-    ![cd dot dot ](../assets/images/cd_dotdot.png)
+* The `.` represents the directory you are currently in. You can use it to reference certain files in your current directory (like `ls ./myfile.txt`)
+
+#### Previous Working Directory: `..`
+
+* The `..` represents the parent directory of the directory you are currently in. For example, if you are in `/home/username/Documents/mydata`, the command `cd ..` will change your directory to `/home/username/Documents`
+* You can also stack these! For example, to move "up" two directories, you could use the command `cd ../../`
+
+```bash
+$ cd Desktop/data
+$ cd ..
+$ pwd
+/home/username/Desktop
+```
+
+![cd dot dot ](../assets/images/cd_dotdot.png)
 
 ??? question "How would we move from the `data` directory to the Downloads directory with one command?"
      ```bash 
@@ -246,14 +254,7 @@ The three program options used here are: `a`, which displays all files/folders,
 even hidden ones; `l` which lists out more information about each listing;
 and `h` which shows the size of items in a human-readable format. 
 
-In the
-first ten columns of the output are the permissions of that item,
-details of which will be discussed in the next paragraph. The next number
-is the number of hardlinks to the file, which for most use cases isn't
-important. After that, we have the username of the owner of the file and
-then the name of the group that owns access to the file. The number
-after that is the size of the item. Then comes the date that the item
-was most recently modified. Last of all is the name of the actual item.
+In the first ten columns of the output are the permissions of that item, details of which will be discussed in the next paragraph. The next number is the number of hardlinks to the file, which for most use cases isn't important. After that, we have the username of the owner of the file and then the name of the group that owns access to the file. The number after that is the size of the item. Then comes the date that the item was most recently modified. Last of all is the name of the actual item.
 
 
 The four items in the `.ssh` folder of this home directory are: 
@@ -264,8 +265,8 @@ The four items in the `.ssh` folder of this home directory are:
 
 3) Two files:
 
-* `authorized_keys`
-* `config`
+    * `authorized_keys`
+    * `config`
 
 Let's talk permissions. The first ten characters of each row
 represent the permissions for each item listed:
@@ -308,21 +309,21 @@ someone can go into that folder.
 
 ## Learning about command options
 
-* man 
+#### man
 
-    Another helpful program is `man`, which stands for *manual*. You may
-    hear the term *man page* which is just short for *manual page*, or
-    running the program `man` with the argument being the program you
-    want more information about.
+Another helpful program is `man`, which stands for *manual*. You may
+hear the term *man page* which is just short for *manual page*, or
+running the program `man` with the argument being the program you
+want more information about.
 
-    ```
-   $ man ls
-    ```
-    The `man` program pulls up a page that you can scroll up and down
-    with your arrow keys or the `j`/`k` keys and quit out of by
-    pressing the `q` key. It is up to each program to provide its
-    own `man` page, so not all programs have them, but when they do
-    it can be helpful.
+```
+$ man ls
+```
+The `man` program pulls up a page that you can scroll up and down
+with your arrow keys or the `j`/`k` keys and quit out of by
+pressing the `q` key. It is up to each program to provide its
+own `man` page, so not all programs have them, but when they do
+it can be helpful.
 
 <!-- As a quiz, who can find (using the `ls` `man` page) what are the
 options necessary to list items by reverse chronological order

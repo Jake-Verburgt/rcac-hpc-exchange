@@ -48,17 +48,18 @@ use:
 
 ### Helpful programs
 
-| Program | Action |
-|---|---|
-| `echo` | Print statements |
-| `hostname` | Name of the server you are logged into |
-| `date` | Current date and time (many format options) |
+| Program | Action | Example |
+|---|---|----|
+| `echo` | Print statements |`echo "Hello, World!"`|
+| `hostname` | Name of the server you are logged into | `hostname -f` | 
+| `date` | Current date and time (many format options) |`date`|
 
 
 ## Running Scripts
 There are two ways to execute shell scripts:
 
 1) Invoking it with the appropriate shell
+
 ```bash
 $ bash hello.sh
 Hello, World!
@@ -100,9 +101,10 @@ chmod [ugo][-+][rwx] file
 
 ??? question "How would we remove read permissions on a
 file for both the file *group* and *others*?"
-    ```
-    chmod go-r file.sh
-    ```
+
+```
+chmod go-r file.sh
+```
 
 
 ## `$PATH` variable 

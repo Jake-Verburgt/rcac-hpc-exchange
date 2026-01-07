@@ -135,4 +135,17 @@ this week, click the 'Clusters' menu in the top bar and hit the
 `>_CLUSTER shell access` option. This will open a new tab with a
 shell available for you to use.
 
+
+!!! tip "Accessing on the web"
+     Thinlinc and open OnDemand are both available on the "cluster overview" page for any cluster, like [https://www.rcac.purdue.edu/compute/negishi](https://www.rcac.purdue.edu/compute/negishi) for example:
+
+     ![web login page](../assets/images/web_login.png)
+
+
+<!-- 
+!!! info "You login to the frontend!"
+     Reminder that when you log into the front-end (a login node). Don't run large computations here!
+
+     ![cluster_login](../assets/images/cluster_login.png) -->
+
 Next section: [Unix](./unix.md)
