@@ -192,17 +192,18 @@ There four special paths that are commonly used in navigating
 UNIX file systems:
 
 #### Previous Working Directory: `-`
-    * The `-` represents the previous working directory (the directory you were in before your current one)
-    * You can run `cd -` to navigate to the previous directory you were in.
-  
-    ```bash
-    $ cd Desktop/data
-    $ cd -
-    $ pwd
-    /home/username
-    ```
 
-    ![cd dash ](../assets/images/cd_dash.png)
+* The `-` represents the previous working directory (the directory you were in before your current one)
+* You can run `cd -` to navigate to the previous directory you were in.
+
+```bash
+$ cd Desktop/data
+$ cd -
+$ pwd
+/home/username
+```
+
+![cd dash ](../assets/images/cd_dash.png)
 
 #### Home Directory: `~`
 
