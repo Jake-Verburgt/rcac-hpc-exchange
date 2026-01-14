@@ -333,7 +333,7 @@ on about good citizenship on HPC resources:
 If you'd rather avoid running jobs on the command line entirely, RCAC offers Open OnDemand interactive apps that handle the submission to the compute backend for you. 
 
 
-Most notably, we have an "Open OnDemand Desktop" application, which will give you a virtual desktop (running on a cluster backend node) available in your browser. This can be incredibly useful if you need to run graphical applications on RCAC, which don't run well
+Most notably, we have an "Open OnDemand Desktop" application, which will give you a virtual desktop (running on a cluster backend node) available in your browser. This can be incredibly useful if you need to run graphical applications on RCAC, which don't run well over SSH on the command line.
 
 
 ![Open OnDemand Desktop](../assets/images/ood_desktop.png)

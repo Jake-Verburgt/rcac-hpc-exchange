@@ -27,9 +27,10 @@ print(C.mean())
 ```
 
 !!! tip "copy/paste in the terminal":
-      To copy in a terminal, use `ctrl`+`shift`+`c`
       
-      To paste in a terminal, use `ctrl`+`shift`+`v`
+       To copy in a terminal, use `ctrl`+`shift`+`c`
+      
+       To paste in a terminal, use `ctrl`+`shift`+`v`
 
 !!! tip "vim commands"
       * `vim example.py` to open this file in vim
