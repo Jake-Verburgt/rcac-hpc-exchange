@@ -174,7 +174,7 @@ Oops, what happened here?
 
 We can't copy directories without recursively copying its contents, whcich `cp` does not do by default. You can copy directories with the `-r` (recursive) option:
 ```bash
-$ cp -r cp example-data/ data.bak
+$ cp -r example-data/ data.bak
 ```
 
 #### rm

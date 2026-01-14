@@ -7,6 +7,8 @@
 In this section, we'll talk a little bit about
 how to use different applications on our clusters.
 
+### A Simple Python Program
+
 First, we have an example python script that we
 will be using just as a test problem for our
 sessions this week as well as in [week 4](../week4/index.md).
@@ -23,6 +25,20 @@ C = np.matmul(A, B)
 
 print(C.mean())
 ```
+
+!!! tip "copy/paste in the terminal":
+      To copy in a terminal, use `ctrl`+`shift`+`c`
+      
+      To paste in a terminal, use `ctrl`+`shift`+`v`
+
+!!! tip "vim commands"
+      * `vim example.py` to open this file in vim
+      * `a` to enter edit mode
+      * `ctrl`+`shift`+`v` to paste file contents
+      * `esc` to exit insert mode
+      * `:wq` to save and quit
+
+
 This script creates two random matrices, of size
 ten thousand by ten thousand and multiplies them
 together. It then prints out the mean of the
@@ -39,6 +55,8 @@ $ python example.py
 -bash: python: command not found
 ```
 Wait, what? Why didn't that work? The system doesn't know about python yet, we haven't loaded it.
+
+### Module System
 
 There are too many versions and conflicting software to
 have every version of every application `pre-installed`
@@ -99,13 +117,13 @@ $ which python
 /apps/external/apps/conda/2024.09/bin/python
 ```
 !!! tip "`which` command"
-     * `which` is a nice program that will tell us where the specified program is coming from. Remember that everythign is a file! `which` tells you what file starts the program when you run a command.
+     * `which` is a nice program that will tell us where the specified program is coming from. Remember that everything is a file! `which` tells you what file starts the program when you run a command.
 
 Now that we have python ready and our script is written,
 let's run it (it may take a couple minutes to run):
 ```
-   $ python example.py
-   2499.9118
+$ python example.py
+2499.9118
 ```
 
 
@@ -127,12 +145,27 @@ let's run it (it may take a couple minutes to run):
 
     Run these three lines of code to create the environment,
     activate it, and then run our example:
-    ```
+    ```bash
     $ conda create -y -n example numpy
     $ conda activate example
     $ python example.py
     2499.9118
     ```
+
+## Putting it into a Script
+Notice that it took several shell commands to run this python program. If we don't want to type out all the commands every time we want to run, we can put tyhem into a script! We'll talk about scripting more in [week 3](../week3/index.md), but for now we can think of a script as a series of commands that we put into a file, that are all ran when we run the script. For example, if we put our commands in a file titled `run_example.sh`:
+
+```bash title="run_example.sh" linenums="1"
+#!/bin/bash
+module load conda
+conda activate example
+python example.py
+```
+We can run the whole script on the command line:
+```bash
+$ bash run_example.sh
+2499.9118
+```
 
 Remember that when we log onto the clusters, we are typically placed on the login nodes, which aren't meant for computationally expensive tasks. This is a computationally intensive task that we should instead run on the compute nodes, which we'll cover in the next section!
 

@@ -67,7 +67,7 @@ $ hostname
 login00.cluster.rcac.purdue.edu
 ```
 
-## Run Types
+### Run Types
 
 Before we get started with how to run jobs on the compute nodes,
 we should talk about the two paradigms of

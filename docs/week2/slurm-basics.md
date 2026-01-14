@@ -37,18 +37,16 @@ manually. Let's take a look at what's in `myjob.sh`
 
 ```bash title="myjob.sh" linenums="1"
 #!/bin/bash
-#SBATCH  --account=rcac
+#SBATCH  --account=hpcexc
 #SBATCH  --partition=cpu
 #SBATCH  --qos=normal
 #SBATCH  --time=0-1:00:00
 #SBATCH  --nodes=1
-#SBATCH  --ntasks-per-node=10
+#SBATCH  --ntasks-per-node=1
 
-echo "Script is starting!"
 cd $SLURM_SUBMIT_DIR
 
 module load conda
-
 conda activate example
 python example.py
 echo "Script is finished! Exiting..."
@@ -63,12 +61,12 @@ Let's take a closer look at the individual pieces of information we need to prov
 ## Account
 ```bash linenums="1" hl_lines="2"
 #!/bin/bash
-#SBATCH  --account=rcac
+#SBATCH  --account=hpcexc
 #SBATCH  --partition=cpu
 #SBATCH  --qos=normal
 #SBATCH  --time=0-1:00:00
 #SBATCH  --nodes=1
-#SBATCH  --ntasks-per-node=10
+#SBATCH  --ntasks-per-node=1
 ```
 The first of which is what account to submit
 that job to. Accounts are typically associated with a research group or department. Each account will have access to a limited amount of resources that they have purchased.
@@ -94,15 +92,15 @@ lab_queue      |       128        32        64        32 |                 0.0
 
 ```bash linenums="1" hl_lines="3"
 #!/bin/bash
-#SBATCH  --account=rcac
+#SBATCH  --account=hpcexc
 #SBATCH  --partition=cpu
 #SBATCH  --qos=normal
 #SBATCH  --time=0-1:00:00
 #SBATCH  --nodes=1
-#SBATCH  --ntasks-per-node=10
+#SBATCH  --ntasks-per-node=1
 ```
 
-Remember that not all backend/compute nodes are the same! Some nodes have special hardware like GPUs or increased RAM, or are set aside for a dedicated use like machine learning trainging.To manage this, we use partitions, which are just subsets of the compute nodes. We need to tell Slurm which partition we intend on using.
+Remember that not all backend/compute nodes are the same! Some nodes have special hardware like GPUs or increased RAM, or are set aside for a dedicated use like machine learning training. To manage this, we use partitions, which are just subsets of the compute nodes. We need to tell Slurm which partition we intend on using.
 
 To show the different partitions
 available on the cluster, run the `showpartitions`
@@ -138,12 +136,12 @@ target one of the feature tags.
 
 ```bash linenums="1" hl_lines="4"
 #!/bin/bash
-#SBATCH  --account=rcac
+#SBATCH  --account=hpcexc
 #SBATCH  --partition=cpu
 #SBATCH  --qos=normal
 #SBATCH  --time=0-1:00:00
 #SBATCH  --nodes=1
-#SBATCH  --ntasks-per-node=10
+#SBATCH  --ntasks-per-node=1
 ```
 
 Lastly, something you may want to specify is the
@@ -160,12 +158,12 @@ Lastly, something you may want to specify is the
 
 ```bash linenums="1" hl_lines="5-7"
 #!/bin/bash
-#SBATCH  --account=rcac
+#SBATCH  --account=hpcexc
 #SBATCH  --partition=cpu
 #SBATCH  --qos=normal
 #SBATCH  --time=0-1:00:00
 #SBATCH  --nodes=1
-#SBATCH  --ntasks-per-node=10
+#SBATCH  --ntasks-per-node=1
 ```
 
 We may also need to specify what resources we want to request, and for how long
@@ -196,11 +194,11 @@ is helpful to note down as it can be used elsewhere.
 
 !!! note 
     The output of your job will, by default, be saved in
-   files with this ID (e.g. `slurm-1980435.out`).
+   files with this ID (e.g. `slurm-32209880.out`).
 
-The job that we submitted requested 8 cores for 1
-minute from your lab's account, to the CPU part of
-the cluster, using the `standby` QoS.
+The job that we submitted requested 1 cores for 1
+hour from your lab's account, to the CPU part of
+the cluster, using the `normal` QoS.
 
 Following is a list of common Slurm resource
 parameters that you may want to specify in your
@@ -229,7 +227,14 @@ learn more about different parameters
 You can use the `squeue` program to list currently scheduled
 (pending and running) jobs. By default it will show all jobs
 from all users on the cluster, which leads to a lot of
-output.
+output. You can limit this to just your jobs with the `--me` flag:
+
+```bash
+$ squeue --me
+JOBID      USER     ACCOUNT      PART QOS     NAME       NODES TRES_PER_NODE   CPUS  TIME_LIMIT ST TIME
+32541229   username rcac         cpu  normal  interactiv     1 N/A                8       30:00  R 0:09
+
+```
 
 <!-- Quiz: What option do we need to limit the output to a
 specific account? Specific user? Only our own jobs?
@@ -322,6 +327,16 @@ on about good citizenship on HPC resources:
 * Do not abuse file systems (heavy I/O for `/depot` space, use `/scratch` instead)
 * Do not submit lots of tiny jobs, instead use the pilot-job pattern with a workflow tool
 * Do not submit jobs and camp (don't submit a GPU job from the Gateway for 24 hours so it's ready for you in the afternoon and then forget about it)
+
+
+## Open OnDemand Interactive Apps
+If you'd rather avoid running jobs on the command line entirely, RCAC offers Open OnDemand interactive apps that handle the submission to the compute backend for you. 
+
+
+Most notably, we have an "Open OnDemand Desktop" application, which will give you a virtual desktop (running on a cluster backend node) available in your browser. This can be incredibly useful if you need to run graphical applications on RCAC, which don't run well
+
+
+![Open OnDemand Desktop](../assets/images/ood_desktop.png)
 
 
 Continue to [Week 3](../week3/index.md)

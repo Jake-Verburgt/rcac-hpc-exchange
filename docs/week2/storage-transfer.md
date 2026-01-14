@@ -137,42 +137,42 @@ navigate using the clusters. As a note, these are RCAC
 specific programs, meaning that we implemented these and
 other supercomputers may not have them.
 
-* myquota
+### myquota
 
-    `myquota` is run without any arguments and tells you
-    where you have access to read and write files. It also
-    tells you what the space quotas are for each of those
-    spaces and how much you have used already:
+`myquota` is run without any arguments and tells you
+where you have access to read and write files. It also
+tells you what the space quotas are for each of those
+spaces and how much you have used already:
 
-    ```
-    $ myquota
-    Type     Location   Size    Limit    Use   Files   Limit    Use
-    ===============================================================
-    home     username  809KB   25.0GB  0.00%       -       -      -
-    scratch  cluster    36KB  200.0TB  0.00%      0k  2,000k  0.00%
-    depot    example  92.0MB    1.0TB     1%       -       -      -
-    ```
+```
+$ myquota
+Type     Location   Size    Limit    Use   Files   Limit    Use
+===============================================================
+home     username  809KB   25.0GB  0.00%       -       -      -
+scratch  cluster    36KB  200.0TB  0.00%      0k  2,000k  0.00%
+depot    example  92.0MB    1.0TB     1%       -       -      -
+```
 
-* flost
+### flost
 
-    RCAC regularly backs up data in home and depot
-    spaces, so that if something is accidentally deleted
-    or overwritten, it can be recovered (if it's been
-    there sufficiently long). We have daily, weekly, and
-    monthly snapshots for varying amounts of time. If
-    you lost something in your scratch space, we don't
-    have backups of those, so you're out of luck.
+RCAC regularly backs up data in home and depot
+spaces, so that if something is accidentally deleted
+or overwritten, it can be recovered (if it's been
+there sufficiently long). We have daily, weekly, and
+monthly snapshots for varying amounts of time. If
+you lost something in your scratch space, we don't
+have backups of those, so you're out of luck.
 
-    ```
-   $ flost
-   This script will help you try to recover lost home or group directory contents.
-   NB: Scratch directories are not backed up and cannot be recovered.
+```
+$ flost
+This script will help you try to recover lost home or group directory contents.
+NB: Scratch directories are not backed up and cannot be recovered.
 
-   Currently anchoring the search under: $HOME
-   If your lost files were on a different filesystem, exit now with Ctrl-C and
-   rerun flost with a suitable '-w WHERE' argument (or see 'flost -h' for help).
+Currently anchoring the search under: $HOME
+If your lost files were on a different filesystem, exit now with Ctrl-C and
+rerun flost with a suitable '-w WHERE' argument (or see 'flost -h' for help).
 
-   Please enter the date that you lost your files: 2024-10-01
-    ```
+Please enter the date that you lost your files: 2024-10-01
+```
 
 Next Section: [Cluster Applications](./applications.md)
