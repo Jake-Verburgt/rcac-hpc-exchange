@@ -26,7 +26,7 @@ C = np.matmul(A, B)
 print(C.mean())
 ```
 
-!!! tip "copy/paste in the terminal":
+!!! tip "copy/paste in the terminal"
       
        To copy in a terminal, use `ctrl`+`shift`+`c`
       
