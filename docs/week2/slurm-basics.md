@@ -16,7 +16,7 @@ centers. It is a resource manager and a
 workload manager. Essentially, there are
 a finite number of compute nodes, many
 users of the system and even more jobs
-to be run. the scheduler tracks resource
+to be run. The scheduler tracks resource
 allocation requests and manages the
 execution of those jobs. Users package
 their work (directly or indirectly) into
@@ -148,10 +148,10 @@ Lastly, something you may want to specify is the
 *Quality of Service* (QoS) for the job. The QoS determines the priority and some constraints of your job. The two primary QoS values will be `normal` and `standby`:
 
 * The `normal` QoS gives your job increased priority, but subtracts from your accounts available resources. 
-   * `normal` jobs can run for up to 2 weeks.
+    * `normal` jobs can run for up to 2 weeks.
 
 * The `standby` QoS doesn't subtract from your accounts resources, but are given very low priority to run.
-   * `standby` jobs are only allowed to run up to 4 hours
+    * `standby` jobs are only allowed to run up to 4 hours
 
 
 ## Time and Resources
@@ -193,8 +193,7 @@ resource allocation request! This job ID number
 is helpful to note down as it can be used elsewhere.
 
 !!! note 
-    The output of your job will, by default, be saved in
-   files with this ID (e.g. `slurm-32209880.out`).
+    The output of your job will, by default, be saved in files with this ID (e.g. `slurm-32209880.out`).
 
 The job that we submitted requested 1 cores for 1
 hour from your lab's account, to the CPU part of

@@ -24,17 +24,18 @@ clusters.
 There are 6 main ways to get data and files onto and off of
 the clusters:
 
-1) Open on Demand
+1) Open OnDemand
 
-2) scp
+2) Globus
 
-3) sftp
+3) scp
 
 4) rsync
 
-5) SMB
+5) sftp
 
-6) Globus
+6) SMB
+
 
 ### Open OnDemand
 
@@ -45,6 +46,21 @@ what they can do. e.g. there is a file size limit of
 all, you're going to have a bad time.
 
 ![ood_transfer](../assets/images/ood_transfer.png)
+
+### Globus
+
+For transferring large data to the cluster, you will
+want to use the [Globus transfer service](https://transfer.rcac.purdue.edu). If you want to transfer files from your local machine
+to the cluster, you will need to install the [Globus Connect
+Personal](https://www.globus.org/globus-connect-personal) software on your local computer.
+
+From the Globus transfer service, you can select a source
+and a destination. It will handle the actual transferring
+of the file(s) for you, resuming if there's network
+connectivity problems.
+
+![globus_transfer](../assets/images/globus_transfer.png)
+
 
 ### SCP 
 
@@ -65,6 +81,16 @@ When copying from a cluster, the destination file will
 go into the directory you are currently in. You can also
 specify a path you want the destination file to go to.
 This path can be either relative, or absolute.
+
+### rsync
+
+`rsync` is similar to `scp`, but much more fully-featured.
+It includes features to auto-resume transfers in case of
+disconnection. It has the same format of arguments as `scp`,
+but has many more options, check them out with:
+```
+$ man rsync
+```
 
 ### sftp
 
@@ -96,16 +122,6 @@ the transferring on the side of your local computer will
 be relative to the directory you were in when you initiated
 the `sftp` session.
 
-### rsync
-
-`rsync` is similar to `scp`, but much more fully-featured.
-It includes features to auto-resume transfers in case of
-disconnection. It has the same format of arguments as `scp`,
-but has many more options, check them out with:
-```
-$ man rsync
-```
-
 
 ### SMB
 
@@ -116,19 +132,6 @@ back and forth to the clusters in a graphical way.
 To learn more about this option, please visit this
 site: [SMB drives](https://www.rcac.purdue.edu/knowledge/negishi/storage/transfer/cifs)
 
-### Globus
-
-For transferring large data to the cluster, you will
-want to use the [Globus transfer service](https://transfer.rcac.purdue.edu). If you want to transfer files from your local machine
-to the cluster, you will need to install the [Globus Connect
-Personal](https://www.globus.org/globus-connect-personal) software on your local computer.
-
-From the Globus transfer service, you can select a source
-and a destination. It will handle the actual transferring
-of the file(s) for you, resuming if there's network
-connectivity problems.
-
-![globus_transfer](../assets/images/globus_transfer.png)
 
 ## Helpful RCAC programs for file management 
 

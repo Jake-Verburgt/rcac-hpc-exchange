@@ -20,14 +20,13 @@ account and save it as `example.py`.
 ```python title="example.py" linenums="1"
 import numpy as np
 
-A, B = np.random.rand(2, 10_000, 10_000)
+A, B = np.random.rand(2, 5_000, 5_000)
 C = np.matmul(A, B)
 
 print(C.mean())
 ```
 
 !!! tip "copy/paste in the terminal"
-      
        To copy in a terminal, use `ctrl`+`shift`+`c`
       
        To paste in a terminal, use `ctrl`+`shift`+`v`
@@ -41,7 +40,7 @@ print(C.mean())
 
 
 This script creates two random matrices, of size
-ten thousand by ten thousand and multiplies them
+five thousand by five thousand and multiplies them
 together. It then prints out the mean of the
 resultant matrix. It's not useful scientifically
 but it does take some time for the computer to

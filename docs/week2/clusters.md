@@ -68,7 +68,7 @@ processors and Nvidia Tesla GPUs.
 
 Gilbreth is made up of many different node types that all
 have different GPUs associated with them, ranging from
-Nvidia V100s to A100s.
+Nvidia H100s to A100s.
 
 ## Scholar
 
