@@ -132,6 +132,7 @@ for i in {1..5}; do
 done
 ```
 
+Alternatively,
 
 ```bash
 for ((i=1; i<=5; i++)); do
@@ -188,7 +189,6 @@ done
 !!! warning
     * Spaces matter: `[ "$x" = 1 ]`, not `["$x"=1]`
     * Use quotes to avoid word splitting
-    * Prefer `[[ ]]` over `[ ]`
     * Remember: `0` means *success*
     * If a command fails, bash will continue to move on through the script!
 
