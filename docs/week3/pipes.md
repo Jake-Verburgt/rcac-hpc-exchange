@@ -43,25 +43,35 @@ to attach to files other than the console.
 | `>>  FILE` | Append `stdout` to `FILE` |
 | `2>  FILE` | Write `stderr` to `FILE` |
 | `2>> FILE` | Append `stderr` to `FILE` |
-| `|   PROGRAM` | Join `stdout` to `stdin` of `PROGRAM` |
+| |   PROGRAM` | Join `stdout` to `stdin` of `PROGRAM` |
 
-The following example redirects "Ooh, so scary!"
-from the console into the file `message.txt`.
-```
-$ boo > message.txt
+The following example redirects the `stdout` from our program (the "Hello, world!" text it prints) from the console into the file `message.txt`.
+
+```bash
+$ hello > message.txt
 ```   
 You can concatenate (print) the contents of
-files with the `cat` program
+files with the `cat` program:
+
+```bash
+$ cat message.txt
+Hello, world!
 ```
-   $ cat message.txt
-   Ooh, so scary!
+We can also use the output (`stdout`) of the `cat` program (again, the "Hello, World!" text) to the input (`stdin`) of another program with a pipe(`|`). We'll pass the input in the the `wc` "word count" program to count
+words, lines, chars, etc. with the `wc` program. We can pass the `stdout`
 ```
-To reduce output, you can count the number of
-words, lines, chars, etc. with the `wc` program.
+$ cat message.txt | wc --chars
+14
 ```
-   $ cat message.txt | wc --chars
-   15
-```
+
+??? question "How might we see how many files we have in our current directory?"
+    We could get a list of our files with `ls`, and  pass the output to `wc` to count the number of lines.
+
+    ```bash
+    ls | wc --lines
+    55
+    ```
+
 ### Useful programs
 
 | Program | Meaning |
@@ -75,3 +85,7 @@ words, lines, chars, etc. with the `wc` program.
 | `awk` | Streaming programming language (superpowers) |
 | `wc` | Reduce output by counting (words, lines, etc) |
 | `xargs` | Transpose output as positional arguments to next program |
+
+
+
+Next section: [Processes](./processes.md)

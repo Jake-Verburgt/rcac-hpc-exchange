@@ -2,8 +2,7 @@
 
 [Back to Week 3](./index.md)
 
-There are many things we can do to
-manage processes in the shell:
+There are many things we can do to manage processes in the shell:
 
 * Run more than one program by placing it in the background
 * Query running processes
@@ -13,12 +12,13 @@ manage processes in the shell:
 To run programs in the background, add
 a single trailing ampersand (`&`) to the
 command.
-```
+
+```bash
 $ sleep 600 &
 [1] 1298141
 
-$ echo "still here"
-still here
+$ echo "I still have control of my shell!"
+I still have control of my shell!
 ```
 Output from these "background-ed"
 programs is still streamed to the shell.
@@ -65,43 +65,50 @@ do?
 
 You can wait nicely for all jobs
 in the background to complete with
-the `wait` program. You can also
+the `wait` program. 
+
+```bash
+$ wait
+```
+
+You can also
 re-attach to background processes
-with the `fg` program. Lastly, you
+with the `fg` program. This code will bring the `sleep 600`
+program back to the foreground and
+will wait for it to finish before
+giving you back control of the
+command line.
+
+```bash
+$ sleep 600 &
+[1] 1240872
+$ fg
+sleep 600
+```
+
+You can also use `ctrl+z` to pause a job actively running in the shell, and then `bg` to resume it in the background:
+
+```bash
+$ sleep 600
+[ctrl+z]
+[1]+  Stopped                 sleep 600
+$ bg
+[1]+ sleep 600 &
+jobs
+[1]+  Running                 sleep 600 &
+```
+
+Lastly, you
 can interrupt processes with the
 `kill` command (using `%` for the
 relative PID).
 
-```
-$ wait
-
+```bash
 $ sleep 600 &
 [1] 222728
 
 $ kill -s int %1
 ```
-
-If you don't want to wait for a
-program to finish normally, you
-can send an interrupt signal with
-your keyboard. For Linux and Windows
-users, you press `Ctrl + c` and for
-Mac users, you press `Cmd + .*`.
-
-Once you send a program to the
-background, you can pull it back to
-the foreground by using the `fg` program:
-```
-   $ sleep 600 &
-   [1] 222747
-
-   $ fg %1
-```
-This code will bring the `sleep 600`
-program back to the foreground and
-will wait for it to finish before
-giving you back control of the
-command line.
 
 The `kill` program can technically
 send any signal to a program (despite
@@ -109,6 +116,8 @@ its ominous name). In the example above,
 we have sent the `int` signal to the
 first child process. This interrupts
 the process and tries to stop it.
+
+## Signals
 
 The UNIX *signal interrupt* mechanism is
 an important concept to understand in
@@ -136,3 +145,6 @@ before the walltime limit).
 | `kill` | Send a signal to a processes (usually to stop) |
 | `wait` | Wait for running background child processes to complete |
 | `fg` | Reattach to background process |
+
+
+Next section: [Managing Files and Directories](./files-directories.md)

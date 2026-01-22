@@ -47,10 +47,7 @@ options are:
 * `z` - gzip
 * `f` - file named the following. 
 
-The first argument is actually an extension of the `f`
-option, which tells `tar` what we want to name
-the archive. The second (and following)
-argument(s) tells `tar` what we want to archive.
+The first argument (`example-data.tar.gz`) is actually an extension of the `f` option, which tells `tar` what we want to name the archive. The second (and following) argument(s) tells `tar` what we want to archive.
 
 To undo the archiving, simple swap the `c`
 option for the `x` option (which stands for
@@ -65,18 +62,15 @@ $ tar -xvzf example-data.tar.gz
 The `zip` program is simpler to use, but
 often people prefer `tar` over `zip`.
 
-```
+```bash
 $ zip archive-name.zip example-data/
 $ unzip archive-name.zip
 ```
 
-As mentioned in earlier sections,
-file name extensions are usually
-meaningless in UNIX systems. However
-it is common to use `.tar.gz` to
-denote gzip-compressed tar archive
-files and `.zip` to denote archive
-files made with the `zip` program.
+!!! note "File name conventions"
+     As mentioned in earlier sections, file name extensions are usually meaningless in UNIX systems. However it is common to use `.tar.gz` to denote gzip-compressed tar archive files and `.zip` to denote archive files made with the `zip` program.
+
+## Compression
 
 Compressing a file is to take it and make
 it smaller, but unreadable (by humans).
@@ -89,7 +83,7 @@ usage and behavior. The three are:
 * `bzip2`
 * `xz`
 
-```
+```bash
 $ gzip *.txt
 $ cat *.gz | gunzip
  ```
@@ -117,11 +111,13 @@ down, 7-9 have higher compressor and
 decompressor memory requirements and are only
 useful when compressing larger files (> 16 MiB).
 
+## Finding Files
+
 When you have a lot of files, it can be useful
 to have a program to find files that match a
 pattern. To do this, use the `find` program.
 
-```
+```bash
 $ find ~ -type f -name "*.txt" | grep "example-data"
 ~/example-data/paper.txt
 ```
@@ -132,23 +128,23 @@ options, but these are special options that the
 they don't have two leading dashes even though
 they are longer than one letter). The first
 argument that we provided was the folder we
-want to search in, in this case our home
-directory. The `type` primary narrows down
+want to search in, in this case our home (`~`)
+directory. The `type` option narrows down
 what kind of listing the command will find.
 Putting `f` here narrows the search to just
 find regular files. The `name` primary
 filters the search to only list the files
 and such that follow the pattern given, in
-this case, everything that ends in `.txt`.
+this case, everything that ends in `.txt` (Remember that `*` is a wildcard that matches any number of any characters!).
 Finally, we pipe all the output to the `grep`
-program that filters output to only lines
+program (a program for "regular expression" pattern matching) that filters output to only lines
 containing the given argument (here
 `example-data`).
 
 This `find` program is a great way to initialize
 a pipeline for these kinds of management tasks.
 
-### Program reference
+### Useful Programs
 
 | Program | Action |
 |---|---|
@@ -158,3 +154,6 @@ a pipeline for these kinds of management tasks.
 | `bzip2/bunzip2` | Bzip compression |
 | `xz/unxz` | XZ (LZMA) compression |
 | `find` | Search for files |
+
+
+Continue to [Week 4](../week4/index.md)

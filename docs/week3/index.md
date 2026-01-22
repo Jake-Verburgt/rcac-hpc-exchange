@@ -5,6 +5,7 @@ Unix operating system, including scripting and managing different
 aspects of jobs you may run, such as processes, outputs, and files.
 
 * [Scripting](./scripting.md)
+* [Control Flow](./control-flow.md)
 * [Managing Processes](./processes.md)
 * [Pipes](./pipes.md)
 * [Files & Directories](./files-directories.md)

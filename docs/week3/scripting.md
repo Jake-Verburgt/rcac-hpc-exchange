@@ -9,7 +9,7 @@ concepts that we are going to discuss:
 * Where can scripts and other programs be stored?
 * Environment variables
 * Login profiles
-* Program exit status and control flow
+* Program exit status
 
 ## What is a shell script?
 
@@ -38,9 +38,9 @@ program, which just prints out the argument(s) to
 the console.
 
 !!! note "Quotes"
-    Bash (and other shells) often use whitespace to delimit arguments to programs. Quotations keep arguments with spaces together.
+     Bash (and other shells) often use whitespace to delimit arguments to programs. Quotations keep arguments with spaces together.
 
-    Double quotes and single quotes work differently in bash: double quotes allow expansion of variables and some other kinds of things, whereas single quotes are verbatim. Please use your command-line editor to copy this into a file named `hello.sh`.
+     Double quotes and single quotes work differently in bash: double quotes allow expansion of variables and some other kinds of things, whereas single quotes are verbatim. Please use your command-line editor to copy this into a file named `hello.sh`.
 
 
 A couple of helpful programs that you may want to
@@ -76,11 +76,11 @@ $ ./hello.sh
     Why did this happen? What can we do to check the permissions? Use the command `ls -l hello.sh` to see the permissions:
 
     ```
-    $ ls –l hello.sh
+    $ ls -l hello.sh
     -rw-r--r-- 1 username student 22 Oct 11 01:44 hello.sh
     ```
-    The file `hello.sh` doesn't have the **execute**
-    bit set, so we can't run it as a program.
+
+The file `hello.sh` doesn't have the **execute** bit set, so we can't run it as a program. Please feel free to refer to [Week 1 Filesystems](../week1/filesystem.md#permissions) for a refresher on permissions.
 
 You can change file and directory permissions
 using the `chmod` program:
@@ -93,18 +93,29 @@ $ ./hello.sh
 Hello, World!
 ```
 
-The `chmod` program allows you to add and remove read(`r`)/write(`w`)/execute(`x`) permissions for the user (`u`), group (`g`), and others (`o`) with the following syntax:
+This changes the execute permission from:
+
+<span class="perm-type">-</span><span class="perm-user">rw-</span><span class="perm-group">r--</span><span class="perm-other">r--</span>username student 34 Jan 22 14:13 hello.sh
+
+to 
+
+<span class="perm-type">-</span><span class="perm-user">rwx</span><span class="perm-group">r-x</span><span class="perm-other">r-x</span>username student 34 Jan 22 14:13 hello.sh
+
+
+For a quick refresher on what permissions are, take a look at [Navigating Filesystems](../week1/filesystem.md#permissions) from week 1.
+
+The `chmod` program allows you to add and remove read(`r`)/write(`w`)/execute(`x`) permissions for the <span class="perm-user">user</span> (`u`), <span class="perm-group">group</span> (`g`), and <span class="perm-other">others</span> (`o`) with the following syntax:
 
 ```bash
 chmod [ugo][-+][rwx] file
 ```
 
+
 ??? question "How would we remove read permissions on a
 file for both the file *group* and *others*?"
-
-```
-chmod go-r file.sh
-```
+     ```
+     chmod go-r file.sh
+     ```
 
 
 ## `$PATH` variable 
@@ -118,7 +129,7 @@ hello.sh: command not found
 
 In order for a shell to be able to find this little program and use it as a command, we need to add the directory it is located in to be part of our `PATH` variable. (We'll talk more on shell variables in a bit).
 
-Essentially,the `PATH` variable controls where the shell looks for executables. You can see all the directories that are searched for commands with the following command:
+Essentially,the `PATH` variable controls where the shell looks for executable programs to run as commands. You can see all the directories that are searched for commands with the following command:
 
 ```bash
 echo $PATH
@@ -145,9 +156,9 @@ Hello, World!
     Also, remember that file extensions are optional in UNIX (you can remove the `.sh` from the file name).
 
 ??? question "What happens if we close the shell and reopen it?"
-    It doesn't matter if we change directories, but the change to our `PATH` variable is not kept if we close the shell.
+     It doesn't matter if we change directories, but the change to our `PATH` variable is not kept if we close the shell.
 
-      There is a file called the `.bashrc` file that you can add the `export PATH=$PATH:~/bin` command, which will be ran whenever you open a terminal!
+     There is a file called the `.bashrc` file that you can add the `export PATH=$PATH:~/bin` command to, which will be ran whenever you open a terminal!
 
 ## Environment variables
 
@@ -169,70 +180,107 @@ by environment variables.
 
 ### Simple variables
 
-They are like other programming languages, and you can define them yourself! There are no types (mostly everything is text)
+They are like other programming languages, and you can define them yourself! There are no types (mostly everything is text).
 
 Simple assignment:
 ```bash
 x=1
 y=foo
 ```
+
+You can access the variable with with the `$var` or `${var}`:
+
+```bash
+echo $x
+1
+echo ${y}
+foo
+```
+
 Variables are *conventionally* uppercase, but
 it's not necessary.
-```
+
+```bash
 NAME="some data"
 ```
 Variables are just dumb text, unlike other
 programming languages. While there are some
 exceptions, there are no complex data
 structures.
-```
+
+```bash
 MYDATA=1,2,3
 ```
-And since it's all just text, there's limited
-syntax.
-```
-OTHER=1+2.3
-```
+
 There is also a weird thing where 0 is true
 and 1 is false, which we will discuss later.
-```
+
+```bash
 COND=1
 ```
+
+Lastly, you can use **Command substitution** to set a variable to the output of a command:
+
+```bash
+HOST=$(hostname -f)
+```
+
+---
+
 Variables also have a scope. If you define
 a variable, it is only visible in local
 scope (current script) by default.
-```
+
+```bash
 X=true
 ```
+
+
 To propagate the variable down to child
 processes, you need to `export` it.
-```
+
+```bash
 export X
 ```
+
 You can also declare the variable and export
 it on the same line.
-```
+
+```bash
 export THING=0
 ```
 You can also declare multiple variables on
 one line.
-```
+
+```bash
 export THING=0 DATASET=foo.in
 ```
+
+
 ### Magic variables
 
 There are a couple of "magic" variables which
 are not like other programming languages.
-```
+
+```bash
 echo $RANDOM
 ```
 Will always give you a random value, even if
 you set it to be something else.
 
+
+```bash
+echo $SECONDS
+```
+Will print the number of seconds that have passed since the shell has been opened. 
+
+
 ### Special variables
 
 There are many different special variables
 you can use.
+
+
 | Variable | Meaning |
 |---|---|
 | `$0` ... `$99` | x-th argument of script/function |
@@ -262,7 +310,7 @@ As we discussed earlier, the `PATH` variable is reset
 every time you log into the cluster, or open a new
 terminal. What if we wanted to have it be modified
 every time we started a new session? There's a
-solution for that! It's called a **login profile**
+solution for that! It's called a **login profile**!
 Typically, on Linux you would use the `~/.bashrc`
 file, but on the UNIX system we have on the clusters
 it's contained in the `~/.bash_profile` hidden file.
@@ -278,12 +326,25 @@ alias Negishi='ssh username@.negishi.rcac.purdue.edu'
 export PATH=$PATH:$HOME/bin
 ```
 
+
+Let's go ahead and make that now:
+
+```bash
+cd ~
+vim .bashrc
+#or
+vim .bash_profile
+# copy/paste the bashrc contents!
+```
+
 There are many things you can put in the login
 profile to configure your personal session, but
-three that we are going to talk about are:
+the two that we are going to talk about are:
 
 * Aliases
 * Variables
+
+### Aliases
 
 An alias is a verbatim command substitution that
 happens on the command line when invoked like a program.
@@ -296,8 +357,11 @@ Which would make sure that every time you run the
 other programs will not recognize aliases as
 commands.
 
+### Variables
+
 You can also add variables (like `PATH`) to your
 login profile.
+
 ```bash
 export PATH=$PATH:$HOME/bin
 ```
@@ -345,3 +409,5 @@ $ false
 $ echo $?
 1
 ```
+
+Next section: [Control Flow](./control-flow.md)
