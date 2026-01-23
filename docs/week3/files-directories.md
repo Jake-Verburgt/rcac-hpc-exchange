@@ -42,16 +42,16 @@ In the example above, we supplied four options
 to the `tar` program and two arguments. The
 options are:
 
-* `c` - compress
+* `c` - create 
 * `v` - verbose
-* `z` - gzip
+* `z` - gzip (compress)
 * `f` - file named the following. 
 
 The first argument (`example-data.tar.gz`) is actually an extension of the `f` option, which tells `tar` what we want to name the archive. The second (and following) argument(s) tells `tar` what we want to archive.
 
-To undo the archiving, simple swap the `c`
+To undo the archiving, simply swap the `c`
 option for the `x` option (which stands for
-extract)L
+extract):
 
 ```bash
 $ tar -xvzf example-data.tar.gz
@@ -63,7 +63,7 @@ The `zip` program is simpler to use, but
 often people prefer `tar` over `zip`.
 
 ```bash
-$ zip archive-name.zip example-data/
+$ zip -r archive-name.zip example-data/
 $ unzip archive-name.zip
 ```
 
@@ -79,37 +79,34 @@ compress individual files and streams
 and they all have nearly identical
 usage and behavior. The three are:
 
-* `gzip`
-* `bzip2`
-* `xz`
+* `gzip` (fast, very common)
+* `bzip2` (usually compresses smaller than gzip, but slower)
+* `xz` (often the smallest files, but slowest / most CPU-heavy)
+
+#### `gzip` (`.gz`)
 
 ```bash
 $ gzip *.txt
 $ cat *.gz | gunzip
- ```
+```
+
+#### `bzip2` (`.bz2`)
+
+```bash
+bzip2 file.txt
+bunzip2 file.txt.bz2
+```
+
+#### `xz` (`.xz`)
+
+```bash
+xz file.txt
+unxz file.txt.xz
+```
 
 Compressed data from these programs can be
 stacked safely and decompressed in
 concatenated form.
-
-What levels of compression are available
-for these programs? Do these levels mean the
-same thing across all three?
-
-* `gzip`: options 1-9, 1 being fastest with
-the least compression, 9 being slowest with
-most optimal compression.
-
-* `bzip2`: options 1-9, choose the block size
-of the file when compressing, 1 being 100 k
-and 9 being 900 k.
-
-* `xz`: options 0-9, 0-3 being somewhat fast
-presets, 4-6 offering good to very good
-compression while keeping memory requirements
-down, 7-9 have higher compressor and
-decompressor memory requirements and are only
-useful when compressing larger files (> 16 MiB).
 
 ## Finding Files
 

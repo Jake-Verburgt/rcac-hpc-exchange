@@ -43,7 +43,7 @@ to attach to files other than the console.
 | `>>  FILE` | Append `stdout` to `FILE` |
 | `2>  FILE` | Write `stderr` to `FILE` |
 | `2>> FILE` | Append `stderr` to `FILE` |
-| |   PROGRAM` | Join `stdout` to `stdin` of `PROGRAM` |
+| `|   PROGRAM` | Join `stdout` to `stdin` of `PROGRAM` |
 
 The following example redirects the `stdout` from our program (the "Hello, world!" text it prints) from the console into the file `message.txt`.
 
@@ -57,8 +57,8 @@ files with the `cat` program:
 $ cat message.txt
 Hello, world!
 ```
-We can also use the output (`stdout`) of the `cat` program (again, the "Hello, World!" text) to the input (`stdin`) of another program with a pipe(`|`). We'll pass the input in the the `wc` "word count" program to count
-words, lines, chars, etc. with the `wc` program. We can pass the `stdout`
+We can also use the output (`stdout`) of the `cat` program (again, the "Hello, World!" text) to the input (`stdin`) of another program with a pipe(`|`). We'll pass the output to the `wc` "word count" program which can count the words, lines, chars, etc of the provided input.
+
 ```
 $ cat message.txt | wc --chars
 14

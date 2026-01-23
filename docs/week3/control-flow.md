@@ -7,8 +7,9 @@ This page continues the Bash scripting tutorial by introducing **conditionals**,
 ---
 
 In Bash, **commands return an exit code**:
-- `0` → success (true)
-- non-zero → failure (false)
+
+* `0` → success (true)
+*  non-zero → failure (false)
 
 ```bash
 ls /tmp        # success → exit code 0
@@ -100,7 +101,7 @@ fi
 
 ```bash
 if [[ -f input.dat && -d /path/to/data ]]; then
-  echo "Input file exists and is non-empty"
+  echo "Input file and Data directory present!"
 fi
 ```
 
@@ -139,6 +140,7 @@ for ((i=1; i<=5; i++)); do
   echo "$i"
 done
 ```
+
 ---
 
 ### `while` Loops

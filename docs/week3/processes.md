@@ -29,10 +29,10 @@ are going.
 After the program is put in the
 background, the shell tells you
 two numbers. The first number is
-the relative process ID (PID),
+the relative job ID,
 relative to the number of child
 processes. The second number is
-the system PID.
+the system process ID (PID).
 
 You can check on your shell's
 child processes with the `jobs`
@@ -94,7 +94,7 @@ $ sleep 600
 [1]+  Stopped                 sleep 600
 $ bg
 [1]+ sleep 600 &
-jobs
+$ jobs
 [1]+  Running                 sleep 600 &
 ```
 
@@ -111,7 +111,7 @@ $ kill -s int %1
 ```
 
 The `kill` program can technically
-send any signal to a program (despite
+send *any* signal to a program (despite
 its ominous name). In the example above,
 we have sent the `int` signal to the
 first child process. This interrupts
@@ -122,7 +122,7 @@ the process and tries to stop it.
 The UNIX *signal interrupt* mechanism is
 an important concept to understand in
 software programming. You should know
-about the **SIGNINT**, **SIGTERM**, and
+about the **SIGINT**, **SIGTERM**, and
 **SIGKILL** signals, which are all
 interrupt signals with increasing amounts
 of force to the program.

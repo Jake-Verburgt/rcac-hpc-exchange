@@ -87,7 +87,7 @@ using the `chmod` program:
 
 ```bash
 $ chmod +x hello.sh
-$ ls –l hello.sh
+$ ls -l hello.sh
 -rwxr-xr-x 1 username student 22 Oct 11 01:44 hello.sh
 $ ./hello.sh
 Hello, World!
@@ -95,11 +95,11 @@ Hello, World!
 
 This changes the execute permission from:
 
-<span class="perm-type">-</span><span class="perm-user">rw-</span><span class="perm-group">r--</span><span class="perm-other">r--</span>username student 34 Jan 22 14:13 hello.sh
+<span class="perm-type">-</span><span class="perm-user">rw-</span><span class="perm-group">r--</span><span class="perm-other">r--</span> username student 34 Jan 22 14:13 hello.sh
 
 to 
 
-<span class="perm-type">-</span><span class="perm-user">rwx</span><span class="perm-group">r-x</span><span class="perm-other">r-x</span>username student 34 Jan 22 14:13 hello.sh
+<span class="perm-type">-</span><span class="perm-user">rwx</span><span class="perm-group">r-x</span><span class="perm-other">r-x</span> username student 34 Jan 22 14:13 hello.sh
 
 
 For a quick refresher on what permissions are, take a look at [Navigating Filesystems](../week1/filesystem.md#permissions) from week 1.
@@ -111,8 +111,7 @@ chmod [ugo][-+][rwx] file
 ```
 
 
-??? question "How would we remove read permissions on a
-file for both the file *group* and *others*?"
+??? question "How would we remove read permissions on a file for both the file *group* and *others*?"
      ```
      chmod go-r file.sh
      ```
@@ -315,11 +314,11 @@ Typically, on Linux you would use the `~/.bashrc`
 file, but on the UNIX system we have on the clusters
 it's contained in the `~/.bash_profile` hidden file.
 
-```bash  title="/home/username/.bashrc" linenums="1"
+```bash  title="/home/username/.bashrc (or .bash_profile)" linenums="1"
 
 #aliases
 alias rm="rm -i"
-alias Negishi='ssh username@.negishi.rcac.purdue.edu'
+alias Negishi='ssh username@negishi.rcac.purdue.edu'
 
 
 #variable exports
@@ -334,7 +333,7 @@ cd ~
 vim .bashrc
 #or
 vim .bash_profile
-# copy/paste the bashrc contents!
+# copy/paste the bashrc/bash_profile contents!
 ```
 
 There are many things you can put in the login
