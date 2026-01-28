@@ -1,9 +1,10 @@
-# Job history
+# Job History
 
-Let's submit a job again with
-`sbatch` and check on it with
-`squeue`.
-```
+[Back to Week 4](./index.md)
+
+Let's submit a job again with `sbatch` and check on it with `squeue`.
+
+```bash
 $ sbatch example.sh
 Submitted batch job 19823415
 
@@ -14,13 +15,10 @@ JOBID     USER      ACCOUNT    NAME       NODES  CPUS   TIME_LIMIT  ST  TIME
 $ squeue --me
 JOBID     USER      ACCOUNT    NAME       NODES  CPUS   TIME_LIMIT  ST  TIME
 ```
-Notice that the job disappeared
-from the output of `squeue` after
-completion. How can we check on jobs
-after they've disappeared here? If
-you know the job ID, you can always
-run `jobinfo`:
-```
+
+Notice that the job disappeared from the output of `squeue` after completion. How can we check on jobs after they've disappeared here? If you know the job ID, you can always run `jobinfo`:
+
+```bash
 $ jobinfo 19823415
 Name       : example.sh
 User       : username
@@ -31,16 +29,14 @@ Cores      : 4
 GPUs       : 0
 State      : COMPLETED
 ExitCode   : 0:0
+...
 ```
 
-But how do we query the full job
-history?
+But how do we query the full job history?
 
-We can use the `sacct` program to
-search deeper into our job history.
-See `man sacct` for details, but
-`-X -a` are recommended options:
-```
+We can use the `sacct` program to search deeper into our job history:
+
+```bash
 $ sacct -u username
 JobID           Jobname  Partition    Account  AllocCPUS      State ExitCode
 ------------ ---------- ---------- ---------- ---------- ---------- --------
@@ -53,30 +49,35 @@ JobID           Jobname  Partition    Account  AllocCPUS      State ExitCode
 ...
 ```
 
-Quiz: How can we limit output to
-a specific range in time? Are there
-other fields we can display?
+The `sacct` program is highly malleable, with many options for data filtering and output:
 
-* Use the `-S/--starttime` and
-   `-E/--endtime` options to control
-   the window of time shown. The other
-   fields can be found by running
-   `sacct \-\-helpformat`.
+| Flag | Description | Example Usage |
+|------|-------------|---------------|
+| `-a` | Show jobs for **all users** (not just your own) | `sacct -a` |
+| `-X` | Exclude **job steps**, show only top-level jobs | `sacct -X` |
+| `-j` | Query **specific job(s)** by JobID | `sacct -j 12345,12346` |
+| `-u` | Filter by **user** | `sacct -u jsmith` |
+| `-A` | Filter by **account** | `sacct -A rcac-gpu` |
+| `-P` | Output **pipe-delimited** format (script-friendly) | `sacct -P -n` |
+| `-S` | Start time (inclusive) | `sacct -S 2026-01-01` or `sacct -S now-30days` |
+| `-E` | End time (inclusive) | `sacct -E 2026-01-31` |
+| `-o` | Select **custom output fields** | `sacct -o JobID,User,State,Elapsed` |
+| `-s` | Filter by **job state** | `sacct -s COMPLETED,FAILED` |
+| `-r` | Filter by **partition** | `sacct -r gpu` |
+| `-T` | Show **timestamps** instead of elapsed durations | `sacct -T` |
 
-You can use the `--name` option
-or many others like it to filter
-for specific jobs. See `man sacct`
-for more details.
 
-An example of a job search that is
-only for a specific username with a
-specific submission account would be::
+An example of a job search that is only for a specific username with a specific submission account would be:
+
+```bash
+$ sacct -X -u username -A lab_queue -o JobID,JobName,User,State,Elapsed,NodeList`
+
+JobID           JobName      User      State    Elapsed        NodeList 
+------------ ---------- --------- ---------- ---------- --------------- 
+33251396       myjob.sh  username  COMPLETED   00:00:12            a006 
+33251564       myjob.sh  username  COMPLETED   00:00:11            a004 
 ```
-$ sacct -aX -u username -A lab_queue
-```
-This shows you what jobs you have run
-with the `lab_queue` account.
 
-How do we control output fields?
-* Use the `-o/--format` option
-   to control what fields are outputted.
+This shows you what jobs you have run with the `lab_queue` account.
+
+**Next section:** [Resource Utilization and Monitoring](utilization-monitoring.md)

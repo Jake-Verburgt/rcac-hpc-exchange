@@ -9,7 +9,7 @@ utilization of your jobs. Lastly, we will end with a quick foray
 into managing the workloads of many-task computing.
 
 * [Storage & Transfers](./storage-transfer.md)
-* [Multi-Node & Topology](./multinode-topology.md)
 * [Job History](./job-history.md)
 * [Utilization & Monitoring](./utilization-monitoring.md)
 * [Workload Management](./workload-management.md)
+* [Multi-Node & Topology](./multinode-topology.md)

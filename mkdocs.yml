@@ -25,17 +25,17 @@ nav:
   - Week 3:
       - Overview: week3/index.md
       - Scripting: week3/scripting.md
-      - Control Flow: week3/control-flow.md
+      # - Control Flow: week3/control-flow.md
       - Pipes: week3/pipes.md
       - Managing processes: week3/processes.md
       - Files & directories: week3/files-directories.md
   - Week 4:
       - Overview: week4/index.md
       - Storage & transfers: week4/storage-transfer.md
-      - Multinode & topology: week4/multinode-topology.md
       - Job history: week4/job-history.md
       - Utilization & monitoring: week4/utilization-monitoring.md
       - Workload management: week4/workload-management.md
+      - Multinode & topology: week4/multinode-topology.md
   - Reference:
       - Cheatsheet: reference/command-cheatsheet.md
       - Glossary: reference/glossary.md

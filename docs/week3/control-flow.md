@@ -40,8 +40,6 @@ fi
 
 ## Test Expressions
 
-### File Tests
-
 | Test | Meaning |
 |-----|--------|
 | `-f file` | Regular file exists |

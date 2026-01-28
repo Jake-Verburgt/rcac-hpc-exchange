@@ -20,9 +20,6 @@ this is called *standard output*. The shell
 defines `stdin`, `stdout`, and `stderr` for
 every program.
 
-File descriptors are integers that are used
-by processes to attach to open files.
-
 ### Standard file descriptors
 
 | # | Common name | Description |
@@ -30,6 +27,9 @@ by processes to attach to open files.
 | `0` | `stdin` | Attached to programs for input data |
 | `1` | `stdout` | Attached to programs for output data |
 | `2` | `stderr` | Attached as a secondary output for errors |
+
+
+
 
 You can also redirect these file descriptors
 to attach to files other than the console.
@@ -72,7 +72,11 @@ $ cat message.txt | wc --chars
     55
     ```
 
-### Useful programs
+
+
+
+
+<!-- ### Useful programs
 
 | Program | Meaning |
 |---|---|
@@ -84,7 +88,7 @@ $ cat message.txt | wc --chars
 | `grep/sed` | Filter/modify input based on regular expression |
 | `awk` | Streaming programming language (superpowers) |
 | `wc` | Reduce output by counting (words, lines, etc) |
-| `xargs` | Transpose output as positional arguments to next program |
+| `xargs` | Transpose output as positional arguments to next program | -->
 
 
 

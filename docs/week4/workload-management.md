@@ -1,240 +1,198 @@
-# Managing workloads and jobs
+# Managing Workloads and Multiple Jobs
 
-In this last section, we will discuss
-how to manage many-task workflows. Because,
-we often want to run lots of things,
-especially the same thing on many inputs.
+[Back to Week 4](./index.md)
 
-There's two main paradigms that we can
-adhere to when talking about workload
-management:
 
-* Submit lots of separate jobs
-* Submit one job with many tasks inside (pilot job)
+Managing workloads and jobs is a crucial aspect of high-performance computing. In this section, we will discuss how to manage many-task workflows.
 
-Both approaches can be handled many
-different ways. We will only go over
-a few in this workshop.
+## Introduction
+In many cases, researchers need to run the same task multiple times with different inputs. There are two main paradigms for managing such workloads:
+1. **Submit lots of separate jobs**: This approach involves submitting each task as a separate job.
+2. **Submit one job with many tasks inside**: This approach involves submitting a single job that runs multiple tasks.
 
-One approach is to build a job flow
-script that just submits lots of jobs
-into different directories. Be sure to
-modify our job script to instead rely on
-the `SLURM_JOB_NAME` environment variable
-for the directory. For this, we need two
-files: The submitter and the worker.
+## Lots of separate jobs
 
-The submitter we will call `submit.sh`
-and should look like this::
+If we want to submit many separate jobs, we could simply run `sbatch` on many different job scripts:
+
+```bash
+sbatch job1.sh
+sbatch job2.sh
+sbatch job3.sh
+...
 ```
+
+Alternatively, if our job script is able to take arguments as input, we could reuse the same job submission script, and just change the input:
+
+```bash
+
+sbatch job.sh input_1
+sbatch job.sh input_2
+sbatch job.sh input_3
+...
+```
+
+In either case, manually typing out `sbatch` for each of our jobs is tedious, and prone to user error. We can instead make a script that runs on the front-end to handle job submission for us. 
+
+To do this, we need two files:
+* A submitter script (`submit.sh`) that submits the jobs.
+* A worker script (`myjob.sh`) that runs the tasks.
+
+
+![Diagram showing how a submitter script can submit multiple jobs to slurm](../assets/images/individual_jobs.png)
+
+
+### Submitter Script
+The submitter script that submits 30 jobs with 30 different names would look like this:
+
+```bash title="submit.sh" linenums="1"
 #!/bin/bash
 
 for step in {01..30}
 do
-    sbatch example.sh -J example-${step}
+  sbatch myjob.sh --job-name=example-${step}
 done
 ```
-For the worker, we will edit the
-`example.sh` submission script we
-had earlier to use the new paradigm::
-```
-   #!/bin/bash
-   #SBATCH -A lab_queue -p cpu -q standby
-   #SBATCH -c 128 -t 00:10:00
 
-   module load conda
-   module load monitor
-
-   mkdir -p ${SCRATCH}/${SLURM_JOB_NAME}
-   cd ${SCRATCH/${SLURM_JOB_NAME}
-
-   cp ~/example.sh ~/example.py ./
-
-   monitor cpu percent --csv > cpu_per.csv &
-   monitor cpu memory --csv > cpu_mem.csv &
-   python example.py > results.out
-
-   cd ..
-   htar -cvf ${SLURM_JOB_NAME}.tar ${SLURM_JOB_NAME}/
-```
-
-   If you faced the Numpy missing issue
-   earlier, we need to have our Conda
-   enviornment activated in our submission
-   script
-```
+### Worker Script
+The worker script should look like this:
+```bash title="myjob.sh" linenums="1" hl_lines="7 14-15"
 #!/bin/bash
-#SBATCH -A lab_queue -p cpu -q standby
-#SBATCH -c 128 -t 00:10:00
+#SBATCH  --account=hpcexc
+#SBATCH  --partition=cpu
+#SBATCH  --qos=normal
+#SBATCH  --time=0-1:00:00
+#SBATCH  --nodes=1
+#SBATCH  --cpus-per-task=1
 
 module load conda
 conda activate example
-module load monitor
+echo "Running with the python interpreter: $(which python)"
 
+#Lets move to our scratch directory to do computational work
 mkdir -p ${SCRATCH}/${SLURM_JOB_NAME}
 cd ${SCRATCH}/${SLURM_JOB_NAME}
 
-cp ~/example.sh ~/example.py ./
-
-monitor cpu percent --csv > cpu_per.csv &
-monitor cpu memory --csv > cpu_mem.csv &
-python example.py > results.out
-
-cd ..
-htar -cvf ${SLURM_JOB_NAME}.tar ${SLURM_JOB_NAME}/
+python ~/example.py > results.out # Write the output into our current directory
+echo "Python script done at $(date)!"
 ```
-We've only modified the areas of the
-script that were affected by the
-working directory name that we
-created to hold job outputs. Whatever
-we give for the job name will now
-result in that directory being created
-and used in Scratch. See the *file pattern*
-section of the *manual page* for details.
 
-We don't have to submit this one, but to
-submit it, we would run the `submit.sh`
-file as a program
-```
+Notice that we create and work in a different directory in our scratch based on the current job name. The first job that gets submitted would get a job name `example-01`, and would make the directory `/scratch/user/example-01`, the second job would make `/scratch/user/example-02`, and so on.
+
+
+
+We don't have to submit this one, but to submit it, we would run the `submit.sh` file as a program:
+
+```bash
 $ ./submit.sh
 Submitted batch job 209526
 Submitted batch job 209527
 Submitted batch job 209528
 ...
 ```
-This will create 30 different scratch folders
-named `example-01` to `example-30`, copy all
-relevant files there, run the python script
-30 times and bundle all the folders up to
-send to Fortress.
 
-We can also use something called "Slurm
-job arrays" to automate our workflow.
-This way, we can submit a single job instead
-of manually submitting many copies.
-The job is duplicated and runs `N` times
-with only `SLURM_ARRAY_TASK_ID` environment
-variable different.
+This will create 30 different scratch folders named `example-01` to `example-30`, and run a different instance of python in each directory.
 
-Create a new submission script called
-`array.sh` and copy in:
-```
+
+!!! note "Slurm Environment Variables"
+     You've probably seen us use `slurm` variables within some of the job scripts. `slurm` sets these variables when it starts our job in the login node, and can be useful for gathering information about the running job. In the example above, we made directories based on the job name, which we accessed with the `${SLURM_JOB_NAME}` variable. Below is an incomplete list of `slurm` variables that we can use, some of which we will use later. 
+
+     | Variable | Description |
+     |----------|-------------|
+     | `SLURM_JOB_ID` | Unique ID of the current job allocation |
+     | `SLURM_JOB_NAME` | Job name specified by `--job-name` |
+     | `SLURM_JOB_NODELIST` | Nodes assigned to the job (compact form) |
+     | `SLURM_JOB_NUM_NODES` | Number of nodes allocated |
+     | `SLURM_NTASKS_PER_NODE` | Tasks per node |
+     | `SLURM_CPUS_PER_TASK` | CPUs allocated per task |
+     | `SLURM_PROCID` | MPI rank / global task ID |
+     | `SLURM_LOCALID` | Task’s local rank on its node |
+     | `SLURM_NODEID` | Node index within allocation |
+     | `SLURM_SUBMIT_DIR` | Directory job was submitted from |
+     | `SLURM_SUBMIT_HOST` | Host where `sbatch` was run |
+     | `SLURM_CLUSTER_NAME` | Slurm cluster name |
+     | `SLURMD_NODENAME` | Hostname of current compute node |
+     | `SLURM_ARRAY_TASK_ID` | ID of a task in a slurm job array |
+
+
+
+
+### Slurm Job Arrays
+
+Another way to manage many-task workflows is to use Slurm job arrays. This way, we can submit a single job instead of manually submitting many copies. The job is duplicated and runs `N` times with only `SLURM_ARRAY_TASK_ID` environment variable different.
+
+Following is an example script that uses Slurm job arrays. Copy it into a file named `array.sh`
+```bash title="array.sh" linenums="1" hl_lines="7 14-16"
 #!/bin/bash
-#SBATCH -A lab_queue -p cpu -q standby
-#SBATCH -c 128 -t 00:10:00
-#SBATCH -a 1-30
-
-module load conda
-module load monitor
-
-site=example-${SLURM_ARRAY_TASK_ID}
-mkdir -p ${SCRATCH}/${site}
-cd ${SCRATCH/${site}
-
-cp ~/array.sh ~/example.py ./
-
-monitor cpu percent --csv > cpu_per.csv &
-monitor cpu memory --csv > cpu_mem.csv &
-python example.py > results.out
-
-cd ..
-htar -cvf ${site}.tar ${site}/
-```
-
-   If you faced the Numpy missing issue
-   earlier, we need to have our Conda
-   environment activated in our submission
-   script:
-```
-#!/bin/bash
-#SBATCH -A lab_queue -p cpu -q standby
-#SBATCH -c 128 -t 00:10:00
-#SBATCH -a 1-30
+#SBATCH  --account=hpcexc
+#SBATCH  --partition=cpu
+#SBATCH  --qos=normal
+#SBATCH  --time=0-1:00:00
+#SBATCH  --nodes=1
+#SBATCH  --cpus-per-task=1
+#SBATCH --array=1-30
 
 module load conda
 conda activate example
-module load monitor
+echo "Running with the python interpreter: $(which python)"
 
 site=example-${SLURM_ARRAY_TASK_ID}
 mkdir -p ${SCRATCH}/${site}
 cd ${SCRATCH}/${site}
 
-cp ~/array.sh ~/example.py ./
-
-monitor cpu percent --csv > cpu_per.csv &
-monitor cpu memory --csv > cpu_mem.csv &
-python example.py > results.out
-
-cd ..
-htar -cvf ${site}.tar ${site}/
+python ~/example.py > results.out # Write the output into our current directory
+echo "Python script done at $(date)!"
 ```
-This will submit an array of 30 jobs
-to do the same task many times and
-save the output in different directories.
 
-These examples are only the beginning,
-the mechanics of a job array can get
-a lot more sophisticated from here.
+This will submit an array of 30 jobs to do the same task many times and save the output in different directories.
 
-However, there are limitations on
-what you can do by submitting many
-jobs at the same time. For one, it
-clogs our database if you submit too
-many jobs. For this reason, we ask that
-you prefer use the pilot job paradigm.
-This is where you request one job and
-run many tasks inside that job.
+These examples are only the beginning, the mechanics of a job array can get a lot more sophisticated from here.
 
-One naive example of this would be
-the following job script:
-```
+However, there are limitations on what you can do by submitting many jobs at the same time. For one, it clogs our database if you submit too many jobs. For this reason, we ask that you prefer use the pilot job paradigm. This is where you request one job and run many tasks inside that job.
+
+## Pilot Job Paradigm
+
+The pilot job paradigm involves submitting a single job that runs multiple tasks. This approach is useful when we need to run many tasks with different inputs.
+
+![Diagram showing a pilot job of 5 python processes getting submitted to slurm](../assets/images/pilot_job.png)
+
+
+One naive example script that uses the pilot job paradigm:
+
+```bash title="example.sh" linenums="1" hl_lines="7-8 18-22 24"
 #!/bin/bash
-#SBATCH -A lab_queue -p cpu -q standby
-#SBATCH -c 128 -t 00:10:00
+#SBATCH  --account=hpcexc
+#SBATCH  --partition=cpu
+#SBATCH  --qos=normal
+#SBATCH  --time=0-1:00:00
+#SBATCH  --nodes=1
+#SBATCH  --tasks-per-node=5
+#SBATCH  --cpus-per-task=1
 
 module load conda
 conda activate example
+echo "Running with the python interpreter: $(which python)"
 
 site=example-naive
 mkdir -p ${SCRATCH}/${site}
 cd ${SCRATCH}/${site}
 
-cp ~/array.sh ~/example.py ./
-
-python example.py > results1.out &
-python example.py > results2.out &
-python example.py > results3.out &
+python ~/example.py > results1.out &
+python ~/example.py > results2.out &
+python ~/example.py > results3.out &
+python ~/example.py > results4.out &
+python ~/example.py > results5.out &
 
 wait
-
-cd ..
-htar -cvf ${site}.tar ${site}/
+echo "All jobs completed!"
 ```
-This just manually runs our workflow
-multiple times and saves the results
-to a different output file each time.
-You could extend this to doing multiple
-different workflows in tandem, as long
-as they fit within the job (RAM and CPUs)
-you can do whatever you want with the
-resources.
 
-Note:
-* This is NOT real science, we're just doing
-   the same thing 3 times. In reality, you
-   would want to do this (usually) with different
-   inputs, so you can get different tasks done.
+This just manually runs our workflow multiple times and saves the results to a different output file each time. You could extend this to doing multiple different workflows in tandem, as long as they fit within the job (RAM and CPUs) you can do whatever you want with the resources.
 
-There are many tools out there for automating
-computing of many tasks with the pilot
-job paradigm. Two examples are:
-HTCondor and HyperShell. They both
-achieve the task of computing many
-things using a single Slurm job
-and each have different features.
+There are many tools out there for automating computing of many tasks with the pilot job paradigm. Two examples are: HTCondor and HyperShell. They both achieve the task of computing many things using a single Slurm job and each have different features.
 
-The challenges of *high-throughput*,
-**many-task** computing like this
-are becoming more common. If you have
-more questions, you can always submit a
-ticket to [our ticketing system](rcac-help@purdue.edu). 
+## Conclusion
+Managing **high-throughput** and **many-task** workflows is an important aspect of high-performance computing. We can use various approaches, including submitting lots of separate jobs, using Slurm job arrays, or using the pilot job paradigm. Each approach has its own advantages and disadvantages, and the choice of approach depends on the specific requirements of your workflow.
+
+If you have more questions on this topic, you can always send an email to [our ticketing system](mailto:rcac-help@purdue.edu)
+
+**Next Section:** [Multinode topology](./multinode-topology.md)

@@ -69,7 +69,7 @@ file1.txt file2.txt file3.txt
 ```
 
 ```bash
-$ ls data_?.[ct]sv
+$ ls data?.[ct]sv
 data1.csv data2.tsv data3.csv
 ```
 

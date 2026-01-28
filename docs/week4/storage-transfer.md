@@ -1,229 +1,108 @@
-* File storage and transfers
+# File storage and transfers
+
+[Back to Week 4](./index.md)
+
+There are many places you can store your files to access them on the clusters:
+
+* Local (mountable)
+    * `/home`
+    * `/depot`
+    * `/scratch`
+    * `/tmp`
+
+* Indirect access
+    * `Fortress` (HPSS tape archive)
+    * `Ceph` (S3 object storage)
+
+* Cloud
+    * Box.com / REED
+    * GitHub (github.itap.purdue.edu)
+
+* Libraries
+    * PURR - research data repository providing data management, DOI, citation tracking
+
+Of these, only the **Local** and **Indirect access** options are directly available/mounted onto the clusters. The **Cloud** and **Libraries** are good places to store your files, but require more steps to get onto the clusters.
+
+## Local Storage
+
+![An image showing a filesystem tree highlighting the scratch, depot, home, and tmp locations](../assets/images/cluster_storage.png)
+
+### Home directory `$HOME`
+#### Path: `/home/username`
+
+Your home directory is small (only 25GB), it has mild performance and is cluster specific (it is shared between nodes of a cluster, but not across clusters). It is also mountable on your local computer as a network drive.
+
+Home directories are housed on redundant hardware, are **never purged** and are protected by snapshots. They are private to each user (they cannot be accessed by other members of your research group)
+
+Home directories are good for personal configuration files, software installation, scripts, etc. You can also store personal data and job files, if they're small enough. It's ok to run jobs against your home directory, but it's not good for heavy I/O scenarios. In short, it's good for medium to long term storage.
+
+### Depot directory
+#### Path: `/depot/<group_name>`
+
+The Data Depot is a group directory mounted on all Purdue community clusters. It is larger than your home directory (100GB free trial) and PI's can purchase additional space at $47/TB/year. It has reasonable performance with redundant hardware that is **never purged** and is protected by snapshots.
+
+It is **mounted on all clusters**, so you see the same data no matter which cluster you're using. You can also mount it as a network drive on your local computer.
+
+It is **owned by the PI** of the group and is **shared by group members**. It also offers fine-grained access controls.
+
+Importantly, you can use the data depot without any cluster purchase, if you need somewhere persistent to store your data.
+
+The Data Depot is good for shared configuration files, software installation, scripts, etc. You can store critical research data here to be shared amongst your group. It's ok to run jobs against but it's **not good for intensive I/O scenarios**. It is good for medium to long term storage.
+
+### Scratch directory `$CLUSTER_SCRATCH`, `$SCRATCH`, or `$RCAC_SCRATCH`
+
+#### Path: `/scratch/<cluster>/username`
+
+Your scratch directory is a high-performance directory on each cluster. It is huge (100+TB), however it does have a file number limit (in the millions), so make sure to not have a bunch of tiny files, use the `tar` and `zip` programs to bundle files together. It is highly performant, but cluster specific, in that it is shared across nodes in a cluster, but not across clusters. It is also mountable as a network drive on your local computer.
+It is also private per user, other members of your group cannot access it.
+
+The scratch system is internally redundant, so you don't have to worry about hardware failure corrupting your data, but files are not recoverable if deleted. It is also regularly purged of older files.
+
+Scratch directories are good for intermediate to massive data I/O, so are perfect for data intensive jobs. It is **NOT** for the primary copy of your data or software. And it is **NOT for long-term storage.** It is only for short-term storage of intermediate results.
+
+!!! warning
+     Beware of regular purging of older files. You can use the `purgelist` program to  tell you which files will be purged. Please do not try to game the system, as we will ban users who repeatedly do so. Just back older files up to Fortress instead of storing them on Scratch.
+
+### Temporary directory
+#### Path: `/tmp`
+
+There is a node-local `/tmp` directory on Purdue's community clusters. It is moderately large (200+GB) with good performance. However, there is zero redundancy and files are purged after your job on the node ends. There are no snapshots of data in the `/tmp` directory.
+
+It is node-local, i.e. each node of the cluster has its own `/tmp` that is world-readable (and sort of writable). It is what researchers used to use before the Scratch directory.
+
+It is good for node-local caching of data and files. It is **NOT** for valuable data or software and **NOT** for long-term storage. It is rarely needed, but priceless when you do need it. Unless you understand the tradeoffs, consider just using your Scratch directory.
 
 
-There are many places you can store
-your files to access them on the
-clusters:
+### Checking Access
 
-**Local (mountable)**
-
-* `/home`
-* `/depot`
-* `/scratch`
-* `/tmp`
-
-**Indirect access**
-
-* `Fortress` (HPSS tape archive)
-* `Ceph` (S3 object storage)
-
-**Cloud**
-* SharePoint
-* GitHub (github.itap.purdue.edu)
-
-**Libraries**
-
-* PURR - research data repository providing data management, DOI, citation tracking
-
-Of these, only the **Local** and
-**Indirect access** options are
-directly available/mounted onto
-the clusters. The **Cloud** and
-**Libraries** are good places to
-store your files, but require
-more steps to get onto the clusters.
-
-## Home directory
-
-
-**Environment variable**
-
-`$HOME`
-
-**Path**
-
-`/home/username`
-
-Your home directory is small (only
-25GB), it has mild performance and
-is cluster specific (it is shared
-between nodes of a cluster, but not
-across clusters). It is also mountable
-on your local computer as a network
-drive.
-
-Home directories are housed on
-redundant hardware, are never
-purged and are protected by
-snapshots. They are private to
-each user (they cannot be accessed
-by other members of your research group)
-
-Home directories are good for personal
-configuration files, software installation,
-scripts, etc. You can also store personal
-data and job files, if they're small enough.
-It's ok to run jobs against your home
-directory, but it's not good for heavy
-I/O scenarios. In short, it's good for
-medium to long term storage.
-
-## Depot directory
-
-**Path**
-
-`/depot/<group_name>`
-
-The Data Depot is a group directory
-mounted on all Purdue community
-clusters. It is larger than your
-home directory (100GB free trial)
-and it can grow in 1TB increments
-at \$47/TB/year. It has reasonable
-performance with redundant hardware
-that is never purged and is protected
-by snapshots.
-
-It is mounted on all clusters, so you
-see the same data no matter which cluster
-you're using. You can also mount it as a
-network drive on your local computer.
-
-It is owned by the PI of the group and
-is shared by group members. It also
-offers fine-grained access controls.
-
-Importantly, you can use the data depot
-without any cluster purchase, if you
-need somewhere persistent to store your
-data.
-
-The Data Depot is good for shared
-configuration files, software installation,
-scripts, etc. You can store critical
-research data here to be shared amongst
-your group. It's ok to run jobs against
-but it's not good for intensive I/O
-scenarios. It is good for medium to
-long term storage.
-
-## Scratch directory
-
-
-**Environment variable**
-
-`$CLUSTER_SCRATCH`, or `$SCRATCH`, or
-`$RCAC_SCRATCH`
-
-**Path**
-
-`/scratch/<cluster>/username`
-
-Your scratch directory is a high-performance
-directory on each cluster. It is huge (100+TB),
-however it does have a file number limit (in the
-millions), so make sure to not have a bunch of tiny
-files, use the `tar` and `zip` programs to bundle
-files together. It is highly performant, but cluster
-specific, in that it is shared across nodes in
-a cluster, but not across clusters. It is also
-mountable as a network drive on your local computer.
-It is also private per user, other members of
-your group cannot access it.
-
-The scratch system is internally redundant,
-so you don't have to worry about hardware
-failure corrupting your data, but files
-are not recoverable if deleted. It is also
-regularly purged of older files.
-
-Scratch directories are good for intermediate
-to massive data I/O, so are perfect for data
-intensive jobs. It is **NOT** for the primary
-copy of your data or software. And it is
-**NOT for long-term storage.** It is only for
-short-term storage of intermediate files.
-
-Warning!
-* Beware of regular purging of older files.
-   You can use the `purgelist` program to
-   tell you which files will be purged. Please
-   do not try to game the system, as we will
-   ban users who repeatedly do so. Just back
-   older files up to Fortress instead of storing
-   them on Scratch.
-
-## Temporary directory
-
-
-**Path**
-
-`/tmp/...`
-
-There is a node-local `/tmp` directory
-on Purdue's community clusters. It is
-moderately large (200+GB) with good
-performance. However, there is zero
-redundancy and files are purged after
-your job on the node ends. There are no
-snapshots of data in the `/tmp` directory.
-
-It is node-local, i.e. each node of the
-cluster has its own `/tmp` that is
-world-readable (and sort of writable). It
-is what researchers used to use before
-the Scratch directory.
-
-It is good for node-local caching of data
-and files. It is **NOT** for valuable data
-or software and **NOT** for long-term
-storage. It is rarely needed, but priceless
-when you do need it. Unless you understand
-the tradeoffs, consider just using your
-Scratch directory.
-
-## Fortress (tape archive)
-**Path**
-
-`/home/username`
-
-`/group/<group-name>`
-
-Fortress is our IBM HPSS system for
-long-term storage. It is huge (25PB) and
-is free up to a point. It's a tape system
-with a robotic arm. Its disk cache makes
-*writes* fast, but *reads* slow.
-
-It is replicated, redundant, and never purged.
-It is accessible from all clusters with
-specialized command-line tools, as well
-as mountable as a network drive for external
-machines. All Data Depot groups get a `/group`
-Fortress directory.
-
-Fortress is good for backing up (archiving)
-critical research data. It is good at storing
-large files **NOT for many small files**.
-It is **NOT** for running jobs agains. It is
-made as a slow, long-term storage for your
-critical data.
-
-We have used the `myquota` command before,
-but let's run it again to get started::
-```
+Reminder that you can use the `myquota` command to check your current usage on local storage locations!
+```bash
 $ myquota
-Type     Location     Size    Limit    Use   Files   Limit      Use
-===================================================================
-home     username    809KB   25.0GB  0.00%      -       -        -
-scratch  username     36KB  200.0TB  0.00%      0k  2,000k    0.00%
+Type       Location             Size    Limit    Use   Files   Limit    Use
+===========================================================================
+home       username           18.0GB   25.0GB  72.0%      -       -      - 
+scratch    username          670.8MB  200.0TB   0.0%  170.4K    2.0M   8.5%
+depot      labname             4.0MB  100.0GB   0.0%      -       -      - 
 ```
-To access Fortress and move files to/from it,
-use the `hsi/htar` programs. Use `hsi` interactively
-(similar to using `sftp`, with `ls, cd, get/put, ...`)
 
-.. code-block::
-```
+
+## Indirect Access
+
+### Fortress (HPSS tape archive)
+
+#### Path:`/home/username`, `/group/<group-name>`
+
+Fortress is our IBM HPSS system for long-term storage. It is huge (25PB) and is free up to a point. It's a tape system with a robotic arm. Its disk cache makes *writes* fast, but *reads* slow.
+
+It is replicated, redundant, and never purged. It is accessible from all clusters with specialized command-line tools, as well as mountable as a network drive for external machines. All Data Depot groups get a `/group` Fortress directory.
+
+Fortress is good for backing up (archiving) critical research data. It is good at storing large files **NOT for many small files**. It is **NOT** for running jobs against. It is made as a slow, long-term storage for your critical data.
+
+
+To access Fortress and move files to/from it,
+use the `hsi/htar` programs.
+
+```bash
 $ hsi
 ***************************************************************************
 **  No Fortress keytab found in your home directory.  Creating one now.  **
@@ -232,21 +111,13 @@ $ hsi
 ...
 [Fortress HSI]/home/username->
 ```
-Note:
-* The HSI interface is not a true shell and
-   only allows limited commands. It also doesn't
-   allow for tab-completion.
 
-We can use `hsi` to navigate the tape
-archive system. We can create, remove,
-rename, and directories "like normal".
-While in the `hsi` interface, use the
-`help` program for a listing of commands
-and what they do. Outside of the `hsi`
-interface, you can run `hsi help` to
-get the same information.
+!!! note
+     The HSI interface is not a true shell and only allows limited commands. It also doesn't allow for tab-completion.
 
-```
+We can use `hsi` to navigate the tape archive system. We can create, remove, rename, and directories "like normal". While in the `hsi` interface, use the `help` program for a listing of commands and what they do. Outside of the `hsi` interface, you can run `hsi help` to get the same information.
+
+```bash
 [Fortress HSI]/home/username->ls
 
 [Fortress HSI]/home/username->mkdir example
@@ -255,49 +126,39 @@ mkdir: /home/username/example
 [Fortress HSI]/home/username->cd example
 [Fortress HSI]/home/username/example->ls -lh
 ```
-Now let's remove the directory that we
-just created, we don't need it cluttering
-up our file system:
+
+Now let's remove the directory that we just created, we don't need it cluttering up our file system:
+
+```bash
+[Fortress HSI]/home/username/example->cd ..
+[Fortress HSI]/home/username->rm -r example
+Unknown option or missing argument: 'r' ignored
+*** Warning: '/home/carls113/example' is a directory - ignored
 ```
-   [Fortress HSI]/home/username/example->cd ..
-   [Fortress HSI]/home/username->rm -r example
-   Unknown option or missing argument: 'r' ignored
-   *** Warning: `/home/carls113/example' is a directory - ignored
+
+??? question "Why can't we remove this directory with `rm -r`? What command do we need to remove a directory?"
+     `rmdir example`
+
+Use `hsi put` and `hsi get` to copy data to and from the tape archive. Let's add our directory to the archive and try to get it back.
+
+```bash
+[Fortress HSI]/home/username->put -R example-data
+put 'example-data/paper.txt' : paper.txt
 ```
-Why can't we remove this directory
-with `rm -r`? What command do we need to
-remove a directory?
-*  `rmdir example`
-* Use `hsi put` and `hsi get` to copy data
-to and from the tape archive. Let's add our
-directory to the archive and try to get it
-back.
 
-    ```
-    [Fortress HSI]/home/username->put -R example-data
-    put 'example-data/paper.txt' : paper.txt
-    ```
-Note:
+!!! note
+     Without specifying otherwise, we are operating with respect to our home directories (on both archive and cluster).
 
-* Without specifying otherwise, we are
-   operating with respect to our home
-   directories (on both archive and cluster).
+To exit the `hsi` interface, use the `exit` command.
 
-To exit the `hsi` interface, use the `exit`
-command.
-
-```
+```bash
 [Fortress HSI]/home/username-> exit
 username@loginXX.CLUSTER:[~] $
 ```
-You can also use `hsi` commands in one shot
-without logging in first. Try removing the
-`example-data` directory from the cluster
-and then bringing it back with `hsi get`.
-To be extra safe, we will rename it here
-instead of actually deleting the directory
-and its contents.
-```
+
+You can also use `hsi` commands in one shot without logging in first. Try removing the `example-data` directory from the cluster and then bringing it back with `hsi get`. To be extra safe, we will rename it here instead of actually deleting the directory and its contents.
+
+```bash
 $ mv example-data backup
 
 $ hsi get -R example-data
@@ -305,148 +166,105 @@ Username: username UID: 143856 Acct: 143856(143856) Copies: 1 COS: 0 Firewall:
 get '/home/username/example-data/paper.txt' :
 '/home/username/example-data/paper.txt' ...
 ```
-Be sure you already have the data on
-   Fortress before deleting it from your
-   home directory!
 
-Instead of using `hsi` command to get and put
-files, we shouldn't store all these smaller
-files separately. The tape archive is most
-efficient with large archive formats and has
-special capabilities with the `.tar` format.
+!!! warning
+     Be sure you already have the data on Fortress before deleting it from your home directory!
 
-You can bundle and send the whole directory in
-one stream with the `htar` program.:
+Instead of using `hsi` command to get and put files, we shouldn't store all these smaller files separately. The tape archive is most efficient with large archive formats and has special capabilities with the `.tar` format.
+
+### Transferring data to and from Fortress
+You can bundle and send the whole directory in one stream with the `htar` program.:
+
+```bash
+$ htar -cvf example-data.tar example-data/
+HTAR: a  example-data/
+HTAR: a  example-data/paper.txt
+...
 ```
-   $ htar -cvf example-data.tar example-data/
-   HTAR: a  example-data/
-   HTAR: a  example-data/paper.txt
-   ...
-```
-In the example above, the options to the `htar`
-program are similar to the `tar` program. Except,
-we don't need to compress it using `gzip` (with
-the `z` flag).
 
-Note:
-* There is no need to make and compress this
-   `.tar` archive ahead of time. Fortress has
-   built-in compression.
+In the example above, the options to the `htar` program are similar to the `tar` program. Except, we don't need to compress it using `gzip` (with the `z` flag).
 
-In our job script, we can use certain Slurm
-options to specify a path for the console
-output files in our job. These options are
-`-o/--output` (for `stdout` and `-e/--error`
-(for `stderr`). Output paths can contain
-substitution patterns like `%j` or `%A`.
-See the *file pattern* section of the
-*manual page* for details.
+!!! note
+     There is no need to make and compress this `.tar` archive ahead of time. Fortress has built-in compression.
 
-So, our example job submission script
-might look like this::
-```
+### Example
+
+Lets return to our Python job that we created in week 2, and make a few changes to it so our results get archived automatically. In our job script, we can use certain Slurm options to specify a path for the console output files in our job. These options are `-o/--output` (for `stdout` and `-e/--error` (for `stderr`). Output paths can contain substitution patterns like `%j` or `%A`. See the *file pattern* section of the *manual page* for details.
+
+So, our example job submission script might look like this:
+
+
+```bash title="myjob.sh" linenums="1" hl_lines="8 15-16 19 22 24"
 #!/bin/bash
-#SBATCH -A lab_queue -p cpu -q standby
-#SBATCH -J example
-#SBATCH -c 8 -t 00:10:00
-#SBATCH -o ~/example.out
-
-module load conda
-python example.py
-```
-* If you faced the Numpy problem before,
-   we need to again activate the Conda
-   environment we created to have Numpy
-   available.
-```
-#!/bin/bash
-#SBATCH -A lab_queue -p cpu -q standby
-#SBATCH -J example
-#SBATCH -c 8 -t 00:10:00
-#SBATCH -o ~/example.out
+#SBATCH  --account=hpcexc
+#SBATCH  --partition=cpu
+#SBATCH  --qos=normal
+#SBATCH  --time=0-1:00:00
+#SBATCH  --nodes=1
+#SBATCH  --ntasks-per-node=1
+#SBATCH  --output="example.out"
 
 module load conda
 conda activate example
-python example.py
+echo "Running with the python interpreter: $(which python)"
+
+#Lets move to our scratch directory to do computational work
+mkdir -p ${SCRATCH}/example
+cd ${SCRATCH}/example
+
+#Lets run our python file from our Home directory, and write the output
+python ~/example.py > results.out # Write the output into our current directory
+echo "Python script done at $(date)!"
+#Move up a directory (from /scratch/username/)
+cd .. 
+
+htar -cvf example.tar example/
+echo "Backed up data to Fortress at $(date)!"
+
 ```
-Once that runs, we can check to see the
-status of the job with `squeue \-\-me`.
-Once it finishes running, we can check
-the output file to make sure it does what
-we expect:
-```
-$ sbatch example.sh
+
+Once this runs we can check to see the status of the job with `squeue --me`. Once it finishes running, we can check the output file to make sure it does what we expect:
+
+```bash
+$ sbatch myjob.sh
 Submitted batch job 2095574
+
 $ cat ~/example.out
-2499.9118
-```
-If we run the job a second time,
-will it overwrite the output file? If
-so, what other options exist?
-
-* It will overwrite it. There are many
-   options available, like job name, job
-   ID, and so on. Use `man sbatch` to
-   find out what these options are.
-
-We can implement our basic knowledge of
-UNIX programs to isolate our job and
-save outputs to the tape archive. There
-isn't a "right" or "wrong" way here, but this
-version of the submission file illustrates
-some good ideas with job behavior:
-```
-#!/bin/bash
-#SBATCH -A lab_queue -p cpu -q standby
-#SBATCH -c 8 -t 00:10:00
-
-module load conda
-
-mkdir -p ${SCRATCH}/example
-cd ${SCRATCH}/example
-
-cp ~/example.sh ~/example.py ./
-python example.py > results.out
-
-cd ..
-htar -cvf example.tar example/
+Running with the python interpreter: /home/username/.conda/envs/example/bin/python
+Python script done at Wed Jan 28 12:45:49 EST 2026!
+HTAR: a   example/
+HTAR: a   example/results.out
+HTAR: a   /tmp/HTAR_CF_CHK_1726143_1769622349
+HTAR Create complete for example.tar. 3072 bytes written for 1 member files, max threads: 2 Transfer time: 0.032 seconds (0.097 MB/s) wallclock/user/sys: 0.281 0.012 0.007 seconds
+HTAR: HTAR SUCCESSFUL
+Backed up data to Fortress at Wed Jan 28 12:45:49 EST 2026!
 ```
 
+??? question "If we run the job a second time, will it overwrite the output file? If so, what other options exist?"
+     It will overwrite it. There are many options available, like job name, job ID, and so on. Use `man sbatch` to find out what these options are.
 
-If you faced the Numpy problem before,
-   we need to again activate the Conda
-   environment we created to have Numpy
-   available.
-```
-#!/bin/bash
-#SBATCH -A lab_queue -p cpu -q standby
-#SBATCH -c 8 -t 00:10:00
 
-module load conda
-conda activate example
+With regards to the outputs of our python script there's two places we need to check for the output of our job. First is the `scratch` space that our job ran in:
 
-mkdir -p ${SCRATCH}/example
-cd ${SCRATCH}/example
-
-cp ~/example.sh ~/example.py ./
-python example.py > results.out
-
-cd ..
-htar -cvf example.tar example/
-```
-Here, there's two places we need to check
-for the output of our job. First is the
-`scratch` space that our job ran in:
-```
-$ sbatch example.sh
-Submitted batch job 2095583
+```bash
 $ cat $SCRATCH/example/results.out
 2499.9118
 ```
-Then, we also need to check that our
-`example.tar` file was created on Fortress:
-```
+
+Then, we also need to check that our `example.tar` file was created on Fortress:
+
+```bash
 $ hsi ls
 /home/username:
 example-data/   example-data.tar   example.tar
 ```
+
+
+### Transferring to Fortress via Globus
+
+For a more interactive way to transfer data to Fortress, you can use our Globus transfer service at https://transfer.rcac.purdue.edu. Just be sure to archive large amounts of files (with `zip` or `tar`) before transferring!
+
+![Image of the graphical interface on fortress showing the transfer of files from the Negishi cluster to the Fortress HPSS archive](../assets/images/globus_fortress.png)
+
+
+**Next section:** [Job History](job-history.md)

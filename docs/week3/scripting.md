@@ -29,6 +29,7 @@ example in the following sections:
 #!/bin/bash
 
 echo 'Hello, World!'
+
 ```
 
 Notice the first line is the "shebang" that starts
@@ -202,14 +203,6 @@ it's not necessary.
 ```bash
 NAME="some data"
 ```
-Variables are just dumb text, unlike other
-programming languages. While there are some
-exceptions, there are no complex data
-structures.
-
-```bash
-MYDATA=1,2,3
-```
 
 There is also a weird thing where 0 is true
 and 1 is false, which we will discuss later.
@@ -282,12 +275,36 @@ you can use.
 
 | Variable | Meaning |
 |---|---|
-| `$0` ... `$99` | x-th argument of script/function |
+| `$1` ... `$99` | x-th argument of script/function |
 | `$_` | Last argument of script/function |
 | `$@` | All arguments of script/function (whitespace) |
 | `$#` | Count of arguments of script/function |
 | `$?` | Exit status of last process (more on this later) |
-| `$!` | Process ID of last process (more on this later) |
+| `$!` | Process ID of last process|
+
+
+As an example, let's look at the following script:
+
+```bash title="hellonames.sh" linenums="1"
+#!/bin/bash
+
+echo "You gave me $# names!"
+echo "The first name is $1"
+
+for name in $@; do
+    echo "Hello $name!"
+done
+```
+
+We can now provide this script arguments, and use them in our script!
+```bash 
+$ bash hellonames.sh jake josh jenny
+You gave me 3 names!
+The first name is jake
+Hello jake!
+Hello josh!
+Hello jenny!
+```
 
 
 ### System Variables
@@ -377,7 +394,7 @@ home directory. Which would be bad.
 !!! warning 
     Something that you should **NOT** do is load modules (especially conda modules) in your login profile. This can mess up the rest of the start up process and can cause weird errors.
 
-## Exit status
+## Exit status & Control Flow
 
 Successful programs should exit with a zero (`0`).
 And any non-zero exit status should be considered
@@ -391,6 +408,10 @@ Hello, world!
 
 $ echo $?
 0
+
+$ commandthatfails
+echo $?
+1
 ```
 Control flow (if-else conditional statements) in
 shell scripts often hinge on the success or
@@ -399,14 +420,95 @@ true and 1 (non-zero) means false in the UNIX
 shell. This is opposite of almost everywhere
 else.
 
-```bash hl_lines="2 6"
-$ true
-$ echo $?
-0
 
-$ false
-$ echo $?
-1
+```bash
+if command; then
+  echo "Command Succeeded"
+else
+  echo "Command Failed!"
+fi
 ```
 
-Next section: [Control Flow](./control-flow.md)
+As shorthand, you may also see conditionals formatted like this:
+
+```bash
+command && echo "Command Succeeded" || echo "Command Failed"
+```
+
+Bash also allows us to run several tests against files and variables with true/false outcomes:
+
+```bash
+if [[ -d "$SCRATCH" ]]; then
+  echo "Scratch directory exists"
+fi
+```
+
+### File & Path Tests
+
+| Test | Meaning | Example |
+|------|---------|---------|
+| `-f file` | Regular file exists | `[[ -f input.txt ]] && echo "input.txt exists"` |
+| `-d dir`  | Directory exists | `[[ -d $SCRATCH ]] && echo "Scratch exists"` |
+| `-e path` | Path exists | `[[ -e results.out ]] || echo "Missing results"` |
+| `-r file` | Readable | `[[ -r data.csv ]] && head data.csv` |
+| `-w file` | Writable | `[[ -w output.log ]] && echo "test" >> output.log` |
+| `-x file` | Executable | `[[ -x run.sh ]] && ./run.sh` |
+
+
+### String Tests
+
+| Test | Meaning | Example |
+|------|---------|---------|
+| `-z str` | String is empty | `[[ -z "$1" ]] && echo "No argument given"` |
+| `-n str` | String is not empty | `[[ -n "$USER" ]] && echo "User is $USER"` |
+| `str1 == str2` | Equal | `[[ "$HOSTNAME" == "login01" ]] && echo "On login 1"` |
+| `str1 != str2` | Not equal | `[[ "$SHELL" != "/bin/bash" ]] && echo "Not using bash"` |
+
+
+### Numeric Comparisons
+
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `-eq` | equal | `[[ "$N" -eq 16 ]] && echo "Using 16 cores"` |
+| `-ne` | not equal | `[[ "$TASKS" -ne 1 ]] && echo "Parallel job"` |
+| `-lt` | less than | `[[ "$N" -lt 4 ]] && echo "Small job"` |
+| `-le` | less or equal | `[[ "$N" -le 32 ]] && echo "Within node limits"` |
+| `-gt` | greater than | `[[ "$N" -gt 10 ]] && echo "Large job"` |
+| `-ge` | greater or equal | `[[ "$MEM" -ge 128 ]] && echo "High-memory job"` |
+
+
+### Logical Operators
+
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `&&` | AND | `[[ -f in.txt && -w out.txt ]] && ./process.sh` |
+| `||` | OR | `[[ -d "$SCRATCH" ]] || mkdir -p "$SCRATCH"` |
+| `!`  | NOT | `[[ ! -f config.yaml ]] && echo "Missing config"` |
+
+## Loops
+
+Lastly, loops are implemented in `bash`, and can be particularly useful for looping over files or arguments:
+
+```bash
+for f in $(ls *.py); do
+  echo "Processing $f"
+  python $f
+done
+
+for name in $@; do
+    echo "Hello $name!"
+done
+
+
+for number in {1..10}; do
+    echo "On $number!"
+done
+```
+
+There's many more aspects of `bash` that we're not going to talk about here like while loops, functions, and variable substitution. Before we move on, it's important to note that if a command fails, bash will just continue on by default. This is 
+
+
+To make sure that bash exits 
+
+
+Next section: [Pipes](./pipes.md)

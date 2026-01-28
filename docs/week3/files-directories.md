@@ -33,7 +33,12 @@ archive.
 
 `tar` stands for "Tape ARchive" format,
 because tape archives do better with one
-big file instead of many, smaller files. We will learn more on how to archive data at RCAC in [Week 4](../week4/index.md). To package a directory into a single, compressed file, you would use the following command:
+big file instead of many, smaller files. We will learn more on how to archive data at RCAC in [Week 4](../week4/index.md). 
+
+
+![Tar Files](../assets/images/tar.png)
+
+To package a directory into a single, compressed file, you would use the following command:
 
 ```bash
 $ tar -cvzf example-data.tar.gz example-data/
@@ -82,6 +87,10 @@ usage and behavior. The three are:
 * `gzip` (fast, very common)
 * `bzip2` (usually compresses smaller than gzip, but slower)
 * `xz` (often the smallest files, but slowest / most CPU-heavy)
+
+
+![gzip](../assets/images/gzip.png)
+
 
 #### `gzip` (`.gz`)
 
