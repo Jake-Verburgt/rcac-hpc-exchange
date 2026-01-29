@@ -5,39 +5,25 @@
 
 
 Before we begin, we must understand what a cluster actually is, and what it consists of. A cluster is built from
-many **servers**, which are **interconnected**
-over fast networks, attached to one or more
+many inter-connected servers, which are attached to one or more
 **data** storage systems. They typically run
 a **UNIX**-like operating system and are
-managed by a batch **scheduler**. They often
-run special **software**.
+managed by a batch **scheduler**.
 
 ## Servers (Nodes)
 
 So what are these servers that make up the
 clusters? They're all just computers! They
-look a certain way and live in a data center
-so they are technically servers, but when
-referring to a single server as a unit within
-a cluster of machines, **node** suggests
-membership in a group. They have many names,
-such as: node, computer, server, machine, host.
+look a certain way and live in a data center, but at the end of they day its just a specialized computer with memory, CPUs, and storage. When referring to a server as part of a group, such as in a cluster, we typically refer to them as **nodes**, although they go by many other names such as: computer, server, machine, host.
 
-Different nodes can also have different
-purposes, such as **login** vs. **compute**
-vs. **data**. We will get into this distinction
-more later in this section.
+Different nodes can also have different purposes, such as **login** vs. **compute** vs. **data**. We will get into this distinction more later in this section.
 
 Here is what a node looks like and what it is
 made up of:
 
 ![An image showing on the left the makeup of a node, that has cores as a part of a socket and memory alongside that socket. On the right, it shows an image of an actual node, an HPE Cray XD2000.](../assets/images/node.png)
 
-Each node has one or more sockets that are each
-made up of a number of cores. Each socket has its
-own memory associated with it. There are many other
-components that can make up a node, such as disk
-space, or GPUs.
+Each node has one or more sockets that are each made up of a number of cores. Each socket has its own memory associated with it. There are many other components that can make up a node, such as disk space, or GPUs.
 
 ## Clusters
 
@@ -47,12 +33,7 @@ Very broadly, a cluster is just a collection on nodes, which are able to communi
 
 2) Compute or back-end nodes
 
-When you log into the cluster,
-you are put onto a login node, which is limited
-in resources and not suitable for doing actual
-research. You need to interact with the scheduler
-(which we will talk about in a bit) to move from the login nodes to the
-compute nodes.
+When you log into the cluster, you are put onto a login node, which is limited in resources and not suitable for doing actual research. You need to interact with the scheduler (which we will talk about in a bit) to move from the login nodes to the compute nodes.
 
 ![Overview of cluster](../assets/images/cluster_overview.png)
 
@@ -67,7 +48,7 @@ $ hostname
 login00.cluster.rcac.purdue.edu
 ```
 
-### Run Types
+<!-- ### Run Types
 
 Before we get started with how to run jobs on the compute nodes,
 we should talk about the two paradigms of
@@ -76,17 +57,11 @@ running code on a supercomputer:
 * Interactively
 * Batch mode
 
-In the `interactive` paradigm, you get a session
-on a compute node (using the gateway, ssh, or
-ThinLinc), and the run your code directly.
-However, if your network drops, your code
-could be interrupted.
+In the `interactive` paradigm, you get a session on a compute node (using the gateway, ssh, or ThinLinc), and the run your code directly. However, if your network drops, your code could be interrupted.
 
 In the `batch` paradigm, you write your code,
 and then submit one (or many) instances of
-your code using the scheduler and it can
-run on arbitrarily many nodes without worry
-of interruption.
+your code using the scheduler and it can run on arbitrarily many nodes without worry of interruption. -->
 
 ### Cluster Filesystems
 
@@ -97,7 +72,7 @@ Although we will discuss Filesystem locations in greater detail later, it is imp
 | Home   | `/home/username`| Backed up personal storage | Shared across all nodes|
 | Scratch | `/scratch/cluster/username`| Large temporary files | Shared across all nodes|
 | Depot | `/depot/labname`| Files and programs for your lab | Shared across all nodes **AND** across clusters|
-| temp | `/tmp`| Varies | Node specific|
 | apps | `/apps`| Centrally installed applications | Shared across all nodes|
+| temp | `/tmp`| Varies | Node specific|
 
 Next Section: [Purdue Clusters](./clusters.md)

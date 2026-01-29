@@ -55,7 +55,7 @@ are using the correct shell.
 ## Windows
 
 Windows computers are not UNIX-based, and the default command prompt or Powershell will **NOT** work!
-![Screenshot of Windows Powershell](../assets/images/win_powershell.png)
+![Screenshot of Windows Powershell, with a red X indicating that you should not use it](../assets/images/win_powershell.png)
 
 We will need to install extra software on Windows to
 ensure that we can run the UNIX

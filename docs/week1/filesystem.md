@@ -2,28 +2,20 @@
 
 [Back to Week 1](./index.md)
 
-Now that we have learned about the shell and the anatomy of a
-command, let's dive into different helpful programs (that you can run as commands) that you
-typically encounter while working on UNIX systems.
+Now that we have learned about the shell and the anatomy of a command, let's dive into different helpful programs (that you can run as commands) that you typically encounter while working on UNIX systems.
 
 As a user, you can picture a filesystem as a series of nested files and folders(a.k.a. directories). 
-![Tree structure of a filesystem](../assets/images/filesystem.png)
 
+![Tree structure of a filesystem](../assets/images/filesystem.png)
 
 ### pwd:
 
-`pwd` is a program that is occasionally helpful, but is a
-    good way to get your feet wet in trying out different UNIX
-    programs. All it does is print out what directory (folder) you are
-    currently in. Usually you will already know where you're at
-    from the prompt, but it can be helpful to know the full path.
-    `pwd` stands for *print working directory*:
+`pwd` is a program that is occasionally helpful, but is a good way to get your feet wet in trying out different UNIX commands. All it does is print out what directory (folder) you are currently in. Usually you will already know where you're at from the prompt, but it can be helpful to know the full path. `pwd` stands for *print working directory*:
 
 ```bash
 $ pwd
 /home/username
 ```
-
 
 ??? question "What directory are you in when you open your shell?"
 
@@ -34,13 +26,9 @@ $ pwd
     /home/verburgt
     ```
     
-
-
 ### ls:
 
-`ls` is one of the most common UNIX programs that you may use
-    while on UNIX systems. By default, it lists the contents of
-    your current working directory:
+`ls` is one of the most common UNIX programs that you may use while on UNIX systems. By default, it lists the contents of your current working directory:
 
 ```bash
 $ ls
@@ -124,10 +112,8 @@ $ pwd
 
 ### mkdir
 
-The last program we'll go over in this section is the `mkdir`
-or *make directory*. This does what it sounds like and will
-create the directory noted in the argument if it doesn't already
-exist.
+The last program we'll go over in this section is the `mkdir` or *make directory* command. This does what it sounds like and will create the directory noted in the argument if it doesn't already exist.
+
 ```
 $ mkdir example-data
 ```
@@ -156,8 +142,6 @@ directory.
     mkdir Desktop/myfolder
     ```
 
-
-
 ## Paths
 
 All files in UNIX systems are organized into directories, and
@@ -181,12 +165,8 @@ output_of_ls
 !!! note "File Extensions"
      In UNIX systems, file extensions are technically meaningless, however, convention is important. Executables don't need to end in `.exe` and text files don't need to end in `.txt`. It is helpful if they do, so that people (including yourself) know what type of file it is.
      
-     Paths as the argument of the `cd` program can be absolute or relative.
-
-
 
 ### Special paths
-
 
 There four special paths that are commonly used in navigating
 UNIX file systems:
@@ -282,16 +262,16 @@ The first column shows whether it's a directory (with a `d`) or not (with a dash
 
 Then the next nine columns are broken into three groups of three:
 
-1) First three - User (`u`)
+1) First three - <span class="perm-user">User</span> (`u`)
 
  -<span class="perm-user">rw-</span>r----  1 username groupname  4096 Jan  5  notes.txt
 
 
-2) Second three - Group (`g`)
+2) Second three - <span class="perm-group">Group</span> (`g`)
 
 -rw-<span class="perm-group">r--</span>r--  1 username groupname  4096 Jan  5  notes.txt
 
-3) Last three - Others (`o`)
+3) Last three - <span class="perm-other">Others</span> (`o`)
 
 -rw-r--<span class="perm-other">r--</span>  1 username groupname  4096 Jan  5  notes.txt
 
@@ -302,11 +282,11 @@ can edit the data in the file. And the execute bit controls if
 someone can run that file as a program. We'll talk more about the
 "execute" bit in the [Week 3 "Scripting" section](../week3/scripting.md). 
 
-For directories, the permission bits mean slightly different things.
+<!-- For directories, the permission bits mean slightly different things.
 The write bit is the same, it controls whether someone can modify
 (e.g. delete) is. The execute bit controls whether someone can see
 what's inside the directory. The read bit controls whether
-someone can go into that folder.
+someone can go into that folder. -->
 
 ## Learning about command options
 

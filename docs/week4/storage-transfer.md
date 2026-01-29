@@ -262,7 +262,7 @@ example-data/   example-data.tar   example.tar
 
 ### Transferring to Fortress via Globus
 
-For a more interactive way to transfer data to Fortress, you can use our Globus transfer service at https://transfer.rcac.purdue.edu. Just be sure to archive large amounts of files (with `zip` or `tar`) before transferring!
+For a more interactive way to transfer data to Fortress, you can use our Globus transfer service at [https://transfer.rcac.purdue.edu](https://transfer.rcac.purdue.edu). Just be sure to archive large amounts of files (with `zip` or `tar`) before transferring!
 
 ![Image of the graphical interface on fortress showing the transfer of files from the Negishi cluster to the Fortress HPSS archive](../assets/images/globus_fortress.png)
 

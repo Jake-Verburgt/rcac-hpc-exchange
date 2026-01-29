@@ -4,36 +4,16 @@
 [Back to Week 2](./index.md)
 
 
-In this section, we will talk about what
-exactly is a scheduler and how to
-interact with it to get your work
-done.
+In this section, we will talk about how you can interact with the scheduler to submit jobs to the cluster
 
-First, what is a scheduler? We use a
-scheduler called **Slurm** which is the
-most common one used by major computing
-centers. It is a resource manager and a
-workload manager. Essentially, there are
-a finite number of compute nodes, many
-users of the system and even more jobs
-to be run. The scheduler tracks resource
-allocation requests and manages the
-execution of those jobs. Users package
-their work (directly or indirectly) into
-self-contained **shell scripts** submitted
-to Slurm.
+A scheduler is software that manages how computing resources are shared among users. At RCAC, we use **Slurm**, the most widely used scheduler at major computing centers.
+
+Because there are a limited number of compute nodes and many users submitting jobs, the scheduler is responsible for deciding when and where each job runs. It tracks resource requests (such as CPUs, GPUs, memory, and time limits), queues jobs, and launches them when the requested resources become available.
+
 
 ![slurm_submission](../assets/images/slurm_submission.png)
 
-So what is a `resource allocation request`
-or a `job`? It's essentially a shell script
-that encapsulates everything for the work
-to be done. This shell script can be submitted
-to the scheduler via the `sbatch` program.
-The details of what resources are requested
-are commonly inside the script itself, but
-can also be passed to the `sbatch` program
-manually. Let's take a look at what's in `myjob.sh`
+Users submit their work to Slurm in the form of batch job scripts, which are shell scripts that describe the resources needed and the commands to run. This shell script can be submitted to the scheduler via the `sbatch` program. The details of what resources are requested are commonly inside the script itself, but can also be passed to the `sbatch` program manually. Let's take a look at an example job scropt, `myjob.sh`:
 
 ```bash title="myjob.sh" linenums="1"
 #!/bin/bash
@@ -54,7 +34,7 @@ echo "Script is finished! Exiting..."
 To submit this script to the scheduler, we can simply run:
 
 ```bash
-sbatch myjob.sh
+$ sbatch myjob.sh
 ```
 Let's take a closer look at the individual pieces of information we need to provide Slurm for it to schedule our job. 
 
@@ -115,7 +95,11 @@ cpu      up     446     0  57088   2078      0  15973     1 infin   infinite   1
 highmem  up       6     0    768    236      0   2114     1 infin   infinite   128    1031
 gpu      up       5     3    160    132      0      0     1 infin   infinite    32     515
 ```
-To see what the different node types mean, use
+
+!!! note
+     On many clusters, certain accounts will only be able to submit to specific clusters
+
+<!-- To see what the different node types mean, use
 the `sfeatures` program:
 
 ```
@@ -130,7 +114,7 @@ on clusters with more distinct hardware
 types.
 
 Use the `-C` or `--constraint` option with `sbatch` to
-target one of the feature tags.
+target one of the feature tags. -->
 
 ## Quality of Service (QoS)
 
@@ -178,7 +162,7 @@ We may also need to specify what resources we want to request, and for how long
     This is an incomplete list, and the required options may vary by cluster and partition. For example, some clusters will require you to request memory with `--mem`, or to list how many GPUs you want access to with `--gres=gpu:`. See the user guide for the cluster you are using for more details!
 
 ## Submission
-Once that is written, submit it to the
+Once you are ready, submit it to the
 scheduler with the `sbatch` program:
 
 ```bash
@@ -195,8 +179,17 @@ is helpful to note down as it can be used elsewhere.
 !!! note 
     The output of your job will, by default, be saved in files with this ID (e.g. `slurm-32209880.out`).
 
+    Once our job is done, we can see the output with:
+    ```bash
+    $ ls slurm-32209880.out
+    slurm-32209880.out
+
+    $cat slurm-32209880.out # cat prints the contents of a file!
+    2499.9118
+    ```
+
 The job that we submitted requested 1 cores for 1
-hour from your lab's account, to the CPU part of
+hour from the `hpcexc` account, to the CPU part of
 the cluster, using the `normal` QoS.
 
 Following is a list of common Slurm resource
@@ -204,22 +197,21 @@ parameters that you may want to specify in your
 shell script:
 
 ### Common Slurm resource parameter reference
- | Shortcut | Long form option | Meaning |
+
+  Shortcut | Long form option | Meaning |
 |---|---|---|
-| `-A` | `--account` | Account (default: `lab_queue`) |
-| `-p` | `--partition` | Partition (default: `cpu`) |
-| `-q` | `--qos` | Quality of Service (default: none) |
-| `-J` | `--job-name` | Job name (default: `<script name>`) |
+| `-A` | `--account` | Account |
+| `-p` | `--partition` | Partition  |
+| `-q` | `--qos` | Quality of Service|
+| `-J` | `--job-name` | Job name  |
 | `-t` | `--time` | Walltime limit |
-| `-N` | `--nodes` | Number of nodes (default: 1) |
+| `-N` | `--nodes` | Number of nodes |
 | `-n` | `--ntasks`, `--ntasks-per-node` | Nunber of Slurm tasks (default: 1) |
 | `-c` | `--cpus-per-task` | Cores per task (default: 1) |
 | `--mem` | `--mem-per-cpu` | Memory (default: ~2GB per core) |
 | `-G` | `--gpus`, `--gpus-per-node` | Number of GPUs (default: 0) |
 | `-o` | `--output` | File path for application output |
 
-You can also use the command `man sbatch` to
-learn more about different parameters
 
 ## Job Monitoring and Cancelling
 
@@ -253,7 +245,7 @@ would be `jobinfo JOB_ID`, where the `JOB_ID` is replaced
 with the job ID mentioned above (which you can also check
 with the `squeue` program).
 
-```
+```bash
 $ jobinfo 32209880
 Name : myjob.sh
 User : username
@@ -316,6 +308,17 @@ To get out of the interactive slurm job, simply
 run the `exit` command and you'll be returned to
 the login node you were on previously.
 
+
+## Open OnDemand Interactive Apps
+If you'd rather avoid running jobs on the command line entirely, RCAC offers Open OnDemand interactive apps that handle the submission to the compute backend for you. 
+
+
+Most notably, we have an "Open OnDemand Desktop" application, which will give you a virtual desktop (running on a cluster backend node) available in your browser. This can be incredibly useful if you need to run graphical applications on RCAC, which don't run well over SSH on the command line.
+
+
+![Open OnDemand Desktop](../assets/images/ood_desktop.png)
+
+
 ## Good citizenship
 
 Last, but not least, there are four main points to touch
@@ -326,16 +329,6 @@ on about good citizenship on HPC resources:
 * Do not abuse file systems (heavy I/O for `/depot` space, use `/scratch` instead)
 * Do not submit lots of tiny jobs, instead use the pilot-job pattern with a workflow tool
 * Do not submit jobs and camp (don't submit a GPU job from the Gateway for 24 hours so it's ready for you in the afternoon and then forget about it)
-
-
-## Open OnDemand Interactive Apps
-If you'd rather avoid running jobs on the command line entirely, RCAC offers Open OnDemand interactive apps that handle the submission to the compute backend for you. 
-
-
-Most notably, we have an "Open OnDemand Desktop" application, which will give you a virtual desktop (running on a cluster backend node) available in your browser. This can be incredibly useful if you need to run graphical applications on RCAC, which don't run well over SSH on the command line.
-
-
-![Open OnDemand Desktop](../assets/images/ood_desktop.png)
 
 
 Continue to [Week 3](../week3/index.md)

@@ -2,25 +2,12 @@
 
 [Back to Week 3](./index.md)
 
-When dealing with processes, the output
-of those processes is important. In this
-section, we will discuss how to manage
-the output of processes in different ways.
-
-The main concepts that we will go over are:
-
-* File descriptors and standard input/output
-* Input/output redirection
-* Special files
-* Command pipelining
-* Useful commands for processing output
-
-Programs often write output to the console,
-this is called *standard output*. The shell
-defines `stdin`, `stdout`, and `stderr` for
-every program.
+When dealing with processes, the output of those processes is important. In this section, we will discuss how to manage the output of processes in different ways.
 
 ### Standard file descriptors
+
+When a program  often write output to the console,
+this is called *standard output*, or `stdout`. The shell defines `stdin`, `stdout`, and `stderr` for every program.
 
 | # | Common name | Description |
 |---|---|---|
@@ -29,10 +16,9 @@ every program.
 | `2` | `stderr` | Attached as a secondary output for errors |
 
 
+![Image showing stdin going into a program, and the stdout and stderr coming out of the program](../assets/images/file_descriptors.png)
 
-
-You can also redirect these file descriptors
-to attach to files other than the console.
+You can also redirect these file descriptors to attach to files other than the console.
 
 ### Redirection notation
 
@@ -44,6 +30,7 @@ to attach to files other than the console.
 | `2>  FILE` | Write `stderr` to `FILE` |
 | `2>> FILE` | Append `stderr` to `FILE` |
 | `|   PROGRAM` | Join `stdout` to `stdin` of `PROGRAM` |
+
 
 The following example redirects the `stdout` from our program (the "Hello, world!" text it prints) from the console into the file `message.txt`.
 
@@ -57,12 +44,24 @@ files with the `cat` program:
 $ cat message.txt
 Hello, world!
 ```
+
+![](../assets/images/pipe_to_file.png)
+
+
+
 We can also use the output (`stdout`) of the `cat` program (again, the "Hello, World!" text) to the input (`stdin`) of another program with a pipe(`|`). We'll pass the output to the `wc` "word count" program which can count the words, lines, chars, etc of the provided input.
 
 ```
 $ cat message.txt | wc --chars
 14
 ```
+
+![](../assets/images/pipe.png)
+
+
+!!! tip "`wc` program"
+     `wc`. or the "word count program is a handy tool that allows us to count the number of words (`--words`), lines (`--lines`), or characters (`--chars`) from a file or `stdin`.
+
 
 ??? question "How might we see how many files we have in our current directory?"
     We could get a list of our files with `ls`, and  pass the output to `wc` to count the number of lines.

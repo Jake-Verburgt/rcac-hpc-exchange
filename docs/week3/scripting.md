@@ -81,10 +81,7 @@ $ ./hello.sh
     -rw-r--r-- 1 username student 22 Oct 11 01:44 hello.sh
     ```
 
-The file `hello.sh` doesn't have the **execute** bit set, so we can't run it as a program. Please feel free to refer to [Week 1 Filesystems](../week1/filesystem.md#permissions) for a refresher on permissions.
-
-You can change file and directory permissions
-using the `chmod` program:
+The file `hello.sh` doesn't have the **execute** bit set, so we can't run it as a program. You can change file and directory permissions using the `chmod` program:
 
 ```bash
 $ chmod +x hello.sh
@@ -103,7 +100,7 @@ to
 <span class="perm-type">-</span><span class="perm-user">rwx</span><span class="perm-group">r-x</span><span class="perm-other">r-x</span> username student 34 Jan 22 14:13 hello.sh
 
 
-For a quick refresher on what permissions are, take a look at [Navigating Filesystems](../week1/filesystem.md#permissions) from week 1.
+which allows us to "execute" it as a program. For a quick refresher on what permissions are, take a look at [Navigating Filesystems](../week1/filesystem.md#permissions) from week 1.
 
 The `chmod` program allows you to add and remove read(`r`)/write(`w`)/execute(`x`) permissions for the <span class="perm-user">user</span> (`u`), <span class="perm-group">group</span> (`g`), and <span class="perm-other">others</span> (`o`) with the following syntax:
 
@@ -154,6 +151,8 @@ Hello, World!
 
 !!! tip
     Also, remember that file extensions are optional in UNIX (you can remove the `.sh` from the file name).
+
+Now our `hello` program is available from anywhere! We can change directories, and our shell will still be able to find the `hello` program, because we added it to our `PATH` variable.
 
 ??? question "What happens if we close the shell and reopen it?"
      It doesn't matter if we change directories, but the change to our `PATH` variable is not kept if we close the shell.
@@ -269,8 +268,7 @@ Will print the number of seconds that have passed since the shell has been opene
 
 ### Special variables
 
-There are many different special variables
-you can use.
+There are many different special variables you can use.
 
 
 | Variable | Meaning |
@@ -411,7 +409,7 @@ $ echo $?
 
 $ commandthatfails
 echo $?
-1
+127
 ```
 Control flow (if-else conditional statements) in
 shell scripts often hinge on the success or
@@ -505,10 +503,6 @@ for number in {1..10}; do
 done
 ```
 
-There's many more aspects of `bash` that we're not going to talk about here like while loops, functions, and variable substitution. Before we move on, it's important to note that if a command fails, bash will just continue on by default. This is 
-
-
-To make sure that bash exits 
-
+There's many more aspects of `bash` that we're not going to talk about here like while loops, functions, and variable substitution. Before we move on, it's important to note that if a command fails, bash will just continue on by default.
 
 Next section: [Pipes](./pipes.md)

@@ -18,9 +18,9 @@ As mentioned earlier, the `hostname` program prints out the hostname of the serv
 The `srun` launcher is part of Slurm and will bring up copies of your program within the allocation according to the number of tasks in your request.
 
 Submit the following job script (or variations of it) to get a sense of how we can launch copies of a program across an allocation. Name the job script `hostname.sh`
-```bash title="multinode_job.sh" linenums="1"
+```bash title="hostname.sh" linenums="1" hl_lines="5-7"
 #!/bin/bash
-#SBATCH --account=lab_queue 
+#SBATCH --account=hpcexc 
 #SBATCH --partition=cpu 
 #SBATCH --qos=standby
 #SBATCH --nodes=2 
@@ -53,8 +53,11 @@ a200.negishi.rcac.purdue.edu
 a209.negishi.rcac.purdue.edu
 a209.negishi.rcac.purdue.edu
 ```
-??? Question "What did you notice in the output file of this job? Do the hostnames align with what you expected based on the request? How would we capture the output of each of these tasks (job steps) separately?"
+??? question "What did you notice in the output file of this job? Do the hostnames align with what you expected based on the request?"
+     Yes! We requested 2 nodes, each with 2 tasks (for 4 tasks total). `srun` runs the `hostname` program in each of our tasks. We can see that two of the tasks were launched on `a200`, and the other two were launched on `a209`.
 
+
+??? question "How would we capture the output of each of these tasks (job steps) separately?"
      We could use `srun`'s `--output` option e.g.:
      ```bash
      --output %j-%t-%s.out

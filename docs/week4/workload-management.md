@@ -7,7 +7,9 @@ Managing workloads and jobs is a crucial aspect of high-performance computing. I
 
 ## Introduction
 In many cases, researchers need to run the same task multiple times with different inputs. There are two main paradigms for managing such workloads:
+
 1. **Submit lots of separate jobs**: This approach involves submitting each task as a separate job.
+
 2. **Submit one job with many tasks inside**: This approach involves submitting a single job that runs multiple tasks.
 
 ## Lots of separate jobs
@@ -34,6 +36,7 @@ sbatch job.sh input_3
 In either case, manually typing out `sbatch` for each of our jobs is tedious, and prone to user error. We can instead make a script that runs on the front-end to handle job submission for us. 
 
 To do this, we need two files:
+
 * A submitter script (`submit.sh`) that submits the jobs.
 * A worker script (`myjob.sh`) that runs the tasks.
 
@@ -42,16 +45,19 @@ To do this, we need two files:
 
 
 ### Submitter Script
-The submitter script that submits 30 jobs with 30 different names would look like this:
+A submitter script that submits 30 jobs with 30 different names would look like this:
 
-```bash title="submit.sh" linenums="1"
+```bash title="submit.sh" linenums="1" hl_lines="5"
 #!/bin/bash
 
 for step in {01..30}
 do
-  sbatch myjob.sh --job-name=example-${step}
+  sbatch --job-name=example-${step} myjob.sh 
+  sleep 0.01
 done
 ```
+
+Notice that we give each of our jobs a different name with the `--job-name` option!
 
 ### Worker Script
 The worker script should look like this:
@@ -83,7 +89,7 @@ Notice that we create and work in a different directory in our scratch based on 
 We don't have to submit this one, but to submit it, we would run the `submit.sh` file as a program:
 
 ```bash
-$ ./submit.sh
+$ bash ./submit.sh
 Submitted batch job 209526
 Submitted batch job 209527
 Submitted batch job 209528
@@ -121,7 +127,7 @@ This will create 30 different scratch folders named `example-01` to `example-30`
 Another way to manage many-task workflows is to use Slurm job arrays. This way, we can submit a single job instead of manually submitting many copies. The job is duplicated and runs `N` times with only `SLURM_ARRAY_TASK_ID` environment variable different.
 
 Following is an example script that uses Slurm job arrays. Copy it into a file named `array.sh`
-```bash title="array.sh" linenums="1" hl_lines="7 14-16"
+```bash title="array.sh" linenums="1" hl_lines="8 14-16"
 #!/bin/bash
 #SBATCH  --account=hpcexc
 #SBATCH  --partition=cpu
@@ -129,13 +135,13 @@ Following is an example script that uses Slurm job arrays. Copy it into a file n
 #SBATCH  --time=0-1:00:00
 #SBATCH  --nodes=1
 #SBATCH  --cpus-per-task=1
-#SBATCH --array=1-30
+#SBATCH  --array=1-30
 
 module load conda
 conda activate example
 echo "Running with the python interpreter: $(which python)"
 
-site=example-${SLURM_ARRAY_TASK_ID}
+site=array-example-${SLURM_ARRAY_TASK_ID}
 mkdir -p ${SCRATCH}/${site}
 cd ${SCRATCH}/${site}
 
@@ -143,7 +149,8 @@ python ~/example.py > results.out # Write the output into our current directory
 echo "Python script done at $(date)!"
 ```
 
-This will submit an array of 30 jobs to do the same task many times and save the output in different directories.
+
+Running `sbatch array.sh` will submit an array of 30 jobs to do the same task many times and save the output in different directories (`array-example-01` - `array-example-30`).
 
 These examples are only the beginning, the mechanics of a job array can get a lot more sophisticated from here.
 
@@ -158,7 +165,7 @@ The pilot job paradigm involves submitting a single job that runs multiple tasks
 
 One naive example script that uses the pilot job paradigm:
 
-```bash title="example.sh" linenums="1" hl_lines="7-8 18-22 24"
+```bash title="pilot.sh" linenums="1" hl_lines="7-8 18-22 24"
 #!/bin/bash
 #SBATCH  --account=hpcexc
 #SBATCH  --partition=cpu
@@ -186,7 +193,7 @@ wait
 echo "All jobs completed!"
 ```
 
-This just manually runs our workflow multiple times and saves the results to a different output file each time. You could extend this to doing multiple different workflows in tandem, as long as they fit within the job (RAM and CPUs) you can do whatever you want with the resources.
+You can submit this with `sbatch pilot.sh`, This just manually runs our workflow multiple times and saves the results to a different output file each time. You could extend this to doing multiple different workflows in tandem, as long as they fit within the job (RAM and CPUs) you can do whatever you want with the resources.
 
 There are many tools out there for automating computing of many tasks with the pilot job paradigm. Two examples are: HTCondor and HyperShell. They both achieve the task of computing many things using a single Slurm job and each have different features.
 

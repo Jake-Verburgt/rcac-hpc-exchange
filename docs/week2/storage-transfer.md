@@ -21,7 +21,7 @@ For now, we will put everything into our home directories,
 as that is where we land whenever we log into the
 clusters.
 
-There are 6 main ways to get data and files onto and off of
+There are several ways to get data and files onto and off of
 the clusters:
 
 1) Open OnDemand
@@ -34,7 +34,7 @@ the clusters:
 
 5) sftp
 
-6) SMB
+<!-- 6) SMB -->
 
 
 ### Open OnDemand
@@ -123,14 +123,14 @@ be relative to the directory you were in when you initiated
 the `sftp` session.
 
 
-### SMB
+<!-- ### SMB
 
 `SMB`, also known as `Samba` is a way to connect a
 remote drive to your computer to transfer files
 back and forth to the clusters in a graphical way.
 
 To learn more about this option, please visit this
-site: [SMB drives](https://www.rcac.purdue.edu/knowledge/negishi/storage/transfer/cifs)
+site: [SMB drives](https://www.rcac.purdue.edu/knowledge/negishi/storage/transfer/cifs) -->
 
 
 ## Helpful RCAC programs for file management 
@@ -145,9 +145,9 @@ other supercomputers may not have them.
 `myquota` is run without any arguments and tells you
 where you have access to read and write files. It also
 tells you what the space quotas are for each of those
-spaces and how much you have used already:
+spaces and how much you have used already. We'll talk more about filesystems in [Week 4](../week4/storage-transfer.md#file-storage-and-transfers)
 
-```
+```bash
 $ myquota
 Type     Location   Size    Limit    Use   Files   Limit    Use
 ===============================================================

@@ -64,7 +64,7 @@ Now let's do this for an actual Slurm job. Lets edit our `example.sh` submission
 #SBATCH  --qos=normal
 #SBATCH  --time=0-1:00:00
 #SBATCH  --nodes=1
-#SBATCH  --cpus-per-task=128
+#SBATCH  --cpus-per-task=32
 #SBATCH  --output="example.out"
 
 module load conda
@@ -88,17 +88,14 @@ echo "Python script done at $(date)!"
 ```
 
 
-
-
-
 Be sure to ask for all the  (with `--exclusive`) on the node so you don't collect data on your neighbor's job! Start each monitoring task before starting your application.
 
 ??? question "Why do we need to use the `&` on each of these commands in the script?"
-     If we didn't, the node would be stuck on the monitor command until the walltime ran out.
+     The `&` puts the process into the background! If we didn't, the node would be stuck on the monitor command until the walltime ran out. Check out [Managing Processes](../week3/processes.md) from Week 3 if you need a refresher.
 
 Now, let's run the new monitored submission file:
 ```bash
-$ sbatch example.sh
+$ sbatch --exclusive example.sh
 Submitted batch job 2095586
 ```
 

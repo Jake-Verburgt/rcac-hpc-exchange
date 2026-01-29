@@ -128,27 +128,20 @@ $ find ~ -type f -name "*.txt" | grep "example-data"
 ~/example-data/paper.txt
 ```
 
-In the example, we used some arguments and some
-options, but these are special options that the
-`find` program calls "primaries" (which is why
-they don't have two leading dashes even though
-they are longer than one letter). The first
-argument that we provided was the folder we
-want to search in, in this case our home (`~`)
-directory. The `type` option narrows down
+The first argument to `find` that we provided was the folder we
+want to search in, in this case our home (`~`) directory. 
+
+The `-type` option narrows down
 what kind of listing the command will find.
 Putting `f` here narrows the search to just
-find regular files. The `name` primary
-filters the search to only list the files
+find regular files.
+
+ The `-name` option filters the search to only list the files
 and such that follow the pattern given, in
 this case, everything that ends in `.txt` (Remember that `*` is a wildcard that matches any number of any characters!).
-Finally, we pipe all the output to the `grep`
-program (a program for "regular expression" pattern matching) that filters output to only lines
-containing the given argument (here
-`example-data`).
 
-This `find` program is a great way to initialize
-a pipeline for these kinds of management tasks.
+This command would find *all* the `.txt` that we have in our home directory. To further filter down the file(s) we are looking for, we can pipe (`|`) the contents into a pattern matching program called `grep`. `grep` (without any options) will filter the `stdin` to keep only lines that match the provided pattern(`example-data"`)
+
 
 ### Useful Programs
 

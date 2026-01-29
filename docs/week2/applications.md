@@ -3,7 +3,6 @@
 
 [Back to Week 2](./index.md)
 
-
 In this section, we'll talk a little bit about
 how to use different applications on our clusters.
 

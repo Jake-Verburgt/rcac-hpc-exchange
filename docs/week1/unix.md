@@ -41,29 +41,28 @@ system for servers (both in HPC and Cloud scenarios).
 * Cost
 * Programming environment
 
-Firstly, UNIX systems are usually lightweight, meaning they
+Firstly, UNIX systems are usually **lightweight**, meaning they
 don't have all the features that many modern operating systems
 have, which means that they can run much faster than other
 operating systems out there.
 
-Next, many different applications and libraries are compatible
+Next, many different applications and libraries are **compatible**
 with UNIX systems, meaning that a lot of different workflows
 can be run on a UNIX system.
 
-UNIX systems also often offer much more flexibility when it
+UNIX systems also often offer much more **flexibility** when it
 comes to the system configuration, allowing the system to be
 adapted to a plethora of different use cases.
 
 One of the most important aspects of UNIX systems is that they
-are multi-user, or multiple users can use the system at the
+are **multi-user**, or multiple users can use the system at the
 same time. Imagine if supercomputers were limited to one user
 at a time\! Science would grind to a halt very quickly.
 
-UNIX systems are also often cheaper, or even free, than their
-counterparts, which is valuable in an enterprise situation,
+UNIX systems are also often **cheaper, or even free**, compared to  their counterparts, which is valuable in an enterprise situation,
 where you may have thousands of users.
 
-Lastly, UNIX systems often have primarily text-based interfaces,
+Lastly, UNIX systems often have primarily **text-based interfaces**,
 as opposed to GUI-based ones such as Microsoft Windows. In
 addition, there are many compilers and libraries that are needed
 for scientific programming that are readily available for UNIX
@@ -99,38 +98,52 @@ Other top-level directories that you would commonly see are:
 
 ### Everything is a file
 
-In UNIX, everything is a file. This is an important and infamous
-tradition within UNIX systems. System configurations that may be
-an "API" on other operating systems are just plain text files.
-Inter-process communications are text as well. Even device
-interfaces, such as your screen, or your mouse are exposed via
-the file system. Even "non-file" things are files. Open/close
-read/write, seek, etc. are the universal way to control
-everything on UNIX systems, such as devices, system interfaces,
-processes, peripherals and other non-file things.
+A core UNIX design principle is that **everything is treated as a file**.
 
-### Metadata
+This means:
 
-Because everything is a file, metadata about those files can be
-very important. It is important for the file system to know who
-owns the file and which group(s) can access that file. Each file
-also has multiple timestamps that record when the file was
-created and when it was last edited.
+* System configuration is stored in plain text files  
+* Devices (such as keyboards, disks, and GPUs) appear as files  
+* Process and kernel information is exposed through virtual files  
+* Inter-process communication often uses file-like interfaces  
+
+---
+
+### Metadata & Permissions
+
+Every file has **metadata** that describes:
+
+* **Ownership** — which user owns the file  
+* **Group** — which group owns the file  
+* **Permissions** — who can read, write, or execute it  
+* **Timestamps** — when the file was created, modified, and accessed  
+
+These properties form the basis of UNIX security and access control.
+
+---
 
 ### Executables and libraries
 
-In UNIX systems, since everything is a file, it needs to know
-which files it can run and while files binaries need to be
-able to run. These are referred to as executables (files
-that can be run) and libraries (files needed for the executables
-to run).
+Programs in UNIX are just files.
 
-### The shell
+* **Executables** are files that can be run as programs.  
+* **Libraries** are shared code files that executables depend on at runtime.
 
-Last, but not least, the way to interact with the file system
-that contains everything about the systems is via the "shell".
-We will talk about the shell more in the next section, but for
-now, it is sufficient to say that it is the text-based
-interface to interact with UNIX systems.
+The operating system uses file metadata and standardized binary formats to determine **how programs are loaded, linked, and executed**.
+
+---
+
+### The Shell
+
+The **shell** is the primary interface for interacting with a UNIX system.
+
+It provides:
+
+* A command-line environment  
+* Program execution  
+* File management  
+* Scripting and automation  
+
+The shell acts as the bridge between the user and the operating system, enabling both interactive work and powerful automation. We will explore the shell in much more detail in the next section.
 
 Next section: [The Shell](./shell.md)
