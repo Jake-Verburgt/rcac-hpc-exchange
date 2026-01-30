@@ -207,10 +207,12 @@ shell script:
 | `-t` | `--time` | Walltime limit |
 | `-N` | `--nodes` | Number of nodes |
 | `-n` | `--ntasks`, `--ntasks-per-node` | Nunber of Slurm tasks (default: 1) |
-| `-c` | `--cpus-per-task` | Cores per task (default: 1) |
+
+
+<!-- | `-c` | `--cpus-per-task` | Cores per task (default: 1) |
 | `--mem` | `--mem-per-cpu` | Memory (default: ~2GB per core) |
 | `-G` | `--gpus`, `--gpus-per-node` | Number of GPUs (default: 0) |
-| `-o` | `--output` | File path for application output |
+| `-o` | `--output` | File path for application output | -->
 
 
 ## Job Monitoring and Cancelling

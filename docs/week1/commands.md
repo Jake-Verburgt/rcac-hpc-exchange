@@ -3,6 +3,7 @@
 [Back to Week 1](./index.md)
 
 The primary purpose of the shell is to run commands, which are just small programs. These programs allow you to do things such as move files, run scripts, and transfer data. In the shell, there are two types of programs: built-in and installed.
+    
 There is a slight, but important, distinction between the two:
 built-in programs usually come with the operating system, and installed
 programs are added externally after the operating system is set up.

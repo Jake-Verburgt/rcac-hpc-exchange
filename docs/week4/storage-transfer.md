@@ -27,7 +27,7 @@ Of these, only the **Local** and **Indirect access** options are directly availa
 
 ![An image showing a filesystem tree highlighting the scratch, depot, home, and tmp locations](../assets/images/cluster_storage.png)
 
-### Home directory `$HOME`
+### Home directory: `$HOME`
 #### Path: `/home/username`
 
 Your home directory is small (only 25GB), it has mild performance and is cluster specific (it is shared between nodes of a cluster, but not across clusters). It is also mountable on your local computer as a network drive.
@@ -49,14 +49,14 @@ Importantly, you can use the data depot without any cluster purchase, if you nee
 
 The Data Depot is good for shared configuration files, software installation, scripts, etc. You can store critical research data here to be shared amongst your group. It's ok to run jobs against but it's **not good for intensive I/O scenarios**. It is good for medium to long term storage.
 
-### Scratch directory `$CLUSTER_SCRATCH`, `$SCRATCH`, or `$RCAC_SCRATCH`
+### Scratch directory: `$CLUSTER_SCRATCH`, `$SCRATCH`, or `$RCAC_SCRATCH`
 
 #### Path: `/scratch/<cluster>/username`
 
 Your scratch directory is a high-performance directory on each cluster. It is huge (100+TB), however it does have a file number limit (in the millions), so make sure to not have a bunch of tiny files, use the `tar` and `zip` programs to bundle files together. It is highly performant, but cluster specific, in that it is shared across nodes in a cluster, but not across clusters. It is also mountable as a network drive on your local computer.
 It is also private per user, other members of your group cannot access it.
 
-The scratch system is internally redundant, so you don't have to worry about hardware failure corrupting your data, but files are not recoverable if deleted. It is also regularly purged of older files.
+The scratch system is internally redundant, so you don't have to worry about hardware failure corrupting your data, but there are no snapshots, so files are not recoverable if deleted. **It is also regularly purged of older files.**
 
 Scratch directories are good for intermediate to massive data I/O, so are perfect for data intensive jobs. It is **NOT** for the primary copy of your data or software. And it is **NOT for long-term storage.** It is only for short-term storage of intermediate results.
 
@@ -84,6 +84,15 @@ home       username           18.0GB   25.0GB  72.0%      -       -      -
 scratch    username          670.8MB  200.0TB   0.0%  170.4K    2.0M   8.5%
 depot      labname             4.0MB  100.0GB   0.0%      -       -      - 
 ```
+
+|Storage | Location | Purpose | Availability| Capacity | Backed up?|
+|--------|----------|-------|------------| ----| --- | 
+| Home   | `/home/username`| Backed up personal storage | Shared across all nodes| 25 GB | Yes
+| Scratch | `/scratch/cluster/username`| Large temporary files -  **Purged Regularly** | Shared across all nodes| 200 TB, 2M Files | No
+| Depot | `/depot/labname`| Files and programs for your lab | Shared across all nodes **AND** across clusters| 100+ GB | Yes
+| temp | `/tmp`| temporary files | Node specific| 200+ GB | No
+
+
 
 
 ## Indirect Access
@@ -133,7 +142,7 @@ Now let's remove the directory that we just created, we don't need it cluttering
 [Fortress HSI]/home/username/example->cd ..
 [Fortress HSI]/home/username->rm -r example
 Unknown option or missing argument: 'r' ignored
-*** Warning: '/home/carls113/example' is a directory - ignored
+*** Warning: '/home/username/example' is a directory - ignored
 ```
 
 ??? question "Why can't we remove this directory with `rm -r`? What command do we need to remove a directory?"
@@ -184,12 +193,12 @@ HTAR: a  example-data/paper.txt
 
 In the example above, the options to the `htar` program are similar to the `tar` program. Except, we don't need to compress it using `gzip` (with the `z` flag).
 
-!!! note
-     There is no need to make and compress this `.tar` archive ahead of time. Fortress has built-in compression.
+<!-- !!! note
+     There is no need to make and compress this `.tar` archive ahead of time. Fortress has built-in compression. -->
 
 ### Example
 
-Lets return to our Python job that we created in week 2, and make a few changes to it so our results get archived automatically. In our job script, we can use certain Slurm options to specify a path for the console output files in our job. These options are `-o/--output` (for `stdout` and `-e/--error` (for `stderr`). Output paths can contain substitution patterns like `%j` or `%A`. See the *file pattern* section of the *manual page* for details.
+Lets return to our Python job that we created in week 2, and make a few changes to it so our results get archived automatically. In our job script, we can use certain Slurm options to specify a path for the console output files in our job. These options are `-o/--output` (for `stdout` and `-e/--error` (for `stderr`). 
 
 So, our example job submission script might look like this:
 
@@ -241,7 +250,7 @@ Backed up data to Fortress at Wed Jan 28 12:45:49 EST 2026!
 ```
 
 ??? question "If we run the job a second time, will it overwrite the output file? If so, what other options exist?"
-     It will overwrite it. There are many options available, like job name, job ID, and so on. Use `man sbatch` to find out what these options are.
+     It will overwrite it. You can add substitution patterns like `%j` or `%A` so that different jobs write to different output files. See the *file pattern* section of the *manual page* for details.
 
 
 With regards to the outputs of our python script there's two places we need to check for the output of our job. First is the `scratch` space that our job ran in:

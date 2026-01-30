@@ -81,9 +81,8 @@ components are:
 ### File system hierarchy
 
 In UNIX systems, there is a conventional layout of the
-file system directories. And there are repeated structures in
-different places in the file system. There are standard
-structures, names and purposes for different directories.
+file system directories. There are **standard
+structures, names and purposes for different directories.**
 Some names exist only at the root of the file system and others
 are repeated in layers for a similar purpose or function.
 Some common directories you may see are:
@@ -102,9 +101,10 @@ A core UNIX design principle is that **everything is treated as a file**.
 
 This means:
 
-* System configuration is stored in plain text files  
+* Programs are just files (or collections of files)
+* System configurations are stored in plain text files  
 * Devices (such as keyboards, disks, and GPUs) appear as files  
-* Process and kernel information is exposed through virtual files  
+* Process and kernel information are exposed through virtual files  
 * Inter-process communication often uses file-like interfaces  
 
 ---
@@ -113,10 +113,10 @@ This means:
 
 Every file has **metadata** that describes:
 
-* **Ownership** — which user owns the file  
-* **Group** — which group owns the file  
-* **Permissions** — who can read, write, or execute it  
-* **Timestamps** — when the file was created, modified, and accessed  
+* **Ownership** - which user owns the file  
+* **Group** - which group owns the file  
+* **Permissions** - who can read, write, or execute it  
+* **Timestamps** - when the file was created, modified, and accessed  
 
 These properties form the basis of UNIX security and access control.
 

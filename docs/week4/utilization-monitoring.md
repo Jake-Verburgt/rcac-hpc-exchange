@@ -32,6 +32,7 @@ username@login03.negishi:[~] $ ssh a200
 
 username@a200.negishi:[~] $ htop -u username
 <full screen app>
+<press "q" to exit>
 ```
 
 !!! note

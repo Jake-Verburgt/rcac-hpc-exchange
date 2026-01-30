@@ -3,8 +3,7 @@
 [Back to Week 1](./index.md)
 
 
-The shell is essentially a program that lets you run other
-programs on a command line interface. You can think of desktop file explorers as a type of graphical shell.
+The shell is effectively a program running in your terminal that lets you run other programs via a command line interface. You can think of desktop file explorers as a type of graphical shell.
 
 ![An image of a shell next to a file browser, showing their equivalency](../assets/images/shell_vs_filebrowser.png)
 
@@ -31,6 +30,6 @@ After the colon, and in brackets, it shows you what directory you're currently i
 
 Lastly, the dollar sign shows you that it's the end of the prompt and where you start typing.
 
-Of note, this prompt can be modified and configured in many different ways, so it may not be exactly the same on every system, or in every shell. However, the pattern of ```username@hostname: current_directory``` is extremely common."
+Of note, this prompt can be modified and configured in many different ways, so it may not be exactly the same on every system, or in every shell. However, the pattern of ```username@hostname: current_directory``` is extremely common.
 
 Next section: [Commands](./commands.md)
