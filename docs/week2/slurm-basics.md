@@ -8,12 +8,12 @@ In this section, we will talk about how you can interact with the scheduler to s
 
 A scheduler is software that manages how computing resources are shared among users. At RCAC, we use **Slurm**, the most widely used scheduler at major computing centers.
 
-Because there are a limited number of compute nodes and many users submitting jobs, the scheduler is responsible for deciding when and where each job runs. It tracks resource requests (such as CPUs, GPUs, memory, and time limits), queues jobs, and launches them when the requested resources become available.
+Because there are a limited number of compute nodes and many users submitting jobs, the scheduler is responsible for deciding when and where each job runs. It tracks resource requests (such as CPUs, GPUs, memory, and time limits), queues, jobs, and launches them when the requested resources become available.
 
 
 ![slurm_submission](../assets/images/slurm_submission.png)
 
-Users submit their work to Slurm in the form of batch job scripts, which are shell scripts that describe the resources needed and the commands to run. This shell script can be submitted to the scheduler via the `sbatch` program. The details of what resources are requested are commonly inside the script itself, but can also be passed to the `sbatch` program manually. Let's take a look at an example job scropt, `myjob.sh`:
+Users submit their work to Slurm in the form of batch job scripts, which are shell scripts that describe the resources needed and the commands to run. This shell script can be submitted to the scheduler via the `sbatch` program. The details of what resources are requested are commonly inside the script itself, but can also be passed to the `sbatch` program manually. Let's take a look at an example job script, `myjob.sh`:
 
 ```bash title="myjob.sh" linenums="1"
 #!/bin/bash
@@ -97,7 +97,7 @@ gpu      up       5     3    160    132      0      0     1 infin   infinite    
 ```
 
 !!! note
-     On many clusters, certain accounts will only be able to submit to specific clusters
+     On many clusters, certain accounts will only be able to submit to specific partitions.
 
 <!-- To see what the different node types mean, use
 the `sfeatures` program:
@@ -162,8 +162,7 @@ We may also need to specify what resources we want to request, and for how long
     This is an incomplete list, and the required options may vary by cluster and partition. For example, some clusters will require you to request memory with `--mem`, or to list how many GPUs you want access to with `--gres=gpu:`. See the user guide for the cluster you are using for more details!
 
 ## Submission
-Once you are ready, submit it to the
-scheduler with the `sbatch` program:
+Once you are ready, submit it to the scheduler with the `sbatch` program:
 
 ```bash
 $ ls
@@ -172,9 +171,7 @@ example.py  myjob.sh  ...
 $ sbatch myjob.sh
 Submitted batch job 32209880
 ```
-You have now submitted your first supercomputing
-resource allocation request! This job ID number
-is helpful to note down as it can be used elsewhere.
+`sbatch` will read the parameters that we put in the script, and schedule your job script to be ran.  You have now submitted your first supercomputing resource allocation request! This job ID number is helpful to note down as it can be used elsewhere.
 
 !!! note 
     The output of your job will, by default, be saved in files with this ID (e.g. `slurm-32209880.out`).
@@ -196,6 +193,47 @@ Following is a list of common Slurm resource
 parameters that you may want to specify in your
 shell script:
 
+## Interactive Jobs
+To get an interactive job (or essentially a shell
+on a compute node), use the `sinteractive` program
+(which is RCAC specific). You will need to specify
+the same parameters as with `sbatch` (e.g. account,
+partition, QoS, cores, nodes, time).
+
+
+``` hl_lines="1 8"
+username@login03.negishi:[~] $ sinteractive -A hpcexc -p cpu -q normal -n 1 -t 00:10:00
+salloc: Pending job allocation 19809515
+salloc: job 19809515 queued and waiting for resources
+salloc: job 19809515 has been allocated resources
+salloc: Granted job allocation 19809515
+salloc: Waiting for resource configuration
+salloc: Nodes a195 are ready for job
+username@a195.negishi:[~] $
+```
+
+
+Notice that before the `sinteractive` program was run,
+we were on `login03.negishi` and after it was run, we
+are now on `a195.negishi`, this is a good way to tell
+if you are running on a compute node, or on a login
+node.
+
+To get out of the interactive slurm job, simply
+run the `exit` command and you'll be returned to
+the login node you were on previously.
+
+
+## Open OnDemand Interactive Apps
+If you'd rather avoid running jobs on the command line entirely, RCAC offers Open OnDemand interactive apps that handle the submission to the compute backend for you. 
+
+
+Most notably, we have an "Open OnDemand Desktop" application, which will give you a virtual desktop (running on a cluster backend node) available in your browser. This can be incredibly useful if you need to run graphical applications on RCAC, which don't run well over SSH on the command line.
+
+
+![Open OnDemand Desktop](../assets/images/ood_desktop.png)
+
+
 ### Common Slurm resource parameter reference
 
   Shortcut | Long form option | Meaning |
@@ -206,7 +244,7 @@ shell script:
 | `-J` | `--job-name` | Job name  |
 | `-t` | `--time` | Walltime limit |
 | `-N` | `--nodes` | Number of nodes |
-| `-n` | `--ntasks`, `--ntasks-per-node` | Nunber of Slurm tasks (default: 1) |
+| `-n` | `--ntasks`, `--ntasks-per-node` | Number of Slurm tasks (default: 1) |
 
 
 <!-- | `-c` | `--cpus-per-task` | Cores per task (default: 1) |
@@ -279,47 +317,6 @@ to cancel all our own jobs?
 
 !!! warning
     Cancelling an application this way isn't very "nice", in that it immediately stops everything and can cause problems if in the middle of file operations.
-
-## Interactive Jobs
-To get an interactive job (or essentially a shell
-on a compute node), use the `sinteractive` program
-(which is RCAC specific). You will need to specify
-the same parameters as with `sbatch` (e.g. account,
-partition, QoS, cores, nodes, time).
-
-
-``` hl_lines="1 8"
-username@login03.negishi:[~] $ sinteractive -A lab_queue -p cpu -q standby -c 4 -t 00:10:00
-salloc: Pending job allocation 19809515
-salloc: job 19809515 queued and waiting for resources
-salloc: job 19809515 has been allocated resources
-salloc: Granted job allocation 19809515
-salloc: Waiting for resource configuration
-salloc: Nodes a195 are ready for job
-username@a195.negishi:[~] $
-```
-
-
-Notice that before the `sinteractive` program was run,
-we were on `login03.negishi` and after it was run, we
-are now on `a195.negishi`, this is a good way to tell
-if you are running on a compute node, or on a login
-node.
-
-To get out of the interactive slurm job, simply
-run the `exit` command and you'll be returned to
-the login node you were on previously.
-
-
-## Open OnDemand Interactive Apps
-If you'd rather avoid running jobs on the command line entirely, RCAC offers Open OnDemand interactive apps that handle the submission to the compute backend for you. 
-
-
-Most notably, we have an "Open OnDemand Desktop" application, which will give you a virtual desktop (running on a cluster backend node) available in your browser. This can be incredibly useful if you need to run graphical applications on RCAC, which don't run well over SSH on the command line.
-
-
-![Open OnDemand Desktop](../assets/images/ood_desktop.png)
-
 
 ## Good citizenship
 

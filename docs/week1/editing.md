@@ -172,7 +172,7 @@ cp: example-data/ is a directory (not copied).
 ```
 Oops, what happened here?
 
-We can't copy directories without recursively copying its contents, whcich `cp` does not do by default. You can copy directories with the `-r` (recursive) option:
+We can't copy directories without recursively copying its contents, which `cp` does not do by default. You can copy directories with the `-r` (recursive) option:
 ```bash
 $ cp -r example-data/ data.bak
 ```

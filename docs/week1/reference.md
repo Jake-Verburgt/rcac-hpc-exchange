@@ -123,7 +123,7 @@
      [~/Desktop]$ rm -r --verbose ./practice1
      ```
 
-### Exercise 2
+<!-- ### Exercise 2 -->
 
 
 

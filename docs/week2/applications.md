@@ -152,7 +152,7 @@ $ python example.py
     ```
 
 ## Putting it into a Script
-Notice that it took several shell commands to run this python program. If we don't want to type out all the commands every time we want to run, we can put tyhem into a script! We'll talk about scripting more in [week 3](../week3/index.md), but for now we can think of a script as a series of commands that we put into a file, that are all ran when we run the script. For example, if we put our commands in a file titled `run_example.sh`:
+Notice that it took several shell commands to run this python program. If we don't want to type out all the commands every time we want to run, we can put them into a script! We'll talk about scripting more in [week 3](../week3/index.md), but for now we can think of a script as a series of commands that we put into a file, that are all ran when we run the script. For example, if we put our commands in a file titled `run_example.sh`:
 
 ```bash title="run_example.sh" linenums="1"
 #!/bin/bash
