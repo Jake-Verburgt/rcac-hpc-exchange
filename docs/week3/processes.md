@@ -117,24 +117,10 @@ we have sent the `int` signal to the
 first child process. This interrupts
 the process and tries to stop it.
 
-## Signals
+!!! tip "Signals"
+    The UNIX *signal interrupt* mechanism is an important concept to understand in software programming. You should know about the **SIGINT**, **SIGTERM**, and **SIGKILL** signals, which are all interrupt signals with increasing amounts of force to the program.
 
-The UNIX *signal interrupt* mechanism is
-an important concept to understand in
-software programming. You should know
-about the **SIGINT**, **SIGTERM**, and
-**SIGKILL** signals, which are all
-interrupt signals with increasing amounts
-of force to the program.
-
-However, there are many other signals with
-different purposes other than to halt a
-process.
-
-Slurm understands signals and can send
-desired signals to your job script or
-steps at predefined times (e.g. 10 minutes
-before the walltime limit).
+    Slurm understands signals and can send desired signals to your job script or steps at predefined times (e.g. 10 minutes before the walltime limit).
 
 ### Program reference
 

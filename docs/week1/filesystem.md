@@ -194,7 +194,7 @@ $ pwd
 
 * The `.` represents the directory you are currently in. You can use it to reference certain files in your current directory (like `ls ./myfile.txt`)
 
-#### Previous Working Directory: `..`
+#### Parent Working Directory: `..`
 
 * The `..` represents the parent directory of the directory you are currently in. For example, if you are in `/home/username/Documents/mydata`, the command `cd ..` will change your directory to `/home/username/Documents`
 * You can also stack these! For example, to move "up" two directories, you could use the command `cd ../../`

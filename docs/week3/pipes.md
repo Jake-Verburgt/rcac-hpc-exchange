@@ -45,7 +45,7 @@ $ cat message.txt
 Hello, world!
 ```
 
-![](../assets/images/pipe_to_file.png)
+![Image showing a program sending stdout to a file titled message.txt, with the command program > message.txt](../assets/images/pipe_to_file.png)
 
 
 
@@ -56,11 +56,11 @@ $ cat message.txt | wc --chars
 14
 ```
 
-![](../assets/images/pipe.png)
+![An image of a program sending its stdout to a second program prog2 with the command program | prog2](../assets/images/pipe.png)
 
 
 !!! tip "`wc` program"
-     `wc`. or the "word count program is a handy tool that allows us to count the number of words (`--words`), lines (`--lines`), or characters (`--chars`) from a file or `stdin`.
+     `wc` or the "word count program is a handy tool that allows us to count the number of words (`--words`), lines (`--lines`), or characters (`--chars`) from a file or `stdin`.
 
 
 ??? question "How might we see how many files we have in our current directory?"

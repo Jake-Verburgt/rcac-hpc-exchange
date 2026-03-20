@@ -36,7 +36,7 @@ because tape archives do better with one
 big file instead of many, smaller files. We will learn more on how to archive data at RCAC in [Week 4](../week4/index.md). 
 
 
-![Tar Files](../assets/images/tar.png)
+![An image of the tar -czvf command converting several files into a single file, and the tar -xvzf command converting it back to many files](../assets/images/tar.png)
 
 To package a directory into a single, compressed file, you would use the following command:
 
@@ -89,7 +89,7 @@ usage and behavior. The three are:
 * `xz` (often the smallest files, but slowest / most CPU-heavy)
 
 
-![gzip](../assets/images/gzip.png)
+![An image showing the gzip command converting a 1.1G file, file1.csv to a 55M file, file2.csv.gz, with the gunzip command converting it back](../assets/images/gzip.png)
 
 
 #### `gzip` (`.gz`)

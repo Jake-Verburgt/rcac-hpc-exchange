@@ -81,14 +81,16 @@ $ ./hello.sh
     -rw-r--r-- 1 username student 22 Oct 11 01:44 hello.sh
     ```
 
-The file `hello.sh` doesn't have the **execute** bit set, so we can't run it as a program. You can change file and directory permissions using the `chmod` program:
+The file `hello.sh` doesn't have the **execute** bit set, so we can't run it as a program. You can change file and directory permissions using the `chmod` program
+
+The `chmod` program allows you to add and remove read(`r`)/write(`w`)/execute(`x`) permissions for the <span class="perm-user">user</span> (`u`), <span class="perm-group">group</span> (`g`), and <span class="perm-other">others</span> (`o`) with the following syntax:
 
 ```bash
+chmod [ugo][-+][rwx] file
+```
+To add execute permissions to our file, we can simply run the command:
+```bash
 $ chmod +x hello.sh
-$ ls -l hello.sh
--rwxr-xr-x 1 username student 22 Oct 11 01:44 hello.sh
-$ ./hello.sh
-Hello, World!
 ```
 
 This changes the execute permission from:
@@ -102,12 +104,12 @@ to
 
 which allows us to "execute" it as a program. For a quick refresher on what permissions are, take a look at [Navigating Filesystems](../week1/filesystem.md#permissions) from week 1.
 
-The `chmod` program allows you to add and remove read(`r`)/write(`w`)/execute(`x`) permissions for the <span class="perm-user">user</span> (`u`), <span class="perm-group">group</span> (`g`), and <span class="perm-other">others</span> (`o`) with the following syntax:
+Now, we can run `hello.sh` directly as a program!
 
 ```bash
-chmod [ugo][-+][rwx] file
+$ ./hello.sh
+Hello, World!
 ```
-
 
 ??? question "How would we remove read permissions on a file for both the file *group* and *others*?"
      ```
@@ -155,7 +157,7 @@ Hello, World!
 Now our `hello` program is available from anywhere! We can change directories, and our shell will still be able to find the `hello` program, because we added it to our `PATH` variable.
 
 ??? question "What happens if we close the shell and reopen it?"
-     It doesn't matter if we change directories, but the change to our `PATH` variable is not kept if we close the shell.
+     The change to our `PATH` variable is not kept if we close the shell, so currently, we need to alter the `PATH` every time we run
 
      There is a file called the `.bashrc` file that you can add the `export PATH=$PATH:~/bin` command to, which will be ran whenever you open a terminal!
 
@@ -315,7 +317,7 @@ things.
 | `PATH` | Directories containing programs |
 | `MANPATH` | Directories containing manual pages |
 | `LD_LIBRARY_PATH` | Directories containing shared libraries |
-| `PKG_CONFIG_PATH` | Directories containing package configuration |
+<!-- | `PKG_CONFIG_PATH` | Directories containing package configuration | -->
 
 
 ## Login profile
@@ -324,20 +326,20 @@ As we discussed earlier, the `PATH` variable is reset
 every time you log into the cluster, or open a new
 terminal. What if we wanted to have it be modified
 every time we started a new session? There's a
-solution for that! It's called a **login profile**!
+solution for that! It's called a **login profile**! _The commands in your login profile will be ran every time you open a new terminal._
 Typically, on Linux you would use the `~/.bashrc`
 file, but on the UNIX system we have on the clusters
 it's contained in the `~/.bash_profile` hidden file.
 
 ```bash  title="/home/username/.bashrc (or .bash_profile)" linenums="1"
+#variable exports
+export PATH=$PATH:$HOME/bin
+
 
 #aliases
 alias rm="rm -i"
 alias Negishi='ssh username@negishi.rcac.purdue.edu'
 
-
-#variable exports
-export PATH=$PATH:$HOME/bin
 ```
 
 
@@ -355,21 +357,8 @@ There are many things you can put in the login
 profile to configure your personal session, but
 the two that we are going to talk about are:
 
-* Aliases
 * Variables
-
-### Aliases
-
-An alias is a verbatim command substitution that
-happens on the command line when invoked like a program.
-Here's one example:
-```bash
-alias rm="rm -i"
-```
-Which would make sure that every time you run the
-`rm` program, it's run in interactive mode. However,
-other programs will not recognize aliases as
-commands.
+* Aliases
 
 ### Variables
 
@@ -387,6 +376,18 @@ don't only have `$HOME/bin` as our entire `PATH`.
 Because that would mean the only place that the
 computer looks for programs would be in your
 home directory. Which would be bad.
+
+
+### Aliases
+
+An alias is a verbatim command substitution that
+happens on the command line when invoked like a program.
+Here's one example:
+```bash
+alias Negishi='ssh username@negishi.rcac.purdue.edu'
+```
+Instead of typing the command `ssh username@negishi.rcac.purdue.edu` every time you want to log into Negishi, This alias will allow you to instead just type `Negishi`.
+
 
 
 !!! warning 
@@ -455,6 +456,8 @@ fi
 
 ### String Tests
 
+String tests are commonly used in shell scripts for validating input and making decisions based on names, paths, or environment variables.
+
 | Test | Meaning | Example |
 |------|---------|---------|
 | `-z str` | String is empty | `[[ -z "$1" ]] && echo "No argument given"` |
@@ -464,6 +467,8 @@ fi
 
 
 ### Numeric Comparisons
+
+Numeric comparisons can be useful when you want to compare values such as counts, limits, job sizes, or resource requests.
 
 | Operator | Meaning | Example |
 |----------|---------|---------|
@@ -485,22 +490,48 @@ fi
 
 ## Loops
 
-Lastly, loops are implemented in `bash`, and can be particularly useful for looping over files or arguments:
+Lastly, loops are implemented in `bash`, and can be particularly useful for looping over files or arguments. 
 
+You can use command substitution to loop through files:
 ```bash
 for f in $(ls *.py); do
   echo "Processing $f"
   python $f
 done
 
+Processing file1.py
+Processing file2.py
+Processing file3.py
+```
+
+You can loop through file arguments with the `$@` variable:
+```bash
 for name in $@; do
     echo "Hello $name!"
 done
 
+Hello jake!
+Hello josh!
+Hello jenny!
+```
 
+Lastly, you can loop through an array of integers:
+
+```bash
 for number in {1..10}; do
     echo "On $number!"
 done
+
+On 1!
+On 2!
+On 3!
+On 4!
+On 5!
+On 6!
+On 7!
+On 8!
+On 9!
+On 10!
 ```
 
 There's many more aspects of `bash` that we're not going to talk about here like while loops, functions, and variable substitution. Before we move on, it's important to note that if a command fails, bash will just continue on by default.
