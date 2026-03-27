@@ -55,10 +55,11 @@ a209.negishi.rcac.purdue.edu
 ```
 ??? question "What did you notice in the output file of this job? Do the hostnames align with what you expected based on the request?"
      Yes! We requested 2 nodes, each with 2 tasks (for 4 tasks total). `srun` runs the `hostname` program in each of our tasks. We can see that two of the tasks were launched on `a200`, and the other two were launched on `a209`.
+     !["An image of the hostname command running in 4 different tasks, with two tasks on each node"](../assets/images/Node_topology_srun.png)
 
 
-??? question "How would we capture the output of each of these tasks (job steps) separately?"
-     We could use `srun`'s `--output` option e.g.:
+!!! tip  "Separating Outputs"
+     You can use `srun`'s `--output` option to separate the output if the individual tasks:
      ```bash
      --output %j-%t-%s.out
      ```

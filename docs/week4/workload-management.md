@@ -45,7 +45,7 @@ To do this, we need two files:
 
 
 ### Submitter Script
-A submitter script that submits 30 jobs with 30 different names would look like this:
+A submitter script runs on the frontend and submits multiple jobs to Slurm for us. A Submission script that submits 30 jobs with 30 different names would look like this:
 
 ```bash title="submit.sh" linenums="1" hl_lines="5"
 #!/bin/bash
@@ -100,25 +100,22 @@ This will create 30 different scratch folders named `example-01` to `example-30`
 
 
 !!! note "Slurm Environment Variables"
-     You've probably seen us use `slurm` variables within some of the job scripts. `slurm` sets these variables when it starts our job in the login node, and can be useful for gathering information about the running job. In the example above, we made directories based on the job name, which we accessed with the `${SLURM_JOB_NAME}` variable. Below is an incomplete list of `slurm` variables that we can use, some of which we will use later. 
+     You've probably seen us use `slurm` variables within some of the job scripts. `slurm` sets these variables when it starts our job in the compute node, and can be useful for gathering information about the running job. In the example above, we made directories based on the job name, which we accessed with the `${SLURM_JOB_NAME}` variable. Below is an incomplete list of `slurm` variables that we can use, some of which we will use later. 
 
      | Variable | Description |
      |----------|-------------|
+     | `SLURM_SUBMIT_DIR` | Directory job was submitted from |
+     | `SLURM_SUBMIT_HOST` | Host where `sbatch` was run |
      | `SLURM_JOB_ID` | Unique ID of the current job allocation |
      | `SLURM_JOB_NAME` | Job name specified by `--job-name` |
-     | `SLURM_JOB_NODELIST` | Nodes assigned to the job (compact form) |
+     | `SLURM_JOB_NODELIST` | Nodes assigned to the job |
      | `SLURM_JOB_NUM_NODES` | Number of nodes allocated |
      | `SLURM_NTASKS_PER_NODE` | Tasks per node |
      | `SLURM_CPUS_PER_TASK` | CPUs allocated per task |
      | `SLURM_PROCID` | MPI rank / global task ID |
      | `SLURM_LOCALID` | Task’s local rank on its node |
      | `SLURM_NODEID` | Node index within allocation |
-     | `SLURM_SUBMIT_DIR` | Directory job was submitted from |
-     | `SLURM_SUBMIT_HOST` | Host where `sbatch` was run |
-     | `SLURM_CLUSTER_NAME` | Slurm cluster name |
-     | `SLURMD_NODENAME` | Hostname of current compute node |
      | `SLURM_ARRAY_TASK_ID` | ID of a task in a slurm job array |
-
 
 
 

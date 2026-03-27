@@ -58,19 +58,19 @@ The `sacct` program is highly malleable, with many options for data filtering an
 | `-j` | Query **specific job(s)** by JobID | `sacct -j 12345,12346` |
 | `-u` | Filter by **user** | `sacct -u jsmith` |
 | `-A` | Filter by **account** | `sacct -A rcac-gpu` |
-| `-P` | Output **pipe-delimited** format (script-friendly) | `sacct -P -n` |
+| `-r` | Filter by **partition** | `sacct -r gpu` |
 | `-S` | Start time (inclusive) | `sacct -S 2026-01-01` or `sacct -S now-30days` |
 | `-E` | End time (inclusive) | `sacct -E 2026-01-31` |
-| `-o` | Select **custom output fields** | `sacct -o JobID,User,State,Elapsed` |
 | `-s` | Filter by **job state** | `sacct -s COMPLETED,FAILED` |
-| `-r` | Filter by **partition** | `sacct -r gpu` |
+| `-o` | Select **custom output fields** | `sacct -o JobID,User,State,Elapsed` |
 | `-T` | Show **timestamps** instead of elapsed durations | `sacct -T` |
+| `-P` | Output **pipe-delimited** format (script-friendly) | `sacct -P -n` |
 
 
-An example of a job search that is only for a specific username with a specific submission account would be:
+An example of a job search that is only for a specific username with a specific submission account over the past 15 days would be:
 
 ```bash
-$ sacct -X -u username -A lab_queue -o JobID,JobName,User,State,Elapsed,NodeList`
+$ sacct -X -u username -A hpcexc --starttime=now-15days -o JobID,JobName,User,State,Elapsed,NodeList
 
 JobID           JobName      User      State    Elapsed        NodeList 
 ------------ ---------- --------- ---------- ---------- --------------- 

@@ -60,6 +60,8 @@ The scratch system is internally redundant, so you don't have to worry about har
 
 Scratch directories are good for intermediate to massive data I/O, so are perfect for data intensive jobs. It is **NOT** for the primary copy of your data or software. And it is **NOT for long-term storage.** It is only for short-term storage of intermediate results.
 
+![Am image showing files in a users scratch space being slowly transferred on a conveyor belt to a fire representing a file purge](../assets/images/scratch_purge.png)
+
 !!! warning
      Beware of regular purging of older files. You can use the `purgelist` program to  tell you which files will be purged. Please do not try to game the system, as we will ban users who repeatedly do so. Just back older files up to Fortress instead of storing them on Scratch.
 
@@ -136,9 +138,9 @@ mkdir: /home/username/example
 [Fortress HSI]/home/username/example->ls -lh
 ```
 
-Now let's remove the directory that we just created, we don't need it cluttering up our file system:
+<!-- Now let's remove the directory that we just created, we don't need it cluttering up our file system: -->
 
-```bash
+<!-- ```bash
 [Fortress HSI]/home/username/example->cd ..
 [Fortress HSI]/home/username->rm -r example
 Unknown option or missing argument: 'r' ignored
@@ -146,9 +148,9 @@ Unknown option or missing argument: 'r' ignored
 ```
 
 ??? question "Why can't we remove this directory with `rm -r`? What command do we need to remove a directory?"
-     `rmdir example`
+     `rmdir example` -->
 
-Use `hsi put` and `hsi get` to copy data to and from the tape archive. Let's add our directory to the archive and try to get it back.
+Use `put` and `get` to copy data to and from the tape archive. Let's add our directory to the archive and try to get it back.
 
 ```bash
 [Fortress HSI]/home/username->put -R example-data
@@ -198,7 +200,7 @@ In the example above, the options to the `htar` program are similar to the `tar`
 
 ### Example
 
-Lets return to our Python job that we created in week 2, and make a few changes to it so our results get archived automatically. In our job script, we can use certain Slurm options to specify a path for the console output files in our job. These options are `-o/--output` (for `stdout` and `-e/--error` (for `stderr`). 
+Lets return to our Python job that we created in week 2, and make a few changes to it so our results get archived automatically. In our job script, we can use certain Slurm options to specify a path for the console output files in our job. These options are `-o/--output` (for `stdout`) and `-e/--error` (for `stderr`). 
 
 So, our example job submission script might look like this:
 
@@ -232,7 +234,7 @@ echo "Backed up data to Fortress at $(date)!"
 
 ```
 
-Once this runs we can check to see the status of the job with `squeue --me`. Once it finishes running, we can check the output file to make sure it does what we expect:
+Once this runs we can check to see the status of the job with `squeue --me`. Once it finishes running, we can check the output file (`example.out`) to make sure it does what we expect. Remember that All the text that would normally print to the terminal (`stdout` and `stderr`) will instead go into the slurm log!
 
 ```bash
 $ sbatch myjob.sh
@@ -247,13 +249,14 @@ HTAR: a   /tmp/HTAR_CF_CHK_1726143_1769622349
 HTAR Create complete for example.tar. 3072 bytes written for 1 member files, max threads: 2 Transfer time: 0.032 seconds (0.097 MB/s) wallclock/user/sys: 0.281 0.012 0.007 seconds
 HTAR: HTAR SUCCESSFUL
 Backed up data to Fortress at Wed Jan 28 12:45:49 EST 2026!
+
 ```
-
+<!-- 
 ??? question "If we run the job a second time, will it overwrite the output file? If so, what other options exist?"
-     It will overwrite it. You can add substitution patterns like `%j` or `%A` so that different jobs write to different output files. See the *file pattern* section of the *manual page* for details.
+     It will overwrite it. You can add substitution patterns like `%j` or `%A` so that different jobs write to different output files. See the *file pattern* section of the *manual page* for details. -->
 
 
-With regards to the outputs of our python script there's two places we need to check for the output of our job. First is the `scratch` space that our job ran in:
+Notice that this script doesn't contain our python output, because we redirected that output to a file (`> results.out`) and then archived the file with `htar`. There's two places we need to check for the output of our job. First is the `scratch` directory that the python output file was created in:
 
 ```bash
 $ cat $SCRATCH/example/results.out

@@ -30,8 +30,11 @@ Nodes               : a200
 ```bash
 username@login03.negishi:[~] $ ssh a200
 
-username@a200.negishi:[~] $ htop -u username
-<full screen app>
+username@a200.negishi:[~] $ top -u username # Or htop
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                   
+2145269 username  21   1 3956692   2.3g  19384 R  62.5   0.9   0:17.66 python                                                                    
+2145581 username  20   0  276372   7204   4128 R  25.0   0.0   0:00.29 top                                                                       
+2145062 username  20   0   89956   9836   8060 S   0.0   0.0   0:00.09 systemd       
 <press "q" to exit>
 ```
 
