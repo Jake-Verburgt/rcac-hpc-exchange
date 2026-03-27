@@ -138,18 +138,6 @@ mkdir: /home/username/example
 [Fortress HSI]/home/username/example->ls -lh
 ```
 
-<!-- Now let's remove the directory that we just created, we don't need it cluttering up our file system: -->
-
-<!-- ```bash
-[Fortress HSI]/home/username/example->cd ..
-[Fortress HSI]/home/username->rm -r example
-Unknown option or missing argument: 'r' ignored
-*** Warning: '/home/username/example' is a directory - ignored
-```
-
-??? question "Why can't we remove this directory with `rm -r`? What command do we need to remove a directory?"
-     `rmdir example` -->
-
 Use `put` and `get` to copy data to and from the tape archive. Let's add our directory to the archive and try to get it back.
 
 ```bash
@@ -195,8 +183,6 @@ HTAR: a  example-data/paper.txt
 
 In the example above, the options to the `htar` program are similar to the `tar` program. Except, we don't need to compress it using `gzip` (with the `z` flag).
 
-<!-- !!! note
-     There is no need to make and compress this `.tar` archive ahead of time. Fortress has built-in compression. -->
 
 ### Example
 
