@@ -35,38 +35,29 @@ There are many reasons why one would want to use a UNIX operating
 system for servers (both in HPC and Cloud scenarios).
 
 * Performance
+
+    UNIX systems are often relatively lightweight and avoid much of the overhead found in more consumer-oriented operating systems, making them well suited for compute-intensive workloads.
+ 
 * Compatibility
+    
+    Many scientific applications, libraries, and tools are built for UNIX-like environments, allowing a wide range of workflows to run with minimal friction.
+
 * Configurability
+    
+    UNIX systems are highly flexible and provide fine-grained control over system behavior, software environments, permissions, and automation, making them adaptable to many different use cases.
+
 * Multi-user
+
+    UNIX systems are designed to support multiple users simultaneously, each with their own processes, files, and permissions, which is an essential feature for shared systems like HPC clusters. Imagine if HPC clusters were limited to one user at a time! Science would grind to a halt very quickly.
+
 * Cost
+
+    UNIX systems, particularly Linux distributions, are free or low-cost. This is particularly important at scale in enterprise and research environments where we have thousands of users.
+
 * Programming environment
+    
+    As apposed to operating systems like Windows, UNIX systems offer a strong, text-based workflow that is ideal for remote access, scripting, and automation. We'll cover more of scripting and automation in [Week 3](../week3/index.md).
 
-Firstly, UNIX systems are usually **lightweight**, meaning they
-don't have all the features that many modern operating systems
-have, which means that they can run much faster than other
-operating systems out there.
-
-Next, many different applications and libraries are **compatible**
-with UNIX systems, meaning that a lot of different workflows
-can be run on a UNIX system.
-
-UNIX systems also often offer much more **flexibility** when it
-comes to the system configuration, allowing the system to be
-adapted to a plethora of different use cases.
-
-One of the most important aspects of UNIX systems is that they
-are **multi-user**, or multiple users can use the system at the
-same time. Imagine if supercomputers were limited to one user
-at a time\! Science would grind to a halt very quickly.
-
-UNIX systems are also often **cheaper, or even free**, compared to  their counterparts, which is valuable in an enterprise situation,
-where you may have thousands of users.
-
-Lastly, UNIX systems often have primarily **text-based interfaces**,
-as opposed to GUI-based ones such as Microsoft Windows. In
-addition, there are many compilers and libraries that are needed
-for scientific programming that are readily available for UNIX
-systems, such as **MPI** and **BLAS** implementations.
 
 ## Unix components
 
@@ -80,20 +71,17 @@ components are:
 
 ### File system hierarchy
 
-In UNIX systems, there is a conventional layout of the
-file system directories. There are **standard
-structures, names and purposes for different directories.**
-Some names exist only at the root of the file system and others
-are repeated in layers for a similar purpose or function.
-Some common directories you may see are:
+In UNIX systems, there is a conventional layout of the file system directories. There are **standard structures, names and purposes for different directories.**
+Some names exist only at the root of the file system and others are repeated in layers for a similar purpose or function. Some common directories you may see are:
 
-* **/bin** - where binaries and executables go
-* **/share** - where application specific data goes
-* **/lib** - includes the libraries necessary for the binaries
+* **/bin** - where system binaries and executables go
+* **/usr** - user binaries and libraries
+* **/lib** - includes system libraries necessary for the binaries
 * **/etc** - often contains system configuration files
 
-Other top-level directories that you would commonly see are:
-**/boot, /dev, /sys, /proc, /mnt, /tmp** and others.
+![Image showing top level directories of the linux filesystem](../assets/images/filesystem_root.png)
+
+There's lots of other top-level directories that you might come across like `/boot`, `/sys`, `/mnt`, `/tmp`, and others. Luckily, as a user you rarely will have to deal with these. Almost all of your day to day work is done in `/home`.
 
 ### Everything is a file
 

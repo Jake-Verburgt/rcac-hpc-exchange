@@ -23,7 +23,7 @@ $ pwd
 
     ```bash
     $ pwd
-    /home/verburgt
+    /home/username
     ```
     
 ### ls:
@@ -39,6 +39,10 @@ There are many options that `ls` can use to modify its
 behavior. In addition, you can specify a directory as an
 argument to list contents of that directory.
 
+!!! note "File Extensions"
+     In UNIX systems, file extensions are technically meaningless, however, convention is important. Executables don't need to end in `.exe` and text files don't need to end in `.txt`. It is helpful if they do, so that people (including yourself) know what type of file it is.
+     
+
 !!! note "Hidden Files"
     Files and directories that start with a "." are hidden by default. You can use the `-a` or `--all` options to see them!
 
@@ -49,17 +53,17 @@ argument to list contents of that directory.
     * `?` - matches exactly one character
     * `[abc]` or `[a-z]` - matches one character from a set or range
 
-You can substitute these in to match specific patterns like so:
+    You can substitute these in to match specific patterns like so:
 
-```bash
-$ ls *.txt
-file1.txt file2.txt file3.txt
-```
+    ```bash
+    $ ls *.txt
+    file1.txt file2.txt file3.txt
+    ```
 
-```bash
-$ ls data?.[ct]sv
-data1.csv data2.tsv data3.csv
-```
+    ```bash
+    $ ls data?.[ct]sv
+    data1.csv data2.tsv data3.csv
+    ```
 
 ??? question "What files and folders are hidden in your home directory?"
 
@@ -86,10 +90,12 @@ which directory you are currently working in.
 ```
 $ pwd
 /home/username
-$ cd Documents
+$ cd Desktop/data
 $ pwd
-/home/username/Documents
+/home/username/Desktop/data
 ```
+![Image of a filesystem showing a users working directory change after running the cd command](../assets/images/cd_simple.png)
+
 
 !!! tip "Autocomplete"
     Most terminal interfaces support using `tab` to autocomplete file and folders that exist in your working directory. This works for most commands, but is especially helpful with `cd`.
@@ -98,9 +104,9 @@ $ pwd
     If you run the `cd` command without arguments, you will return back to your home directory.
 
 
-??? question "How can we move to our Desktop?"
+??? question "How can we move to our Documents folder?"
 
-    Use `$ cd Desktop`!
+    Use `$ cd Documents`!
 
     ??? question "How can we move back to your Home directory?"
 
@@ -162,9 +168,7 @@ output_of_ls
 $ ls Desktop
 output_of_ls
 ```
-!!! note "File Extensions"
-     In UNIX systems, file extensions are technically meaningless, however, convention is important. Executables don't need to end in `.exe` and text files don't need to end in `.txt`. It is helpful if they do, so that people (including yourself) know what type of file it is.
-     
+
 
 ### Special paths
 
@@ -235,7 +239,9 @@ The three program options used here are: `a`, which displays all files/folders,
 even hidden ones; `l` which lists out more information about each listing;
 and `h` which shows the size of items in a human-readable format. 
 
-In the first ten columns of the output are the permissions of that item, details of which will be discussed in the next paragraph. The next number is the number of hardlinks to the file, which for most use cases isn't important. After that, we have the username of the owner of the file and then the name of the group that owns access to the file. The number after that is the size of the item. Then comes the date that the item was most recently modified. Last of all is the name of the actual item.
+In the first ten columns of the output are the permissions of that item, details of which will be discussed in the next paragraph. The next number is the number of hardlinks to the file, which for most use cases isn't important. 
+
+After that, we have the username of the <span class="perm-user">owner</span> of the file and then the name of the <span class="perm-group">group</span> that owns access to the file. The number after that is the size of the item. Then comes the date that the item was most recently modified. Last of all is the name of the actual item.
 
 
 The four items in the `.ssh` folder of this home directory are: 
@@ -246,8 +252,9 @@ The four items in the `.ssh` folder of this home directory are:
 
 3) Two files:
 
-    * `authorized_keys`
-    * `config`
+* `authorized_keys`
+
+* `config`
 
 Let's talk permissions. The first ten characters of each row
 represent the permissions for each item listed:
