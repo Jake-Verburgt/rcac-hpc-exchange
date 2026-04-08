@@ -38,16 +38,9 @@ print(C.mean())
       * `:wq` to save and quit
 
 
-This script creates two random matrices, of size
-five thousand by five thousand and multiplies them
-together. It then prints out the mean of the
-resultant matrix. It's not useful scientifically
-but it does take some time for the computer to
-do this problem, so it's helpful to use as a
-toy problem.
+This script creates two random matrices, of size five thousand by five thousand and multiplies them together. It then prints out the mean of the resultant matrix. It's not useful scientifically but it does take some time for the computer to do this problem, so it's helpful to use as a toy problem.
 
 Next, let's try running it:
-
 
 ```
 $ python example.py
@@ -57,14 +50,11 @@ Wait, what? Why didn't that work? The system doesn't know about python yet, we h
 
 ### Module System
 
-There are too many versions and conflicting software to
-have every version of every application `pre-installed`
-for all users all the time. To get around this problem,
-we use a module system called `Lmod`. This module system
-can load and unload programs and commands within your shell environment.
+There are too many versions and conflicting software to have every version of every application pre-installed for all users all the time. To get around this problem, we use a module system called `Lmod`. This module system can load and unload programs and commands within your shell environment.
 
-As an example, run the command `module list` to list all
-currently loaded modules:
+![Image showing three module load commands making additional commands available](../assets/images/module_system.png)
+
+As an example, run the command `module list` to list all currently loaded modules:
 
 ```
 $ module list
@@ -76,9 +66,7 @@ Currently Loaded Modules:
 Where:
 S: Module is Sticky, requires --force to unload or purge
 ```
-There are many different `module` commands that we can use
-to learn about what's available on the system and what our
-current environment is:
+There are many different `module` commands that we can use to learn about what's available on the system and what our current environment is:
 
 | Command | Description |
 |--------|-------------|
@@ -93,14 +81,7 @@ current environment is:
 | `module help`   | Show help message for a module |
 
 
-Let's check for available python modules with `module avail`
-```
-$ module avail python
-No module(s) or extension(s) found!
-```
-Well, that's because we provide python via the `conda`
-package manager...
-
+If we want to run a python script, we'll need to load a module that provides the `python` command. On RCAC clusters, we provide python through the `conda` environment manager, which is available as a module.
 ```   
 $ module avail conda
 
@@ -118,8 +99,7 @@ $ which python
 !!! tip "`which` command"
      * `which` is a nice program that will tell us where the specified program is coming from. Remember that everything is a file! `which` tells you what file starts the program when you run a command.
 
-Now that we have python ready and our script is written,
-let's run it (it may take a couple minutes to run):
+Now that we have python ready and our script is written, let's run it:
 ```
 $ python example.py
 2499.9118
@@ -127,7 +107,7 @@ $ python example.py
 
 
 !!! bug  "Numpy error"
-     If you get an error that says something like this:
+     On some RCAC systems, the `numpy` library isn't available in the "base" conda environment, and you may need to make your own python environment, and you may see errors like this:
 
     ```
     Traceback (most recent call last):
@@ -136,20 +116,24 @@ $ python example.py
     ModuleNotFoundError: No module named 'numpy'
     ```
 
-    This has to do with our (RCAC's) conda installation.
-    There's a long story about why this is happening, but
-    there's a simple solution to it. We're going to make
-    our own conda environment to install `numpy` for
-    ourselves.
+We're going to make our own conda environment to install `numpy` for ourselves. Run these three lines of code to create the environment, activate it, and then run our example:
 
-    Run these three lines of code to create the environment,
-    activate it, and then run our example:
-    ```bash
-    $ conda create -y -n example numpy
-    $ conda activate example
-    $ python example.py
-    2499.9118
-    ```
+```bash
+$ conda create -y -n example_env numpy
+$ conda activate example_env
+(example_env) $ python example.py
+2499.9118
+```
+
+The first line creates a new conda environment named `example_env`, and automatically installs the `numpy` package in it. The second line changes your shell behavior so that it is using your new conda environment. You can tell that the environment is activated as conda will alter your prompt to contain the environment name. If you check which python you are using after you run `conda activate example`, you'll see that now your using a `python` that's installed in your home directory!
+
+```bash
+$ conda activate example_env
+(example_env) $ which python
+~/.conda/envs/example/bin/python
+```
+
+`conda` environments like this are often an easy way to install packages and libraries without the need for `sudo` (admin) privileges. 
 
 ## Putting it into a Script
 Notice that it took several shell commands to run this python program. If we don't want to type out all the commands every time we want to run, we can put them into a script! We'll talk about scripting more in [week 3](../week3/index.md), but for now we can think of a script as a series of commands that we put into a file, that are all ran when we run the script. For example, if we put our commands in a file titled `run_example.sh`:
@@ -157,7 +141,7 @@ Notice that it took several shell commands to run this python program. If we don
 ```bash title="run_example.sh" linenums="1"
 #!/bin/bash
 module load conda
-conda activate example
+conda activate example_env
 python example.py
 ```
 We can run the whole script on the command line:

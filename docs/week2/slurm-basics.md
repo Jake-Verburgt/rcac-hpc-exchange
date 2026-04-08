@@ -13,6 +13,21 @@ Because there are a limited number of compute nodes and many users submitting jo
 
 ![slurm_submission](../assets/images/slurm_submission.png)
 
+
+## Run Types
+
+Before we get started with how to run jobs on the compute nodes, we should talk about the two paradigms of running code on a supercomputer:
+
+* Batch mode
+
+* Interactively
+
+In the `batch` paradigm, you write your code, and then submit one (or many) instances of your code using the scheduler and it can run on arbitrarily many nodes without worry of interruption.
+
+In the `interactive` paradigm, you get a session on a compute node (using the gateway, ssh, or ThinLinc), and the run your code directly. However, if your network drops, your code could be interrupted.
+
+## Batch Scripts
+
 Users submit their work to Slurm in the form of batch job scripts, which are shell scripts that describe the resources needed and the commands to run. This shell script can be submitted to the scheduler via the `sbatch` program. The details of what resources are requested are commonly inside the script itself, but can also be passed to the `sbatch` program manually. Let's take a look at an example job script, `myjob.sh`:
 
 ```bash title="myjob.sh" linenums="1"
@@ -27,18 +42,41 @@ Users submit their work to Slurm in the form of batch job scripts, which are she
 cd $SLURM_SUBMIT_DIR
 
 module load conda
-conda activate example
+conda activate example_env
 python example.py
 echo "Script is finished! Exiting..."
 ```
-To submit this script to the scheduler, we can simply run:
+
+
+### Submission
+Once you are ready, submit it to the scheduler with the `sbatch` program:
 
 ```bash
+$ ls
+example.py  myjob.sh  ...
+
 $ sbatch myjob.sh
+Submitted batch job 32209880
 ```
+`sbatch` will read the parameters that we put in the script, and schedule your job script to be ran.  You have now submitted your first supercomputing resource allocation request! This job ID number is helpful to note down as it can be used elsewhere.
+
+!!! note 
+    The output of your job will, by default, be saved in files with this ID (e.g. `slurm-32209880.out`).
+
+    Once our job is done, we can see the output with:
+    ```bash
+    $ ls slurm-32209880.out
+    slurm-32209880.out
+
+    $cat slurm-32209880.out # cat prints the contents of a file!
+    2499.9118
+    ```
+
+--- 
+
 Let's take a closer look at the individual pieces of information we need to provide Slurm for it to schedule our job. 
 
-## Account
+### Account
 ```bash linenums="1" hl_lines="2"
 #!/bin/bash
 #SBATCH  --account=hpcexc
@@ -56,19 +94,16 @@ are available for you to submit to, and what their current usage is:
 
 ```
 $ slist
-                  Current Negishi Accounts
-==============================================================================
-               |              CPU Partition              |    AI Partition
-Accounts       |   Total     Queue      Run      Free    |  GPU Hours Balance
-============== | ========= ========= ========= ========= | ===================
-lab_queue      |       128        32        64        32 |                 0.0
-```
-!!! note "Queues"
-    The `lab_queue` here is just a placeholder, in reality,this should be something similar to your PI's username. In the following examples, please substitute `lab_queue` with an account found in the output of `slist`.
-    
-    If your `slist` output is empty, that means that you aren't associated with any groups that have resources allocated to their accounts on that cluster.
+                          Current Negishi Accounts                                
+==============================================================================    
+               |              CPU Partition              |     Standby QOS        
+Accounts       |   Total     Queue      Run      Free    |   Queue      Run       
+============== | ========= ========= ========= ========= | ========= =========    
+hpcexc         |        64         0        10        54 |         0         0
 
-## Partition
+```
+
+### Partition
 
 ```bash linenums="1" hl_lines="3"
 #!/bin/bash
@@ -99,24 +134,8 @@ gpu      up       5     3    160    132      0      0     1 infin   infinite    
 !!! note
      On many clusters, certain accounts will only be able to submit to specific partitions.
 
-<!-- To see what the different node types mean, use
-the `sfeatures` program:
 
-```
-$ sfeatures
-NODELIST    CPUS  MEMORY   AVAIL_FEATURES   GRES
-a[000-449]  128   257400   A,a              (null)
-b[000-005]  128   1031600  B,b              (null)
-g[000-004]  32    515500   G,g,MI210,mi210  gpu:3
-```
-Use `AVAIL_FEATURES` as tags as a constraint
-on clusters with more distinct hardware
-types.
-
-Use the `-C` or `--constraint` option with `sbatch` to
-target one of the feature tags. -->
-
-## Quality of Service (QoS)
+### Quality of Service (QoS)
 
 ```bash linenums="1" hl_lines="4"
 #!/bin/bash
@@ -137,8 +156,9 @@ Lastly, something you may want to specify is the
 * The `standby` QoS doesn't subtract from your accounts resources, but are given very low priority to run.
     * `standby` jobs are only allowed to run up to 4 hours
 
+![An Image showing a long queue under a standby sign, and an empty line under a sign labeled normal](../assets/images/standby_vs_normal.png)
 
-## Time and Resources
+### Time and Resources
 
 ```bash linenums="1" hl_lines="5-7"
 #!/bin/bash
@@ -159,46 +179,28 @@ We may also need to specify what resources we want to request, and for how long
 * `--ntasks-per-node` is the number of CPUs
 
 !!! note
-    This is an incomplete list, and the required options may vary by cluster and partition. For example, some clusters will require you to request memory with `--mem`, or to list how many GPUs you want access to with `--gres=gpu:`. See the user guide for the cluster you are using for more details!
+    This is an incomplete list, and the required options may vary by cluster and partition. For example, some clusters will require you to request memory with `--mem`, or to list how many GPUs you want access to with `--gres=gpu:`. See the user guide for the cluster you are using for more details, and the [SBatch documentation](https://slurm.schedmd.com/sbatch.html) for a complete list of options. 
 
-## Submission
-Once you are ready, submit it to the scheduler with the `sbatch` program:
+    | Long Form |  Short Form | Description |
+    |-----------|-------------|-------------|
+    | --account | -A          | Which account to submit under |
+    | --partition | -p  | Which partition to submit to|
+    | --qos   | -q | quality of service for job| 
+    | --nodes | -N | Number of nodes requested | 
+    | --ntasks | -n | Number of tasks requested |
+    | --ntasks-per-node | | Number of tasks requested per node |
+    | --cpus-per-task | -c | CPUs to be allocated for each task  |
+    | --cpus-per-gpu | Number of CPUs allocated per GPU |
+    | --mem | | Amount of Memory to request|
+    | --mem-per-cpu | | Memory requested per allocated CPU|
+    | --time | -t | Length of time to run job for |
+    | --gres=gpu:<count> | | Number of gpus requested
+    | --gpus-per-node| | Number of gpus requested for each node
 
-```bash
-$ ls
-example.py  myjob.sh  ...
 
-$ sbatch myjob.sh
-Submitted batch job 32209880
-```
-`sbatch` will read the parameters that we put in the script, and schedule your job script to be ran.  You have now submitted your first supercomputing resource allocation request! This job ID number is helpful to note down as it can be used elsewhere.
-
-!!! note 
-    The output of your job will, by default, be saved in files with this ID (e.g. `slurm-32209880.out`).
-
-    Once our job is done, we can see the output with:
-    ```bash
-    $ ls slurm-32209880.out
-    slurm-32209880.out
-
-    $cat slurm-32209880.out # cat prints the contents of a file!
-    2499.9118
-    ```
-
-The job that we submitted requested 1 cores for 1
-hour from the `hpcexc` account, to the CPU part of
-the cluster, using the `normal` QoS.
-
-Following is a list of common Slurm resource
-parameters that you may want to specify in your
-shell script:
 
 ## Interactive Jobs
-To get an interactive job (or essentially a shell
-on a compute node), use the `sinteractive` program
-(which is RCAC specific). You will need to specify
-the same parameters as with `sbatch` (e.g. account,
-partition, QoS, cores, nodes, time).
+To get an interactive job (or essentially a shell on a compute node), use the `sinteractive` program (which is RCAC specific). You will need to specify the same parameters as with `sbatch` (e.g. account, partition, QoS, cores, nodes, time).
 
 
 ``` hl_lines="1 8"
@@ -213,15 +215,9 @@ username@a195.negishi:[~] $
 ```
 
 
-Notice that before the `sinteractive` program was run,
-we were on `login03.negishi` and after it was run, we
-are now on `a195.negishi`, this is a good way to tell
-if you are running on a compute node, or on a login
-node.
+Notice that before the `sinteractive` program was run, we were on `login03.negishi` and after it was run, we are now on `a195.negishi`, this is a good way to tell if you are running on a compute node, or on a login node.
 
-To get out of the interactive slurm job, simply
-run the `exit` command and you'll be returned to
-the login node you were on previously.
+To get out of the interactive slurm job, simply run the `exit` command and you'll be returned to the login node you were on previously.
 
 
 ## Open OnDemand Interactive Apps
@@ -234,24 +230,6 @@ Most notably, we have an "Open OnDemand Desktop" application, which will give yo
 ![Open OnDemand Desktop](../assets/images/ood_desktop.png)
 
 
-### Common Slurm resource parameter reference
-
-  Shortcut | Long form option | Meaning |
-|---|---|---|
-| `-A` | `--account` | Account |
-| `-p` | `--partition` | Partition  |
-| `-q` | `--qos` | Quality of Service|
-| `-J` | `--job-name` | Job name  |
-| `-t` | `--time` | Walltime limit |
-| `-N` | `--nodes` | Number of nodes |
-| `-n` | `--ntasks`, `--ntasks-per-node` | Number of Slurm tasks (default: 1) |
-
-
-<!-- | `-c` | `--cpus-per-task` | Cores per task (default: 1) |
-| `--mem` | `--mem-per-cpu` | Memory (default: ~2GB per core) |
-| `-G` | `--gpus`, `--gpus-per-node` | Number of GPUs (default: 0) |
-| `-o` | `--output` | File path for application output | -->
-
 
 ## Job Monitoring and Cancelling
 
@@ -263,57 +241,32 @@ output. You can limit this to just your jobs with the `--me` flag:
 ```bash
 $ squeue --me
 JOBID      USER     ACCOUNT      PART QOS     NAME       NODES TRES_PER_NODE   CPUS  TIME_LIMIT ST TIME
-32541229   username rcac         cpu  normal  interactiv     1 N/A                8       30:00  R 0:09
+32541229   username hpcexc       cpu  normal  interactiv     1 N/A                8       30:00  R 0:09
 
 ```
+This can give you importiant information such as the status of your job (`R` for running, `PD` for pending, and `CG` for cancelling), as well as the current run time. 
 
-<!-- Quiz: What option do we need to limit the output to a
-specific account? Specific user? Only our own jobs?
 
-.. admonition:: Answer
-   :collapsible: closed
-
-   Specific account: `squeue -A ACCOUNT_NAME`
-
-   Specific user: `squeue -u USERNAME`
-
-   Only our own jobs: `squeue \-\- me` -->
-
-To learn more about the parameters of a single job, you can
-use the `jobinfo` program. To use `jobinfo`, the command
-would be `jobinfo JOB_ID`, where the `JOB_ID` is replaced
-with the job ID mentioned above (which you can also check
-with the `squeue` program).
+To learn more about the parameters of a single job, you can use the `jobinfo` program. To use `jobinfo`, the command would be `jobinfo JOB_ID`, where the `JOB_ID` is replaced with the job ID mentioned above (which you can also check with the `squeue` program).
 
 ```bash
 $ jobinfo 32209880
 Name : myjob.sh
 User : username
-Account : lab_queue
+Account : hpcexc
 Partition : cpu
 Nodes : a305
 ```
-There are also `jobenv`, `jobcmd`, and `jobscript`
-programs that tell you more information about the
-job as it was submitted.
+There are also `jobenv`, `jobcmd`, and `jobscript` programs that tell you more information about the job as it was submitted.
 
 !!! Note
     These four commands: `jobinfo`, `jobenv`, `jobcmd`, and `jobscript` are all RCAC-specific. It is not guaranteed that other HPC centers will have these programs implemented.
 
-To cancel a job, use the `scancel` program. It used by
-running `scancel JOB_ID`, where `JOB_ID` is replaced
-with the job ID mentioned before.
+To cancel a job, use the `scancel` program. It used by running `scancel JOB_ID`, where `JOB_ID` is replaced with the job ID mentioned before.
 
-```
+```bash
 $ scancel 32209880
 ```
-<!-- Quiz: Using the `man` program, what option do we need
-to cancel all our own jobs?
-
-.. admonition:: Answer
-   :collapsible: closed
-
-   To cancel all our own jobs: `scancel \-\-me` -->
 
 !!! warning
     Cancelling an application this way isn't very "nice", in that it immediately stops everything and can cause problems if in the middle of file operations.
@@ -327,7 +280,10 @@ on about good citizenship on HPC resources:
    (don't ask for a large memory node if it's not needed)
 * Do not abuse file systems (heavy I/O for `/depot` space, use `/scratch` instead)
 * Do not submit lots of tiny jobs, instead use the pilot-job pattern with a workflow tool
-* Do not submit jobs and camp (don't submit a GPU job from the Gateway for 24 hours so it's ready for you in the afternoon and then forget about it)
+    * We'll tak about this in [Week 4: Workload Management](../week4/workload-management.md).
+* Do not submit jobs and "camp" (don't submit a GPU job from the Gateway for 24 hours so it's ready for you in the afternoon and then forget about it)
 
+<!-- 
+Continue to [Week 3](../week3/index.md) -->
 
-Continue to [Week 3](../week3/index.md)
+Next section: [File Storage and Transfer](./storage-transfer.md) 

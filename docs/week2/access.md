@@ -16,12 +16,7 @@ choose which option(s) makes the most sense for you.
 
 ## SSH
 
-`ssh` is the simplest way to access the cluster.
-Most UNIX systems (such as Linux and macOS) have
-the `ssh` program already installed. Windows 11
-comes with the `ssh` program already there as
-well. To use `ssh`, open a Terminal (in any system).
-And use the command:
+`ssh` is the simplest way to access the cluster. Most UNIX systems (such as Linux and macOS) have the `ssh` program already installed. Windows 11 comes with the `ssh` program already there as well. To use `ssh`, open a Terminal (in any system). And use the command:
 
 ```sh
 $ ssh USERNAME@CLUSTER.rcac.purdue.edu
@@ -62,23 +57,11 @@ You're now ready to do things on the cluster!
 
 ## ThinLinc
 
-ThinLinc is an alternative we provide if you would like
-a more familiar GUI-based interface. There are two ways
-to use ThinLinc: the browser version and the desktop
-version. The desktop version requires a download, but
-it has a couple more features that the browser version
-doesn't have. Specifically, you can use ssh keys as
-well as restart your session in the desktop version,
-which you can't do in the browser version.
+ThinLinc is an alternative we provide if you would like a more familiar GUI-based interface. There are two ways to use ThinLinc: the browser version and the desktop version. The desktop version requires a download, but it has a couple more features that the browser version doesn't have. Specifically, you can use ssh keys as well as restart your session in the desktop version, which you can't do in the browser version.
 
-You can download the desktop ThinLinc client from Cendio
-here: [Cendio](https://www.cendio.com/thinlinc/download/)
+You can download the desktop ThinLinc client from Cendio here: [Cendio](https://www.cendio.com/thinlinc/download/)
 
-Otherwise, if you want to use the browser version,
-simply open up your favorite internet browser and
-navigate to `desktop.CLUSTER.rcac.purdue.edu`, where
-`CLUSTER` is replaced with the name of the cluster
-you want to access.
+Otherwise, if you want to use the browser version, simply open up your favorite internet browser and navigate to `desktop.CLUSTER.rcac.purdue.edu`, where `CLUSTER` is replaced with the name of the cluster you want to access.
 
 The desktop version of ThinLinc looks like this:
 ![Image showing the ThinLinc login portal, with text boxes to enter in the Server, the Username, and the path to the ssh key.](../assets/images/TL_login.png)
@@ -145,4 +128,7 @@ shell available for you to use.
 
 
 
-Next section: [File Storage and Transfer](./storage-transfer.md)
+<!-- Next section: [File Storage and Transfer](./storage-transfer.md) -->
+
+
+Next section: [Cluster Applications](./applications.md)

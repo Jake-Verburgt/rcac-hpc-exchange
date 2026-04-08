@@ -60,7 +60,7 @@ The scratch system is internally redundant, so you don't have to worry about har
 
 Scratch directories are good for intermediate to massive data I/O, so are perfect for data intensive jobs. It is **NOT** for the primary copy of your data or software. And it is **NOT for long-term storage.** It is only for short-term storage of intermediate results.
 
-![Am image showing files in a users scratch space being slowly transferred on a conveyor belt to a fire representing a file purge](../assets/images/scratch_purge.png)
+![An image showing files in a users scratch space being slowly transferred on a conveyor belt to a fire representing a file purge](../assets/images/scratch_purge.png)
 
 !!! warning
      Beware of regular purging of older files. You can use the `purgelist` program to  tell you which files will be purged. Please do not try to game the system, as we will ban users who repeatedly do so. Just back older files up to Fortress instead of storing them on Scratch.

@@ -64,10 +64,7 @@ connectivity problems.
 
 ### SCP 
 
-`scp` stands for `secure copy protocol` and is the
-server version of the `cp` we saw last week.
-It too need a source and a destination, but one of
-them may be a server.
+`scp` stands for `secure copy protocol` and is the server version of the `cp` we saw last week. It needs a source and a destination, but one of them may be a server.
 
 Copying to a cluster:
 ```bash
@@ -77,17 +74,12 @@ Copying from a cluster:
 ```bash 
 $ scp USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name ./destination_file
 ```
-When copying from a cluster, the destination file will
-go into the directory you are currently in. You can also
-specify a path you want the destination file to go to.
-This path can be either relative, or absolute.
+When copying from a cluster, the destination file will go into the directory you are currently in. You can also specify a path you want the destination file to go to. This path can be either relative, or absolute.
 
 ### rsync
 
-`rsync` is similar to `scp`, but much more fully-featured.
-It includes features to auto-resume transfers in case of
-disconnection. It has the same format of arguments as `scp`,
-but has many more options, check them out with:
+`rsync` is similar to `scp`, but much more fully-featured. It includes features to auto-resume transfers in case of disconnection. It has the same format of arguments as `scp`, but has many more options, check them out with:
+
 ```
 $ man rsync
 ```
@@ -117,10 +109,7 @@ sftp> get -P sourcefile somedir/
 
 sftp> exit
 ```
-When transferring to and from the cluster via `sftp`,
-the transferring on the side of your local computer will
-be relative to the directory you were in when you initiated
-the `sftp` session.
+When transferring to and from the cluster via `sftp`, the transferring on the side of your local computer will be relative to the directory you were in when you initiated the `sftp` session.
 
 
 <!-- ### SMB
@@ -153,18 +142,12 @@ Type     Location   Size    Limit    Use   Files   Limit    Use
 ===============================================================
 home     username  809KB   25.0GB  0.00%       -       -      -
 scratch  cluster    36KB  200.0TB  0.00%      0k  2,000k  0.00%
-depot    example  92.0MB    1.0TB     1%       -       -      -
+depot    group    92.0MB    1.0TB     1%       -       -      -
 ```
 
 ### flost
 
-RCAC regularly backs up data in home and depot
-spaces, so that if something is accidentally deleted
-or overwritten, it can be recovered (if it's been
-there sufficiently long). We have daily, weekly, and
-monthly snapshots for varying amounts of time. If
-you lost something in your scratch space, we don't
-have backups of those, so you're out of luck.
+RCAC regularly backs up data in home and depot spaces, so that if something is accidentally deleted or overwritten, it can be recovered (if it's been there sufficiently long). We have daily, weekly, and monthly snapshots for varying amounts of time. If you lost something in your scratch space, we don't have backups of those, so you're out of luck.
 
 ```
 $ flost
@@ -177,5 +160,7 @@ rerun flost with a suitable '-w WHERE' argument (or see 'flost -h' for help).
 
 Please enter the date that you lost your files: 2024-10-01
 ```
+<!-- 
+Next Section: [Cluster Applications](./applications.md) -->
 
-Next Section: [Cluster Applications](./applications.md)
+Continue to [Week 3](../week3/index.md)

@@ -8,11 +8,7 @@ The Rosen Center for Advanced Computing (Purdue's
 supercomputing center) maintains a few clusters
 that serve different purposes.
 
-The first four are what are considered "Purdue
-Community Clusters", and are open to be purchased
-by Purdue staff and faculty. The clusters listed
-after the first four are speciality clusters and
-have atypical methods of getting access to them.
+The first four are what are considered "Purdue Community Clusters", and are open to be purchased by Purdue staff and faculty. The clusters listed after the first four are specialty clusters and have atypical methods of getting access to them.
 
 ## Bell
 
@@ -35,13 +31,13 @@ Negishi will remain in service through **Fall 2028**.
 
 **Best for:** AI, machine learning, GPU computing, mixed CPU+GPU workloads  
 
-Gautschi is a next-generation community cluster featuring both high-core-count CPU nodes and powerful GPU nodes. It is optimized for:
+Gautschi is a next-generation community cluster featuring both high-core-count CPU nodes and GPU nodes. It is optimized for:
 
 * AI and deep learning workloads  
 * Large-scale GPU computing  
 * Hybrid CPU + GPU applications  
 
-With state-of-the-art NVIDIA H100 GPUs and high-speed networking, Gautschi is the primary platform for advanced AI research and accelerator-based computing.
+The AI partition contains NVIDIA H100 GPUs and high-speed networking, Gautschi is the primary platform for advanced AI research and accelerator-based computing.
 
 ## Gilbreth 
 
@@ -53,7 +49,7 @@ Gilbreth is a GPU-focused community cluster supporting a wide range of NVIDIA GP
 * GPU-accelerated simulation  
 * Data analytics and visualization  
 
-Gilbreth supports a diverse set of GPU node types, enabling flexibility for different performance and memory requirements.
+Gilbreth supports a diverse set of GPU node types, enabling flexibility for different performance and memory requirements. Importantly, jobs submitted to Gautschi **MUST** request and use GPUs. 
 
 
 ## Scholar (Teaching Resource)
@@ -84,3 +80,13 @@ Access to these two clusters is on a case-by-case basis and usually requires a r
 
 
 Next Section: [Cluster Access](./access.md)
+
+<!-- 
+| Cluster | GPU Resources | CPU Resources | Best For | Notes|
+|---------|---------------|---------------|----------|------|
+|Bell     | Limited (AMD) | Yes           |          | Reties Fall 2026|
+|Negishi  | Limited (AMD) | Yes           |          |                 |
+|Gilbreth | Nvidia A10, A30, A100, H100 | **No** | GPU Heavy computations | Not for CPU workloads |
+|Gautschi | Nvidia H100, L40S | Yes | Machine Learning, CPU/GPU workloads | 
+|Scholar  | NVidia V100 | Yes | Instructional use | Not for research | 
+ -->

@@ -19,9 +19,9 @@ nav:
       - What is a Cluster?: week2/what-is-a-cluster.md
       - Purdue Clusters: week2/clusters.md
       - Cluster Access: week2/access.md
-      - File Storage and Transfer: week2/storage-transfer.md
       - Cluster Applications: week2/applications.md
       - Cluster Job Submission: week2/slurm-basics.md
+      - File Storage and Transfer: week2/storage-transfer.md
   - Week 3:
       - Overview: week3/index.md
       - Scripting: week3/scripting.md
@@ -40,6 +40,7 @@ nav:
       - Cheatsheet: reference/command-cheatsheet.md
       - Glossary: reference/glossary.md
       - FAQ: reference/faq.md
+      - Onboarding: reference/onboarding.md
 
     
 theme:
@@ -77,7 +78,9 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.superfences
   - admonition 
-  - pymdownx.details
+  - pymdownx.details  
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra_css:
   - stylesheets/extra.css
