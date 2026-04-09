@@ -37,80 +37,110 @@ the clusters:
 <!-- 6) SMB -->
 
 
-### Open OnDemand
+### GUI Methods
 
-In the files tab of the Open on Demand page, there are
-upload and download buttons, but they are limited in
-what they can do. e.g. there is a file size limit of
-100 GB to upload and if your connection is flaky at
-all, you're going to have a bad time.
+=== "Open OnDemand"
 
-![ood_transfer](../assets/images/ood_transfer.png)
+    In the files tab of the Open on Demand page, there are
+    upload and download buttons, but they are limited in
+    what they can do. e.g. there is a file size limit of
+    100 GB to upload and if your connection is flaky at
+    all, you're going to have a bad time.
 
-### Globus
+    ![ood_transfer](../assets/images/ood_transfer.png)
 
-For transferring large data to the cluster, you will
-want to use the [Globus transfer service](https://transfer.rcac.purdue.edu). If you want to transfer files from your local machine
-to the cluster, you will need to install the [Globus Connect
-Personal](https://www.globus.org/globus-connect-personal) software on your local computer.
+=== "Globus"
 
-From the Globus transfer service, you can select a source
-and a destination. It will handle the actual transferring
-of the file(s) for you, resuming if there's network
-connectivity problems.
+    For transferring large data to the cluster, you will
+    want to use the [Globus transfer service](https://transfer.rcac.purdue.edu). If you want to transfer files from your local machine
+    to the cluster, you will need to install the [Globus Connect
+    Personal](https://www.globus.org/globus-connect-personal) software on your local computer.
 
-![globus_transfer](../assets/images/globus_transfer.png)
+    From the Globus transfer service, you can select a source
+    and a destination. It will handle the actual transferring
+    of the file(s) for you, resuming if there's network
+    connectivity problems.
 
+    ![globus_transfer](../assets/images/globus_transfer.png)
 
-### SCP 
+---
 
-`scp` stands for `secure copy protocol` and is the server version of the `cp` we saw last week. It needs a source and a destination, but one of them may be a server.
+### Command Based Methods
 
-Copying to a cluster:
-```bash
-$ scp ./source_file USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name
-```
-Copying from a cluster:
-```bash 
-$ scp USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name ./destination_file
-```
-When copying from a cluster, the destination file will go into the directory you are currently in. You can also specify a path you want the destination file to go to. This path can be either relative, or absolute.
+=== "scp"
 
-### rsync
+    `scp` stands for `secure copy protocol` and is the server version of the `cp` we saw last week. It needs a source and a destination, but one of them may be a server.
 
-`rsync` is similar to `scp`, but much more fully-featured. It includes features to auto-resume transfers in case of disconnection. It has the same format of arguments as `scp`, but has many more options, check them out with:
+    Copying to a cluster:
+    ```bash
+    $ scp ./source_file USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name
+    ```
+    Copying from a cluster:
+    ```bash 
+    $ scp USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name ./destination_file
+    ```
+    When copying from a cluster, the destination file will go into the directory you are currently in. You can also specify a path you want the destination file to go to. This path can be either relative, or absolute.
 
-```
-$ man rsync
-```
+=== "rsync"
 
-### sftp
+    `rsync` is similar to `scp`, but much more fully-featured. It is especially useful for transferring directories, syncing changed files, and resuming interrupted transfers.
 
-`sftp` stands for `secure file transfer protocol` is a
-reliable way to transfer files between the cluster and
-another computer.
+    Copying a file to a cluster:
+    ```bash
+    $ rsync ./source_file USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name
+    ```
 
-Essentially, `sftp` starts a file transfer shell on a
-remote computer. Simple use the command `sftp USERNAME@CLUSTER.rcac.purdue.edu`
-to start the file transfer session. After logging in,
-use the `get` and `put` programs to transfer to and from
-the cluster you are connected to:
+    Copying a file from a cluster:
+    ```bash
+    $ rsync USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/cluster_file_name ./destination_file
+    ```
 
-```bash
-$ sftp USERNAME@CLUSTER.rcac.purdue.edu
+    Copying a directory to a cluster:
+    ```bash
+    $ rsync -av ./my_directory/ USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/
+    ```
 
-    (transfer TO CLUSTER)
-sftp> put sourcefile somedir/destinationfile
-sftp> put -P sourcefile somedir/
+    Copying a directory from a cluster:
+    ```bash
+    $ rsync -av USERNAME@CLUSTER.rcac.purdue.edu:~/some_dir/my_directory/ ./my_directory/
+    ```
 
-    (transfer FROM CLUSTER)
-sftp> get sourcefile somedir/destinationfile
-sftp> get -P sourcefile somedir/
+    A few common options are:
 
-sftp> exit
-```
-When transferring to and from the cluster via `sftp`, the transferring on the side of your local computer will be relative to the directory you were in when you initiated the `sftp` session.
+    - `-a` for **archive mode**, which preserves file structure, permissions, and timestamps
+    - `-v` for **verbose**, which shows what is being transferred
+    - `-h` for **human-readable** file sizes
+    - `--progress` to show transfer progress
+    - `--partial` to keep partially transferred files if a transfer is interrupted
 
+=== "sftp"
+
+    `sftp` stands for `secure file transfer protocol` is a
+    reliable way to transfer files between the cluster and
+    another computer.
+
+    Essentially, `sftp` starts a file transfer shell on a
+    remote computer. Simple use the command `sftp USERNAME@CLUSTER.rcac.purdue.edu`
+    to start the file transfer session. After logging in,
+    use the `get` and `put` programs to transfer to and from
+    the cluster you are connected to:
+
+    ```bash
+    $ sftp USERNAME@CLUSTER.rcac.purdue.edu
+
+        (transfer TO CLUSTER)
+    sftp> put sourcefile somedir/destinationfile
+    sftp> put -P sourcefile somedir/
+
+        (transfer FROM CLUSTER)
+    sftp> get sourcefile somedir/destinationfile
+    sftp> get -P sourcefile somedir/
+
+    sftp> exit
+    ```
+    When transferring to and from the cluster via `sftp`, the transferring on the side of your local computer will be relative to the directory you were in when you initiated the `sftp` session.
+
+---
 
 <!-- ### SMB
 

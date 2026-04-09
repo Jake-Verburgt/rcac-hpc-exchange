@@ -49,8 +49,11 @@ login00.cluster.rcac.purdue.edu
 
 ### Cluster Filesystems
 
-Although we will discuss Filesystem locations in greater detail later, it is important to understand that many filesystems on the cluster are **shared across nodes**. If you create a file in your home directory on a login node, that same file will be available on any of the compute nodes, because all of the nodes are mounting the same home directory filesystem.
+It is important to understand that many filesystems on the cluster are **shared across nodes**. 
 
+![An image showing all nodes on a cluster mounting the same filesystems](../assets/images/cluster_filemount.png)
+
+If you create a file in your home directory on a login node, that same file will be available on any of the compute nodes, because all of the nodes are mounting the same home directory filesystem.
 |Storage | Location | Purpose | Availability|
 |--------|----------|-------|------------|
 | Home   | `/home/username`| Backed up personal storage | Shared across all nodes|
