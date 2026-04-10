@@ -54,6 +54,7 @@ It is important to understand that many filesystems on the cluster are **shared 
 ![An image showing all nodes on a cluster mounting the same filesystems](../assets/images/cluster_filemount.png)
 
 If you create a file in your home directory on a login node, that same file will be available on any of the compute nodes, because all of the nodes are mounting the same home directory filesystem.
+
 |Storage | Location | Purpose | Availability|
 |--------|----------|-------|------------|
 | Home   | `/home/username`| Backed up personal storage | Shared across all nodes|
