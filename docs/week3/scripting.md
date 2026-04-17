@@ -134,7 +134,11 @@ Essentially,the `PATH` variable controls where the shell looks for executable pr
 echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:
 ```
-Every command that we run is located in one of these directories! For example, we can see that the program that is executed by the `ls` command is located in  `/usr/bin/`, which is listed in our `PATH` variable!
+Every command that we run is located in one of these directories! When you type a command, your shell will look through all of the directories on your `PATH` variable until it finds a matching executable file!
+
+![Image of a shell searching through folders on the path variable until it finds a matching command](../assets/images/path_search.png)
+
+ For example, we can see that the program that is executed by the `ls` command is located in  `/usr/bin/`, which is listed in our `PATH` variable!
 
 ```bash
 $ which ls
